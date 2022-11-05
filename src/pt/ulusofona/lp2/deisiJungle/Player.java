@@ -16,7 +16,7 @@ public class Player {
     public boolean isAlreadyTarzanPlaying(ArrayList<Player> alPlayers)
     {
         for (Player player : alPlayers) {
-            if(player.specie.identifier == 'Z'){
+            if(player.specie.getIdentifier() == 'Z'){
                 return true;
             }
         }
@@ -27,6 +27,12 @@ public class Player {
     public boolean checkID(int identifier)
     {
         return this.identifier + 1 != identifier;
+    }
+    public int getIdentifier(){
+        return identifier;
+    }
+    public String getNome(){
+        return nome;
     }
 
 }

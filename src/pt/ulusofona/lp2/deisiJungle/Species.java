@@ -36,6 +36,18 @@ public class Species {
         return alSpecies;
     }
 
+    public char getIdentifier()
+    {
+        return identifier;
+    }
+    public String getNome()
+    {
+        return nome;
+    }
+    public Image getSpecieImage()
+    {
+        return specieImage;
+    }
 
 
 }
