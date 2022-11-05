@@ -5,6 +5,9 @@ import java.util.ArrayList;
 
 public class GameManager {
 
+    int maxPlayers = 4;
+
+
     public GameManager(){
 
     }
