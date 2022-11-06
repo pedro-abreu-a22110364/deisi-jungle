@@ -18,7 +18,7 @@ public class Specie {
         return identifier;
     }
 
-    public String getNome()
+    public String getName()
     {
         return nome;
     }

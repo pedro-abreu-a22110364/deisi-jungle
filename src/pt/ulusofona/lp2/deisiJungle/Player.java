@@ -5,21 +5,21 @@ import java.util.ArrayList;
 
 public class Player {
     int identifier;
-    String nome;
     Specie specie;
+    String name;
     int energy; //Mudar tipo de variavel consoante o que é pedido
 
     public Player() {
     }
 
-    public Player(int identifier, String nome) {
+    public Player(int identifier, String name) {
         this.identifier = identifier;
-        this.nome = nome;
+        this.name = name;
     }
 
-    public Player(int identifier, String nome, Specie specie) {
+    public Player(int identifier, String name, Specie specie) {
         this.identifier = identifier;
-        this.nome = nome;
+        this.name = name;
         this.specie = specie;
     }
 
@@ -50,11 +50,13 @@ public class Player {
     {
         return this.identifier + 1 != identifier;
     }
+
     public int getIdentifier(){
         return identifier;
     }
-    public String getNome(){
-        return nome;
+
+    public String getName(){
+        return name;
     }
 
     public Specie getSpecie() {

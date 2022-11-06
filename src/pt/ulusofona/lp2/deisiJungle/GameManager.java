@@ -20,7 +20,7 @@ public class GameManager {
 
         for (Specie specie : alSpecies) {
             species[count][0] = specie.getIdentifier() + "";
-            species[count][1] = specie.getNome();
+            species[count][1] = specie.getName();
             species[count][2] = specie.getSpecieImage() + "";
             count++;
         }
@@ -54,7 +54,7 @@ public class GameManager {
         for (Player player : alPlayers) {
             if(player != null){
                 strPlayerInfo[count][0] = String.valueOf(player.getIdentifier());
-                strPlayerInfo[count][1] = player.getNome();
+                strPlayerInfo[count][1] = player.getName();
                 strPlayerInfo[count][2] = String.valueOf(player.getSpecie().getIdentifier());
                 strPlayerInfo[count][3] = String.valueOf(player.getEnergy());
                 count++;
