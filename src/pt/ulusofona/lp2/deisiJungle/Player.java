@@ -9,6 +9,10 @@ public class Player {
     String name;
     int energy; //Mudar tipo de variavel consoante o que é pedido
 
+    int position; //Mudar de classe caso necessário
+
+    int playingOrder; //Mudar caso necessário
+
     public Player() {
     }
 
@@ -38,16 +42,14 @@ public class Player {
 
         Player playerWithSmallerId = new Player(Integer.MAX_VALUE, "Dummy");
         for (Player player : players) {
-            if(playerWithSmallerId.getIdentifier() > player.getIdentifier())
-            {
+            if(playerWithSmallerId.getIdentifier() > player.getIdentifier()) {
                 playerWithSmallerId = player;
             }
         }
         return playerWithSmallerId;
     }
 
-    public boolean checkID(int identifier)
-    {
+    public boolean checkID(int identifier) {
         return this.identifier + 1 != identifier;
     }
 
@@ -62,6 +64,14 @@ public class Player {
     public Specie getSpecie() {
         return specie;
     }
+    public int getPosition(){
+        return position;
+    }
+
+    public int getPlayingOrder(){
+        return playingOrder;
+    }
+
     public int getEnergy(){
         return energy;
     }

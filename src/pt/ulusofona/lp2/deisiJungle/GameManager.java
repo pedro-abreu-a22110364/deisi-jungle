@@ -41,7 +41,19 @@ public class GameManager {
     }
 
     public String[] getPlayerInfo(int playerId) {
-        return new String[5];
+        String[] strPlayerInfo = new String[4];
+        for (Player player : alPlayers) {
+            if(player != null){
+                if(player.getIdentifier() == playerId)
+                {
+                    strPlayerInfo[0] = String.valueOf(player.getIdentifier());
+                    strPlayerInfo[1] = player.getName();
+                    strPlayerInfo[2] = String.valueOf(player.getSpecie().getIdentifier());
+                    strPlayerInfo[3] = String.valueOf(player.getEnergy());
+                }
+            }
+        }
+        return strPlayerInfo;
     }
 
     public String[] getCurrentPlayerInfo() {
@@ -49,18 +61,18 @@ public class GameManager {
     }
 
     public String[][] getPlayersInfo() {
-        String[][] strPlayerInfo = new String[alPlayers.size()][4];
+        String[][] strPlayersInfo = new String[alPlayers.size()][4];
         int count = 0;
         for (Player player : alPlayers) {
             if(player != null){
-                strPlayerInfo[count][0] = String.valueOf(player.getIdentifier());
-                strPlayerInfo[count][1] = player.getName();
-                strPlayerInfo[count][2] = String.valueOf(player.getSpecie().getIdentifier());
-                strPlayerInfo[count][3] = String.valueOf(player.getEnergy());
+                strPlayersInfo[count][0] = String.valueOf(player.getIdentifier());
+                strPlayersInfo[count][1] = player.getName();
+                strPlayersInfo[count][2] = String.valueOf(player.getSpecie().getIdentifier());
+                strPlayersInfo[count][3] = String.valueOf(player.getEnergy());
                 count++;
             }
         }
-        return strPlayerInfo;
+        return strPlayersInfo;
     }
 
     public boolean moveCurrentPlayer(int nrSquares,boolean bypassValidations) {
