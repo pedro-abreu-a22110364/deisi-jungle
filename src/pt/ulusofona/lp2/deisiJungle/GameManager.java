@@ -96,7 +96,7 @@ public class GameManager {
     }
 
     public String whoIsTaborda() {
-        return "";
+        return "wrestling";
     }
 
     public ArrayList<Specie> createDefaultSpecies() {
