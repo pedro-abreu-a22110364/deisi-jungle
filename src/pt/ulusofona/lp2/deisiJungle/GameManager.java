@@ -7,7 +7,8 @@ public class GameManager {
 
     int minPlayers = 2;
     int maxPlayers = 4;
-    ArrayList<Species> alSpecies = createDefaultSpecies();
+    ArrayList<Specie> alSpecies = createDefaultSpecies();
+    ArrayList<Player> alPlayers;
 
     public GameManager(){
 
@@ -17,7 +18,7 @@ public class GameManager {
         String[][] species = new String[alSpecies.size()][3];
         int count = 0;
 
-        for (Species specie : alSpecies) {
+        for (Specie specie : alSpecies) {
             species[count][0] = specie.getIdentifier() + "";
             species[count][1] = specie.getNome();
             species[count][2] = specie.getSpecieImage() + "";
@@ -48,7 +49,18 @@ public class GameManager {
     }
 
     public String[][] getPlayersInfo() {
-        return new String[5][];
+        String[][] strPlayerInfo = new String[alPlayers.size()][4];
+        int count = 0;
+        for (Player player : alPlayers) {
+            if(player != null){
+                strPlayerInfo[count][0] = String.valueOf(player.getIdentifier());
+                strPlayerInfo[count][1] = player.getNome();
+                strPlayerInfo[count][2] = String.valueOf(player.getSpecie().getIdentifier());
+                strPlayerInfo[count][3] = String.valueOf(player.getEnergy());
+                count++;
+            }
+        }
+        return strPlayerInfo;
     }
 
     public boolean moveCurrentPlayer(int nrSquares,boolean bypassValidations) {
@@ -71,15 +83,15 @@ public class GameManager {
         return "";
     }
 
-    public ArrayList<Species> createDefaultSpecies() {
-        ArrayList<Species> alSpecies = new ArrayList<>(); //Creating the list to return it later
+    public ArrayList<Specie> createDefaultSpecies() {
+        ArrayList<Specie> alSpecies = new ArrayList<>(); //Creating the list to return it later
 
         //Creating the objects
-        Species elefante = new Species('E', "Elefante");
-        Species leao = new Species('L', "Leão");
-        Species tartaruga = new Species('T', "Tartaruga");
-        Species passaro = new Species('P', "Pássaro");
-        Species tarzan = new Species('Z', "Tarzan");
+        Specie elefante = new Specie('E', "Elefante");
+        Specie leao = new Specie('L', "Leão");
+        Specie tartaruga = new Specie('T', "Tartaruga");
+        Specie passaro = new Specie('P', "Pássaro");
+        Specie tarzan = new Specie('Z', "Tarzan");
 
         //Adding objects to list
         alSpecies.add(elefante);

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Player {
     int identifier;
     String nome;
-    Species specie;
+    Specie specie;
     int energy; //Mudar tipo de variavel consoante o que é pedido
 
     public Player() {
@@ -17,7 +17,7 @@ public class Player {
         this.nome = nome;
     }
 
-    public Player(int identifier, String nome, Species specie) {
+    public Player(int identifier, String nome, Specie specie) {
         this.identifier = identifier;
         this.nome = nome;
         this.specie = specie;
@@ -57,6 +57,9 @@ public class Player {
         return nome;
     }
 
+    public Specie getSpecie() {
+        return specie;
+    }
     public int getEnergy(){
         return energy;
     }
