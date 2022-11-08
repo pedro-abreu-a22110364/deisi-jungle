@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class Player {
     int identifier;
-    Specie specie;
     String name;
+    Specie specie;
     int energy; //Mudar tipo de variavel consoante o que é pedido
 
     int position; //Mudar de classe caso necessário
@@ -74,5 +74,11 @@ public class Player {
 
     public int getEnergy(){
         return energy;
+    }
+
+    public boolean changePosition(int position)
+    {
+        this.position = position;
+        return true;
     }
 }

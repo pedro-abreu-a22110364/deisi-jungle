@@ -7,6 +7,8 @@ public class GameManager {
 
     int minPlayers = 2;
     int maxPlayers = 4;
+    int jungleSize;
+    int initialEnergy;
     ArrayList<Specie> alSpecies = createDefaultSpecies();
     ArrayList<Player> alPlayers;
 
@@ -29,6 +31,48 @@ public class GameManager {
     }
 
     public boolean createInitialJungle(int jungleSize,int initialEnergy,String[][] playersInfo) {
+        this.initialEnergy = initialEnergy;
+        this.jungleSize = jungleSize;
+
+        int nrOfTarzans = 0;
+
+        if(playersInfo == null)
+        {
+            return false;
+        }
+
+        for (String[] playerInfo : playersInfo) {
+            if(nrOfTarzans < 1 && alPlayers.size() <= 4){
+                for (Specie  specie : alSpecies) {
+                    if(playerInfo[2].equals(String.valueOf(specie.getIdentifier())))
+                    {
+                        if(playerInfo[2].equals(String.valueOf('Z')))
+                        {
+                            nrOfTarzans ++;
+                        }
+                        if(playerInfo[1].isEmpty())
+                        {
+                            return false;
+                        }
+                        Player player = new Player(Integer.valueOf(playerInfo[0]), playerInfo[1], specie);
+                    }
+                    return false;
+
+                }
+            }
+            return false;
+        }
+
+        if(alPlayers.size() < minPlayers || alPlayers.size() > maxPlayers)
+        {
+            return false;
+        }
+
+        if(jungleSize <= alPlayers.size())
+        {
+            return false;
+        }
+
         return true;
     }
 
@@ -115,6 +159,27 @@ public class GameManager {
 
         //Returning the list back to "main"
         return alSpecies;
+    }
+
+    public boolean createPlayer(int identifier, String name, char specie){
+        if(alPlayers.size() >= maxPlayers)
+        {
+            return false;
+        }
+
+        for (Specie specy : alSpecies) {
+            if(specy.getIdentifier() == specie)
+            {
+                Player player = new Player(identifier, name, specy);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void checkPlayingOrder()
+    {
+
     }
 
 }
