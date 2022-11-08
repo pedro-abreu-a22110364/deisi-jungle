@@ -10,7 +10,7 @@ public class GameManager {
     int jungleSize;
     int initialEnergy;
     ArrayList<Specie> alSpecies = createDefaultSpecies();
-    ArrayList<Player> alPlayers;
+    ArrayList<Player> alPlayers = new ArrayList<>();
 
     public GameManager(){
 
