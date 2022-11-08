@@ -36,40 +36,35 @@ public class GameManager {
 
         int nrOfTarzans = 0;
 
-        if(playersInfo == null)
-        {
+        if(playersInfo == null) {
             return false;
         }
 
         for (String[] playerInfo : playersInfo) {
             if(nrOfTarzans < 1 && alPlayers.size() <= 4){
                 for (Specie  specie : alSpecies) {
-                    if(playerInfo[2].equals(String.valueOf(specie.getIdentifier())))
-                    {
-                        if(playerInfo[2].equals(String.valueOf('Z')))
-                        {
+                    if(playerInfo[2].charAt(0) == specie.getIdentifier()) {
+
+                        if(playerInfo[2].equals(String.valueOf('Z'))) {
                             nrOfTarzans ++;
                         }
-                        if(playerInfo[1].isEmpty())
-                        {
+                        if(playerInfo[1].isEmpty()) {
                             return false;
                         }
                         Player player = new Player(Integer.valueOf(playerInfo[0]), playerInfo[1], specie);
                     }
-                    return false;
-
                 }
             }
+            else {
+                return false;
+            }
+        }
+
+        if(alPlayers.size() < minPlayers || alPlayers.size() > maxPlayers) {
             return false;
         }
 
-        if(alPlayers.size() < minPlayers || alPlayers.size() > maxPlayers)
-        {
-            return false;
-        }
-
-        if(jungleSize <= alPlayers.size())
-        {
+        if(jungleSize <= alPlayers.size()) {
             return false;
         }
 
