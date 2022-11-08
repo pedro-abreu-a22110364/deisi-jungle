@@ -65,10 +65,7 @@ public class GameManager {
         int count = 0;
         for (Player player : alPlayers) {
             if(player != null){
-                strPlayersInfo[count][0] = String.valueOf(player.getIdentifier());
-                strPlayersInfo[count][1] = player.getName();
-                strPlayersInfo[count][2] = String.valueOf(player.getSpecie().getIdentifier());
-                strPlayersInfo[count][3] = String.valueOf(player.getEnergy());
+                strPlayersInfo[count] = getPlayerInfo(player.getIdentifier());
                 count++;
             }
         }
