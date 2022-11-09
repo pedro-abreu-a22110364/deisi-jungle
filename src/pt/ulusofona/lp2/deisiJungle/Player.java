@@ -10,7 +10,7 @@ public class Player {
     int energy; //Mudar tipo de variavel consoante o que é pedido
     int rank; //Mudar de classe caso necessário
     int position = 0;
-
+    boolean winner = false;
     boolean alreadyPlayed = false;
 
     public int getPosition() {
@@ -34,10 +34,14 @@ public class Player {
     public int getRank(){
         return rank;
     }
-
     public int getEnergy(){
         return energy;
     }
+
+    public boolean isWinner() {
+        return winner;
+    }
+
 
 
     public Player() {

@@ -16,6 +16,7 @@ public class GameManager {
 
     HashMap<Integer,Player> hmPlayers = new HashMap<>(); //
 
+    Player winner = new Player();
     Player nowPlaying;
     public GameManager(){
 
@@ -150,7 +151,7 @@ public class GameManager {
     }
 
     public String[] getWinnerInfo() {
-        return new String[5];
+        return getPlayerInfo(winner.getIdentifier());
     }
 
     public ArrayList<String> getGameResults() {
