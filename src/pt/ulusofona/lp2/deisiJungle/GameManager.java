@@ -2,6 +2,8 @@ package pt.ulusofona.lp2.deisiJungle;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameManager {
 
@@ -10,8 +12,11 @@ public class GameManager {
     int jungleSize;
     int initialEnergy;
     ArrayList<Specie> alSpecies = createDefaultSpecies();
-    ArrayList<Player> alPlayers = new ArrayList<>();
+    //ArrayList<Player> alPlayers = new ArrayList<>();
 
+    HashMap<Integer,Player> hmPlayers = new HashMap<>(); //
+
+    Player nowPlaying;
     public GameManager(){
 
     }
@@ -41,17 +46,21 @@ public class GameManager {
         }
 
         for (String[] playerInfo : playersInfo) {
-            if(nrOfTarzans < 1 && alPlayers.size() <= 4){
+            if(hmPlayers.size() < 4){
                 for (Specie  specie : alSpecies) {
                     if(playerInfo[2].charAt(0) == specie.getIdentifier()) {
-
-                        if(playerInfo[2].equals(String.valueOf('Z'))) {
-                            nrOfTarzans ++;
-                        }
                         if(playerInfo[1].isEmpty()) {
                             return false;
                         }
-                        Player player = new Player(Integer.valueOf(playerInfo[0]), playerInfo[1], specie);
+                        if(playerInfo[2].equals(String.valueOf('Z')) && nrOfTarzans == 1) {
+                            return false;
+                        }
+
+                        if(playerInfo[2].equals(String.valueOf('Z')) && nrOfTarzans < 1) {
+                            nrOfTarzans ++;
+                        }
+                        Player player = new Player(Integer.parseInt(playerInfo[0]), playerInfo[1], specie);
+                        hmPlayers.put(player.getIdentifier(),player);
                     }
                 }
             }
@@ -60,19 +69,29 @@ public class GameManager {
             }
         }
 
-        if(alPlayers.size() < minPlayers || alPlayers.size() > maxPlayers) {
+        if(hmPlayers.size() < minPlayers || hmPlayers.size() > maxPlayers) {
             return false;
         }
 
-        if(jungleSize <= alPlayers.size()) {
+        if(jungleSize <= hmPlayers.size()) {
             return false;
         }
+
 
         return true;
     }
 
     public int[] getPlayerIds(int squareNr) {
-        return new int[5];
+        int[] arrayID = new int[hmPlayers.size()];
+        int count = 0;
+        for (Player player : hmPlayers.values()) {
+            if(player.getPosition() == squareNr)
+            {
+                arrayID[count] = player.getIdentifier();
+                count++;
+            }
+        }
+        return arrayID;
     }
 
     public String[] getSquareInfo(int squareNr) {
@@ -81,17 +100,23 @@ public class GameManager {
 
     public String[] getPlayerInfo(int playerId) {
         String[] strPlayerInfo = new String[4];
-        for (Player player : alPlayers) {
-            if(player != null){
-                if(player.getIdentifier() == playerId)
-                {
-                    strPlayerInfo[0] = String.valueOf(player.getIdentifier());
-                    strPlayerInfo[1] = player.getName();
-                    strPlayerInfo[2] = String.valueOf(player.getSpecie().getIdentifier());
-                    strPlayerInfo[3] = String.valueOf(player.getEnergy());
+        for (Map.Entry<Integer, Player> playerEntry : hmPlayers.entrySet()) {
+            if(hmPlayers.containsKey(playerId))
+            {
+                if(playerEntry.getKey() == playerId && playerEntry != null){
+                        strPlayerInfo[0] = String.valueOf(playerEntry.getValue().getIdentifier());
+                        strPlayerInfo[1] = playerEntry.getValue().getName();
+                        strPlayerInfo[2] = String.valueOf(playerEntry.getValue().getSpecie().getIdentifier());
+                        strPlayerInfo[3] = String.valueOf(playerEntry.getValue().getEnergy());
                 }
             }
         }
+
+
+
+
+
+
         return strPlayerInfo;
     }
 
@@ -100,9 +125,9 @@ public class GameManager {
     }
 
     public String[][] getPlayersInfo() {
-        String[][] strPlayersInfo = new String[alPlayers.size()][4];
+        String[][] strPlayersInfo = new String[hmPlayers.size()][4];
         int count = 0;
-        for (Player player : alPlayers) {
+        for (Player player : hmPlayers.values()) {
             if(player != null){
                 strPlayersInfo[count] = getPlayerInfo(player.getIdentifier());
                 count++;
@@ -115,7 +140,12 @@ public class GameManager {
         if ((nrSquares < 1 || nrSquares > 6) && bypassValidations) {
             return false;
         }
-        //mover jogador
+        if(nowPlaying.getPosition() + nrSquares > jungleSize){
+            return false;
+        }
+
+        nowPlaying.setPosition(nowPlaying.getPosition() + nrSquares);
+
         return true;
     }
 
@@ -157,7 +187,7 @@ public class GameManager {
     }
 
     public boolean createPlayer(int identifier, String name, char specie){
-        if(alPlayers.size() >= maxPlayers)
+        if(hmPlayers.size() >= maxPlayers)
         {
             return false;
         }
@@ -172,9 +202,5 @@ public class GameManager {
         return false;
     }
 
-    public void checkPlayingOrder()
-    {
-
-    }
 
 }

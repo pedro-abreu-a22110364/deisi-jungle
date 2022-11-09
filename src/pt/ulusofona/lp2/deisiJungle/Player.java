@@ -8,10 +8,37 @@ public class Player {
     String name;
     Specie specie;
     int energy; //Mudar tipo de variavel consoante o que é pedido
+    int rank; //Mudar de classe caso necessário
+    int position = 0;
 
-    int position; //Mudar de classe caso necessário
+    boolean alreadyPlayed = false;
 
-    int playingOrder; //Mudar caso necessário
+    public int getPosition() {
+        return position;
+    }
+    public boolean isAlreadyPlayed() {
+        return alreadyPlayed;
+    }
+    public void setPosition(int position) {
+        this.position = position;
+    }
+    public int getIdentifier(){
+        return identifier;
+    }
+    public String getName(){
+        return name;
+    }
+    public Specie getSpecie() {
+        return specie;
+    }
+    public int getRank(){
+        return rank;
+    }
+
+    public int getEnergy(){
+        return energy;
+    }
+
 
     public Player() {
     }
@@ -49,36 +76,6 @@ public class Player {
         return playerWithSmallerId;
     }
 
-    public boolean checkID(int identifier) {
-        return this.identifier + 1 != identifier;
-    }
 
-    public int getIdentifier(){
-        return identifier;
-    }
 
-    public String getName(){
-        return name;
-    }
-
-    public Specie getSpecie() {
-        return specie;
-    }
-    public int getPosition(){
-        return position;
-    }
-
-    public int getPlayingOrder(){
-        return playingOrder;
-    }
-
-    public int getEnergy(){
-        return energy;
-    }
-
-    public boolean changePosition(int position)
-    {
-        this.position = position;
-        return true;
-    }
 }
