@@ -341,24 +341,6 @@ public class GameManager {
         return playerID;
     }
 
-    public int checkPlayerWithMediumPosition(HashMap<Integer,Player> hmPlayersTemp)
-    {
-        int mediumID = 0;
-        int playerWithSmallerIDPosition = hmPlayersTemp.get(checkPlayerWithSmallestPosition()).getPosition();
-        int playerWithBiggestIDPosition = hmPlayersTemp.get(checkPlayerWithBiggestPosition()).getPosition();
-        for (Player player : hmPlayersTemp.values()) {
-            if(player.getPosition() == playerWithSmallerIDPosition || player.getPosition() == playerWithBiggestIDPosition)
-            {
-
-            }
-            else
-            {
-             mediumID = player.getIdentifier();
-            }
-        }
-        return mediumID;
-    }
-
     public int checkPlayerWithSmallestPosition()
     {
         int position = 21;
