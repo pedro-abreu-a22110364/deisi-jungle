@@ -124,7 +124,7 @@ public class GameManager {
     public String[] getSquareInfo(int squareNr) {
         String[] strSquareInfo = new String[3];
         String playersInSquare = "";
-        if(squareNr > jungleSize && squareNr < 0){
+        if(squareNr > jungleSize && squareNr <= 0){
             return null;
         }
 
@@ -144,7 +144,6 @@ public class GameManager {
             }
         }
         strSquareInfo[2] = playersInSquare.substring(0, playersInSquare.length() - 2);
-
 
         return strSquareInfo;
     }

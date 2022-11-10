@@ -9,7 +9,7 @@ public class Player {
     Specie specie;
     int energy; //Mudar tipo de variavel consoante o que é pedido
     int rank; //Mudar de classe caso necessário
-    int position = 0;
+    int position = 1;
     boolean winner = false;
 
     public int getPosition() {

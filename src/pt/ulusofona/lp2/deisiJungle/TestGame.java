@@ -45,4 +45,22 @@ public class TestGame {
         assertEquals("Z", matriz[0][2]);
         assertEquals("10", matriz[0][3]);
     }
+
+    @Test
+    public void testGetSquareInfo()
+    {
+        GameManager manager = new GameManager();
+        String[][] playerInfo = new String[][]{
+                {
+                        "1","Pedro","Z","10"
+                },
+                {
+                        "2","Guilherme","T","10"
+                }
+        };
+        manager.createInitialJungle(20, 10, playerInfo);
+        String[] strs = manager.getSquareInfo(1);
+
+        assertEquals("blank.png",strs[0]);
+    }
 }
