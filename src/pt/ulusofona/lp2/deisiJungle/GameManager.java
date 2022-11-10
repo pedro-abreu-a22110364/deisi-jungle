@@ -15,7 +15,7 @@ public class GameManager {
     int energyMoveCost = 2;
     boolean gameFinished = false;
 
-    int[] orderOfPlay = idOrderOfPlay();
+    int[] orderOfPlay;
 
 
     ArrayList<Specie> alSpecies = createDefaultSpecies();
@@ -100,6 +100,7 @@ public class GameManager {
                 return false;
             }
         }
+        orderOfPlay = idOrderOfPlay();
         return true;
     }
 
