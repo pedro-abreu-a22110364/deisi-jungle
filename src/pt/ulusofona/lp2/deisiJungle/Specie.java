@@ -28,4 +28,3 @@ public class Specie {
         return specieImage;
     }
 }
-
