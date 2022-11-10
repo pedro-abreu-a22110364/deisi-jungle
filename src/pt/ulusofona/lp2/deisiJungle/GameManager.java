@@ -17,7 +17,6 @@ public class GameManager {
     int winner = 0;
     int idPlayerPlaying;
     int playerPlaying;
-    int playersWithoutEnergy = 0;
 
     //Variaveis com informação sobre o jogo
     boolean gameFinished = false;
