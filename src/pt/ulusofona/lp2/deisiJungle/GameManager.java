@@ -14,7 +14,7 @@ public class GameManager {
     ArrayList<Specie> alSpecies = createDefaultSpecies();
     //ArrayList<Player> alPlayers = new ArrayList<>();
 
-    HashMap<Integer,Player> hmPlayers = new HashMap<>(); //
+    HashMap<Integer,Player> hmPlayers = new HashMap<>(); //HashMap with id player as key
 
     Player winner = new Player();
     Player nowPlaying;
@@ -78,7 +78,6 @@ public class GameManager {
             return false;
         }
 
-
         return true;
     }
 
@@ -112,11 +111,6 @@ public class GameManager {
                 }
             }
         }
-
-
-
-
-
 
         return strPlayerInfo;
     }
@@ -170,11 +164,11 @@ public class GameManager {
         ArrayList<Specie> alSpecies = new ArrayList<>(); //Creating the list to return it later
 
         //Creating the objects
-        Specie elefante = new Specie('E', "Elefante");
-        Specie leao = new Specie('L', "Leão");
-        Specie tartaruga = new Specie('T', "Tartaruga");
-        Specie passaro = new Specie('P', "Pássaro");
-        Specie tarzan = new Specie('Z', "Tarzan");
+        Specie elefante = new Specie('E', "Elefante","elephant.png");
+        Specie leao = new Specie('L', "Leão","lion.png");
+        Specie tartaruga = new Specie('T', "Tartaruga","turtle.png");
+        Specie passaro = new Specie('P', "Pássaro","bird.png");
+        Specie tarzan = new Specie('Z', "Tarzan","tarzan.png");
 
         //Adding objects to list
         alSpecies.add(elefante);

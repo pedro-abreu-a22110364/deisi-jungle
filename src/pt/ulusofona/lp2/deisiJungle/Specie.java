@@ -5,12 +5,12 @@ import java.awt.*;
 public class Specie {
     char identifier;
     String nome;
-    Image specieImage;
+    String specieImage;
 
-    public Specie(char identifier, String nome) {
+    public Specie(char identifier, String nome, String specieImage) {
         this.identifier = identifier;
         this.nome = nome;
-        //this.specieImage = specieImage;
+        this.specieImage = specieImage;
     }
 
     public char getIdentifier()
@@ -23,7 +23,7 @@ public class Specie {
         return nome;
     }
 
-    public Image getSpecieImage()
+    public String getSpecieImage()
     {
         return specieImage;
     }
