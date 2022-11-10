@@ -337,12 +337,34 @@ public class GameManager {
 
     public int checkPlayerWithMediumPosition()
     {
+        int mediumID = 0;
+        int playerWithSmallerIDPosition = hmPlayers.get(checkPlayerWithSmallestPosition()).getPosition();
+        int playerWithBiggestIDPosition = hmPlayers.get(checkPlayerWithBiggestPosition()).getPosition();
+        for (Player player : hmPlayers.values()) {
+            if(player.getPosition() == playerWithSmallerIDPosition || player.getPosition() == playerWithBiggestIDPosition)
+            {
 
+            }
+            else
+            {
+             mediumID = player.getPosition();
+            }
+        }
+        return mediumID;
     }
 
     public int checkPlayerWithSmallestPosition()
     {
-
+        int position = 21;
+        int playerID = 0;
+        for (Player player : hmPlayers.values()) {
+            if(player.getPosition() > position)
+            {
+                playerID = player.getIdentifier();
+                position = player.getPosition();
+            }
+        }
+        return playerID;
     }
 
     public void getRankingSorted () {
