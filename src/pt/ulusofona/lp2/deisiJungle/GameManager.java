@@ -241,15 +241,12 @@ public class GameManager {
         }
 
         if(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares >= jungleSize){
-            hmPlayers.get(idPlayerPlaying).setPosition(jungleSize);
-            hmPlayers.get(idPlayerPlaying).removeEnergy(energyMoveCost);
+            moveCurrentPlayerFinal();
             winner = idPlayerPlaying;
             gameFinished = true;
             return true;
         }
-
-        hmPlayers.get(idPlayerPlaying).setPosition(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares);
-        hmPlayers.get(idPlayerPlaying).removeEnergy(energyMoveCost);
+        moveCurrentPlayerAdd (nrSquares);
 
         if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
             playerPlaying = 0;
@@ -325,6 +322,16 @@ public class GameManager {
         return alSpecies;
     }
 
+
+    public void moveCurrentPlayerFinal () {
+        hmPlayers.get(idPlayerPlaying).setPosition(jungleSize);
+        hmPlayers.get(idPlayerPlaying).removeEnergy(energyMoveCost);
+    }
+
+    public void moveCurrentPlayerAdd (int nrSquares) {
+        hmPlayers.get(idPlayerPlaying).setPosition(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares);
+        hmPlayers.get(idPlayerPlaying).removeEnergy(energyMoveCost);
+    }
 
     public int checkPlayerWithBiggestPosition()
     {
