@@ -176,10 +176,10 @@ public class GameManager {
         if(hmPlayers.get(idPlayerPlaying).getEnergy() - 2 < 0) {
             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
                 idPlayerPlaying = orderOfPlay[0];
-                return false;
+                return true;
             }
             idPlayerPlaying = orderOfPlay[playerPlaying + 1];
-            return false;
+            return true;
         }
 
         if(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares > jungleSize){
