@@ -52,6 +52,13 @@ public class GameManager {
             return false;
         }
 
+        //Validate incorrect ids
+        for (String[] strings : playersInfo) {
+            if (!strings[0].matches("[0-9]+")) {
+                return false;
+            }
+        }
+
         //Validate repeated ids
         for (int x = 0; x < playersInfo.length; x++) {
             for (int y = x + 1; y < playersInfo.length; y++) {
