@@ -281,8 +281,6 @@ public class GameManager {
     public ArrayList<String> getGameResults() {
         ArrayList<String> alGameResults = new ArrayList<>();
 
-        //Caso existam 2 ou mais jogadores na mesma casa, vence o jogador com o identificador mais baixo
-
         for (Player value : hmRankings.values()) {
             alGameResults.add("#" + value.getRank() + " " + value.getName() + ", " + value.getSpecie().getName() + ", " + value.getPosition());
         }
