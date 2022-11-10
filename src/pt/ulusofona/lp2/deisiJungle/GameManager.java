@@ -177,11 +177,19 @@ public class GameManager {
     }
 
     public ArrayList<String> getGameResults() {
-        return new ArrayList<String>();
+        ArrayList<String> alGameResults = new ArrayList<String>();
+
+        //Caso existam 2 ou mais jogadores na mesma casa, vence o jogador com o identificador mais baixo
+
+        for (Player value : hmPlayers.values()) {
+            alGameResults.add("#" + value.getRank() + " " + value.getName() + ", " + value.getSpecie().getName() + ", " + value.getPosition());
+        }
+
+        return alGameResults;
     }
 
     public JPanel getAuthorsPanel() {
-        return new JPanel();
+        return null;
     }
 
     public String whoIsTaborda() {
