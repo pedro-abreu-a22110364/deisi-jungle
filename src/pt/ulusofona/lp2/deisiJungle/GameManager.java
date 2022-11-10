@@ -228,7 +228,7 @@ public class GameManager {
             return false;
         }
 
-        if(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares > jungleSize){
+        if(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares >= jungleSize){
             hmPlayers.get(idPlayerPlaying).setPosition(jungleSize);
             hmPlayers.get(idPlayerPlaying).removeEnergy(energyMoveCost);
             winner = idPlayerPlaying;
