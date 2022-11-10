@@ -37,7 +37,6 @@ public class Player {
     public int getEnergy(){
         return energy;
     }
-
     public boolean isWinner() {
         return winner;
     }

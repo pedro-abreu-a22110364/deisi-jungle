@@ -14,11 +14,13 @@ public class GameManager {
     int initialEnergy;
     ArrayList<Specie> alSpecies = createDefaultSpecies();
     //ArrayList<Player> alPlayers = new ArrayList<>();
+    //ArrayList<Integer> alOrderOfPlay = new ArrayList<>();
 
     HashMap<Integer,Player> hmPlayers = new HashMap<>(); //HashMap with id player as key
 
     Player winner = new Player();
     Player nowPlaying;
+
     public GameManager(){
 
     }
@@ -48,11 +50,17 @@ public class GameManager {
         }
 
         //Validate number of players
-        if(playersInfo.length < 2 || playersInfo.length > 4) {
+        if(playersInfo.length < minPlayers || playersInfo.length > maxPlayers) {
             return false;
         }
 
         //Validate incorrect ids
+        for (String[] strings : playersInfo) {
+            if (strings[0] == null) {
+                return false;
+            }
+        }
+
         for (String[] strings : playersInfo) {
             if (!strings[0].matches("[0-9]+")) {
                 return false;
@@ -105,6 +113,7 @@ public class GameManager {
     public int[] getPlayerIds(int squareNr) {
         int[] arrayID = new int[hmPlayers.size()];
         int count = 0;
+
         for (Player player : hmPlayers.values()) {
             if(player.getPosition() == squareNr)
             {
@@ -217,6 +226,5 @@ public class GameManager {
         }
         return false;
     }
-
 
 }
