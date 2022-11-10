@@ -21,7 +21,7 @@ public class GameManager {
     HashMap<Integer,Player> hmPlayers = new HashMap<>(); //HashMap with id player as key
 
     Player winner = new Player();
-    Player nowPlaying;
+    Player playerPlaying;
 
     public GameManager(){
 
@@ -133,7 +133,7 @@ public class GameManager {
         for (Map.Entry<Integer, Player> playerEntry : hmPlayers.entrySet()) {
             if(hmPlayers.containsKey(playerId))
             {
-                if(playerEntry.getKey() == playerId && playerEntry != null){
+                if(playerEntry.getKey() != null && playerEntry.getKey() == playerId){
                         strPlayerInfo[0] = String.valueOf(playerEntry.getValue().getIdentifier());
                         strPlayerInfo[1] = playerEntry.getValue().getName();
                         strPlayerInfo[2] = String.valueOf(playerEntry.getValue().getSpecie().getIdentifier());
@@ -146,7 +146,7 @@ public class GameManager {
     }
 
     public String[] getCurrentPlayerInfo() {
-        return new String[5];
+        return getPlayerInfo(playerPlaying.getIdentifier());
     }
 
     public String[][] getPlayersInfo() {
@@ -165,12 +165,12 @@ public class GameManager {
         if ((nrSquares < 1 || nrSquares > 6) && bypassValidations) {
             return false;
         }
-        if(nowPlaying.getPosition() + nrSquares > jungleSize){
-            nowPlaying.setPosition(jungleSize);
+        if(playerPlaying.getPosition() + nrSquares > jungleSize){
+            playerPlaying.setPosition(jungleSize);
             return true;
         }
 
-        nowPlaying.setPosition(nowPlaying.getPosition() + nrSquares);
+        playerPlaying.setPosition(playerPlaying.getPosition() + nrSquares);
         return true;
     }
 
@@ -221,23 +221,6 @@ public class GameManager {
         //Returning the list back to "main"
         return alSpecies;
     }
-
-    public boolean createPlayer(int identifier, String name, char specie){
-        if(hmPlayers.size() >= maxPlayers)
-        {
-            return false;
-        }
-
-        for (Specie specy : alSpecies) {
-            if(specy.getIdentifier() == specie)
-            {
-                Player player = new Player(identifier, name, specy);
-                return true;
-            }
-        }
-        return false;
-    }
-
     //Incorrect way to order (Bubble Sort)
     /*public Player[] orderOfPlay(Player[] arrOrderOfPlay) {
         Player[] arrOrderOfPlay = new Player[hmPlayers.size()];
