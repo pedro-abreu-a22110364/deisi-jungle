@@ -61,6 +61,6 @@ public class TestGame {
         manager.createInitialJungle(20, 10, playerInfo);
         String[] strs = manager.getSquareInfo(1);
 
-        assertEquals("blank.png",strs[0]);
+        assertEquals("1,2",strs[2]);
     }
 }

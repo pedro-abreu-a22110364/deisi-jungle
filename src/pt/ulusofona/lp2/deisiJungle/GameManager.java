@@ -143,7 +143,9 @@ public class GameManager {
                 playersInSquare += player.getIdentifier() + ",";
             }
         }
-        strSquareInfo[2] = playersInSquare.substring(0, playersInSquare.length() - 2);
+        if (!playersInSquare.equals("")) {
+            strSquareInfo[2] = playersInSquare.substring(0, playersInSquare.length() - 1);
+        }
 
         return strSquareInfo;
     }
