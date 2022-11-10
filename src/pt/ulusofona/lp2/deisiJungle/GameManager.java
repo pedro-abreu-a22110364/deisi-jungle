@@ -44,31 +44,30 @@ public class GameManager {
     public boolean createInitialJungle(int jungleSize,int initialEnergy,String[][] playersInfo) {
         this.initialEnergy = initialEnergy;
         this.jungleSize = jungleSize;
-
         int nrOfTarzans = 0;
 
-        if(playersInfo == null) {
-            return false;
-        }
-
         //Validate number of players
-        if(playersInfo.length < minPlayers || playersInfo.length > maxPlayers) {
+        if(playersInfo == null || playersInfo.length < minPlayers || playersInfo.length > maxPlayers || jungleSize < playersInfo.length * 2) {
             return false;
         }
-
-        //Validate incorrect ids
+        //Validate incorrect ids and names
         for (String[] strings : playersInfo) {
-            if (strings[0] == null || !strings[0].matches("[0-9]+")) {
+            if (strings[0] == null || !strings[0].matches("[0-9]+") || strings[1] == null || strings[1].equals("")) {
                 return false;
             }
         }
-
         //Validate repeated ids
         for (int x = 0; x < playersInfo.length; x++) {
             for (int y = x + 1; y < playersInfo.length; y++) {
                 if(Objects.equals(playersInfo[x][0], playersInfo[y][0])) {
                     return false;
                 }
+            }
+        }
+        //Validate incorrect species
+        for (String[] strings : playersInfo) {
+            if(strings[2] == null || !((strings[2].equals("E")) || (strings[2].equals("L")) || (strings[2].equals("T")) || (strings[2].equals("P")) || (strings[2].equals("Z")))) {
+                return false;
             }
         }
 
@@ -98,11 +97,6 @@ public class GameManager {
                 return false;
             }
         }
-
-        if(jungleSize <= hmPlayers.size()) {
-            return false;
-        }
-
         return true;
     }
 
