@@ -165,16 +165,28 @@ public class GameManager {
 
     public boolean moveCurrentPlayer(int nrSquares,boolean bypassValidations) {
         if ((nrSquares < 1 || nrSquares > 6) && !bypassValidations) {
+            if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
+                idPlayerPlaying = orderOfPlay[0];
+            }
+            idPlayerPlaying = orderOfPlay[playerPlaying + 1];
             return false;
         }
 
         if(hmPlayers.get(idPlayerPlaying).getEnergy() - 2 < 0) {
+            if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
+                idPlayerPlaying = orderOfPlay[0];
+            }
+            idPlayerPlaying = orderOfPlay[playerPlaying + 1];
             return false;
         }
 
         if(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares > jungleSize){
             hmPlayers.get(idPlayerPlaying).setPosition(jungleSize);
             hmPlayers.get(idPlayerPlaying).removeEnergy(energyMoveCost);
+            if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
+                idPlayerPlaying = orderOfPlay[0];
+            }
+            idPlayerPlaying = orderOfPlay[playerPlaying + 1];
             winner = idPlayerPlaying;
             gameFinished = true;
             return true;
