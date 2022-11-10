@@ -205,9 +205,18 @@ public class GameManager {
         //Verifica se todos os players n tem energia
         if(checkNoEnergy())
         {
-            winner = checkPlayerWithBiggestPosition();
-            gameFinished = true;
-            return false;
+            if(checkSamePosition())
+            {
+                winner = getPlayerWithLowestID();
+                gameFinished = true;
+                return true;
+            }
+            else
+            {
+                winner = checkPlayerWithBiggestPosition();
+                gameFinished = true;
+                return false;
+            }
         }
 
         if(hmPlayers.get(idPlayerPlaying).getEnergy() - 2 < 0) {
@@ -360,6 +369,18 @@ public class GameManager {
         }
     }
 
+    public int getPlayerWithLowestID()
+    {
+        int id = Integer.MAX_VALUE;
+        for (Player player : hmPlayers.values()) {
+            if(player.getIdentifier() < id)
+            {
+                id = player.getIdentifier();
+            }
+        }
+        return id;
+    }
+
     public boolean checkNoEnergy(){
         for (Player player : hmPlayers.values()) {
             if(player.getEnergy() >= 2)
@@ -370,6 +391,17 @@ public class GameManager {
         return true;
     }
 
+    public boolean checkSamePosition()
+    {
+        int position = hmPlayers.get(checkPlayerWithBiggestPosition()).getPosition();
+        for (Player player : hmPlayers.values()) {
+            if(player.getPosition() == position)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
    //Bubble Sort
     public int[] idOrderOfPlay () {
