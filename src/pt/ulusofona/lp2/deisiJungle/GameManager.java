@@ -226,13 +226,15 @@ public class GameManager {
         if(hmPlayers.get(idPlayerPlaying).getEnergy() - 2 < 0) {
             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                 //Jogador do inicio
-                playerPlaying = 0;
-                idPlayerPlaying = orderOfPlay[0];
+                if(!checkSamePosition()) { playerPlaying = 0;
+                    idPlayerPlaying = orderOfPlay[0];
+                }
                 return false;
             }
             //Próximo jogador
-            playerPlaying++;
-            idPlayerPlaying = orderOfPlay[playerPlaying];
+            if(checkSamePosition()){playerPlaying++;
+                idPlayerPlaying = orderOfPlay[playerPlaying];
+            }
             return false;
         }
 
@@ -358,7 +360,7 @@ public class GameManager {
         return playerID;
     }
 
-    public void getRankingSorted () {
+    public void getRankingSorted() {
         HashMap<Integer,Player> hmPlayersTemp = hmPlayers;
 
         if (hmPlayersTemp.size() == 1) {
