@@ -124,6 +124,7 @@ public class GameManager {
     public String[] getSquareInfo(int squareNr) {
         String[] strSquareInfo = new String[3];
         String playersInSquare = "";
+
         if(squareNr > jungleSize && squareNr <= 0){
             return null;
         }
@@ -137,6 +138,9 @@ public class GameManager {
             strSquareInfo[0] = "blank.png";
             strSquareInfo[1] = "Vazio";
         }
+
+        strSquareInfo[2] = playersInSquare;
+
         for (Player player : hmPlayers.values()) {
             if(player.getPosition() == squareNr)
             {
