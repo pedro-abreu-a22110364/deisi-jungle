@@ -1,7 +1,5 @@
 package pt.ulusofona.lp2.deisiJungle;
 
-import java.awt.*;
-
 public class Specie {
     char identifier;
     String nome;
