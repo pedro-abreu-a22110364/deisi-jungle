@@ -108,7 +108,7 @@ public class GameManager {
         int count = 0;
 
         if (squareNr < 1 || squareNr > jungleSize) {
-            return arrayID;
+            return new int[0];
         }
 
         for (Player player : hmPlayers.values()) {
@@ -118,7 +118,14 @@ public class GameManager {
                 count++;
             }
         }
-        return arrayID;
+        if(arrayID[0] == 0)
+        {
+            return new int[0];
+        }
+        else
+        {
+            return arrayID;
+        }
     }
 
     public String[] getSquareInfo(int squareNr) {
@@ -208,15 +215,13 @@ public class GameManager {
             if(checkSamePosition())
             {
                 winner = getPlayerWithLowestID();
-                gameFinished = true;
-                return false;
             }
             else
             {
                 winner = checkPlayerWithBiggestPosition();
-                gameFinished = true;
-                return false;
             }
+            gameFinished = true;
+            return false;
         }
 
         if(hmPlayers.get(idPlayerPlaying).getEnergy() - 2 < 0) {
