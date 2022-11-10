@@ -7,6 +7,8 @@ public class Player {
     int identifier;
     String name;
     Specie specie;
+
+
     int energy; //Mudar tipo de variavel consoante o que é pedido
     int rank; //Mudar de classe caso necessário
     int position = 1;
@@ -29,6 +31,9 @@ public class Player {
     }
     public int getRank(){
         return rank;
+    }
+    public void setRank(int rank) {
+        this.rank = rank;
     }
     public int getEnergy(){
         return energy;
@@ -61,4 +66,6 @@ public class Player {
     public void removeEnergy(int energy) {
         this.energy -= energy;
     }
+
+
 }

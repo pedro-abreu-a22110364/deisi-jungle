@@ -308,6 +308,8 @@ public class GameManager {
         return alSpecies;
     }
 
+
+
     public int checkPlayerWithBiggestPosition()
     {
         int position = 0;
@@ -319,6 +321,7 @@ public class GameManager {
                 position = player.getPosition();
             }
         }
+        hmPlayers.get(playerID).setRank(1);
         return playerID;
     }
     public boolean checkNoEnergy(){
