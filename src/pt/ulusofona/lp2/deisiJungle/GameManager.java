@@ -335,6 +335,16 @@ public class GameManager {
         return playerID;
     }
 
+    public int checkPlayerWithMediumPosition()
+    {
+
+    }
+
+    public int checkPlayerWithSmallestPosition()
+    {
+
+    }
+
     public void getRankingSorted () {
         HashMap<Integer,Player> hmPlayersTemp = hmPlayers;
 
