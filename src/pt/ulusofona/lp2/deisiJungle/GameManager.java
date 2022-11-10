@@ -169,15 +169,18 @@ public class GameManager {
     }
 
     public String[][] getPlayersInfo() {
-        String[][] strPlayersInfo = new String[hmPlayers.size()][4];
+        String[][] strPlayerInfo = new String[hmPlayers.size()][4];
         int count = 0;
         for (Player player : hmPlayers.values()) {
             if(player != null){
-                strPlayersInfo[count] = getPlayerInfo(player.getIdentifier());
+                strPlayerInfo[count][0] = String.valueOf(player.getIdentifier());
+                strPlayerInfo[count][1] = player.getName();
+                strPlayerInfo[count][2] = String.valueOf(player.getSpecie().getIdentifier());
+                strPlayerInfo[count][3] = String.valueOf(player.getEnergy());
                 count++;
             }
         }
-        return strPlayersInfo;
+        return strPlayerInfo;
     }
 
     public boolean moveCurrentPlayer(int nrSquares,boolean bypassValidations) {
