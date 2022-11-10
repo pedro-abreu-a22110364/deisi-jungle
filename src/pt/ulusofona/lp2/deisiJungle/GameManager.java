@@ -108,6 +108,10 @@ public class GameManager {
         int[] arrayID = new int[hmPlayers.size()];
         int count = 0;
 
+        if (squareNr < 1 || squareNr > jungleSize) {
+            return arrayID;
+        }
+
         for (Player player : hmPlayers.values()) {
             if(player.getPosition() == squareNr)
             {
@@ -220,5 +224,33 @@ public class GameManager {
         }
         return false;
     }
+
+    //Incorrect way to order (Bubble Sort)
+    /*public Player[] orderOfPlay(Player[] arrOrderOfPlay) {
+        Player[] arrOrderOfPlay = new Player[hmPlayers.size()];
+        int count = 0, lastOrdered = arrOrderOfPlay.length;
+        boolean allInOrder = false;
+
+        for (Player value : hmPlayers.values()) {
+            arrOrderOfPlay[count] = value;
+            count++;
+        }
+
+        while(!allInOrder) {
+            allInOrder = true;
+
+            for (int i = 0;i < lastOrdered -1;i++) {
+                if (arrOrderOfPlay[i].getIdentifier() > arrOrderOfPlay[i+1].getIdentifier()) {
+                    allInOrder = false;
+
+                    int temp = arrOrderOfPlay[i].getIdentifier();
+                    arrOrderOfPlay[i].getIdentifier() = arrOrderOfPlay[i+1].getIdentifier();
+                    arrOrderOfPlay[i].getIdentifier() = temp;
+                }
+            }
+            lastOrdered--;
+        }
+        return arrOrderOfPlay;
+    }*/
 
 }
