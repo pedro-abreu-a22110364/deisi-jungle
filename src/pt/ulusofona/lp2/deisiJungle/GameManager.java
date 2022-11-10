@@ -213,26 +213,24 @@ public class GameManager {
         //Verifica se o jogo já acabou
         if(gameFinished) {return false;}
         //Verifica se todos os players n tem energia
-        if(checkNoEnergy()) {
-            if(checkSamePosition()) {
-                winner = getPlayerWithLowestID();
-            } else {
-                winner = checkPlayerWithBiggestPosition();
-            }
-            gameFinished = true;
-            return false;
+
+        if(!checkWinner())
+        {
+            return checkWinner();
         }
 
         if(hmPlayers.get(idPlayerPlaying).getEnergy() - 2 < 0) {
             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                 //Jogador do inicio
-                if(!checkSamePosition()) { playerPlaying = 0;
+                if(checkWinner()) {
+                    playerPlaying = 0;
                     idPlayerPlaying = orderOfPlay[0];
                 }
                 return false;
             }
             //Próximo jogador
-            if(checkSamePosition()){playerPlaying++;
+            if(checkWinner()){
+                playerPlaying++;
                 idPlayerPlaying = orderOfPlay[playerPlaying];
             }
             return false;
@@ -289,6 +287,22 @@ public class GameManager {
         }
 
         return alGameResults;
+    }
+
+    public boolean checkWinner()
+    {
+        if(checkNoEnergy()) {
+            if(checkSamePosition()) {
+                winner = getPlayerWithLowestID();
+            } else {
+                winner = checkPlayerWithBiggestPosition();
+            }
+            gameFinished = true;
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
     public JPanel getAuthorsPanel() {
