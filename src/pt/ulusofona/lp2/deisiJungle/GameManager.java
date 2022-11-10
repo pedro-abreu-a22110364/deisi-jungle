@@ -123,11 +123,28 @@ public class GameManager {
     }
 
     public String[] getSquareInfo(int squareNr) {
-        String[] strSquareInfo = new String[4];
+        String[] strSquareInfo = new String[3];
+        String playersInSquare = "";
         if(squareNr > jungleSize && squareNr < 0){
             return null;
         }
 
+        if(squareNr == jungleSize)
+        {
+            strSquareInfo[0] = "finish.png";
+            strSquareInfo[1] = "Meta";
+        }
+        else{
+            strSquareInfo[0] = "blank.png";
+            strSquareInfo[1] = "Vazio";
+        }
+        for (Player player : hmPlayers.values()) {
+            if(player.getPosition() == squareNr)
+            {
+                playersInSquare += String.valueOf(player.getIdentifier()) + ",";
+            }
+        }
+        strSquareInfo[2] = playersInSquare.substring(0, playersInSquare.length() - 2);
 
 
         return strSquareInfo;
