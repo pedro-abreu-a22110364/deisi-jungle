@@ -11,18 +11,19 @@ public class GameManager {
     int minPlayers = 2;
     int maxPlayers = 4;
     int jungleSize;
+    //Variaveis de energia
     int initialEnergy;
     int energyMoveCost = 2;
+    //Variaveis com informação de players
     int winner;
     int idPlayerPlaying;
     int playerPlaying;
+    int playersWithoutEnergy;
 
+    //Variaveis com informação sobre o jogo
     boolean gameFinished = false;
-
     int[] orderOfPlay;
-
     ArrayList<Specie> alSpecies = createDefaultSpecies();
-
     HashMap<Integer,Player> hmPlayers = new HashMap<>(); //HashMap with id player as key
 
     public GameManager(){
@@ -197,13 +198,17 @@ public class GameManager {
             return false;
         }
 
+        if(gameFinished) {
+            return false;
+        }
+
         if(hmPlayers.get(idPlayerPlaying).getEnergy() - 2 < 0) {
             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
                 idPlayerPlaying = orderOfPlay[0];
-                return true;
+                return false;
             }
             idPlayerPlaying = orderOfPlay[playerPlaying + 1];
-            return true;
+            return false;
         }
 
         if(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares > jungleSize){
@@ -243,7 +248,7 @@ public class GameManager {
     }
 
     public ArrayList<String> getGameResults() {
-        ArrayList<String> alGameResults = new ArrayList<String>();
+        ArrayList<String> alGameResults = new ArrayList<>();
 
         //Caso existam 2 ou mais jogadores na mesma casa, vence o jogador com o identificador mais baixo
 

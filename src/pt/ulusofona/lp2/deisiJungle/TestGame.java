@@ -63,4 +63,29 @@ public class TestGame {
 
         assertEquals("1,2",strs[2]);
     }
+
+    @Test
+    public void testGetPlayerInfo()
+    {
+        GameManager manager = new GameManager();
+        String[][] playerInfo = new String[][]{
+                {
+                        "1","Pedro","Z","10"
+                },
+                {
+                        "2","Guilherme","T","10"
+                },
+                {
+                        "3","Tomas","L","10"
+                },
+                {
+                        "4","Ricardo","E","10"
+                }
+        };
+        manager.createInitialJungle(20, 10, playerInfo);
+        String[] strs = manager.getPlayerInfo(2);
+
+        assertEquals("T",strs[2]);
+    }
+
 }
