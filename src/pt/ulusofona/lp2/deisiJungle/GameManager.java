@@ -167,6 +167,7 @@ public class GameManager {
         if ((nrSquares < 1 || nrSquares > 6) && !bypassValidations) {
             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
                 idPlayerPlaying = orderOfPlay[0];
+                return false;
             }
             idPlayerPlaying = orderOfPlay[playerPlaying + 1];
             return false;
@@ -175,6 +176,7 @@ public class GameManager {
         if(hmPlayers.get(idPlayerPlaying).getEnergy() - 2 < 0) {
             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
                 idPlayerPlaying = orderOfPlay[0];
+                return false;
             }
             idPlayerPlaying = orderOfPlay[playerPlaying + 1];
             return false;
@@ -185,6 +187,9 @@ public class GameManager {
             hmPlayers.get(idPlayerPlaying).removeEnergy(energyMoveCost);
             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
                 idPlayerPlaying = orderOfPlay[0];
+                winner = idPlayerPlaying;
+                gameFinished = true;
+                return true;
             }
             idPlayerPlaying = orderOfPlay[playerPlaying + 1];
             winner = idPlayerPlaying;
@@ -196,6 +201,7 @@ public class GameManager {
         hmPlayers.get(idPlayerPlaying).removeEnergy(energyMoveCost);
         if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
             idPlayerPlaying = orderOfPlay[0];
+            return true;
         }
         idPlayerPlaying = orderOfPlay[playerPlaying + 1];
         return true;
