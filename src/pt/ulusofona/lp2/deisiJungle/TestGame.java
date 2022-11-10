@@ -45,5 +45,4 @@ public class TestGame {
         assertEquals("Z", matriz[0][2]);
         assertEquals("10", matriz[0][3]);
     }
-
 }

@@ -13,18 +13,17 @@ public class GameManager {
     int jungleSize;
     int initialEnergy;
     int energyMoveCost = 2;
+    int winner;
+    int idPlayerPlaying;
+    int playerPlaying;
+
     boolean gameFinished = false;
 
     int[] orderOfPlay;
 
-
     ArrayList<Specie> alSpecies = createDefaultSpecies();
-    //ArrayList<Player> alPlayers = new ArrayList<>();
-    //ArrayList<Integer> alOrderOfPlay = new ArrayList<>();
+
     HashMap<Integer,Player> hmPlayers = new HashMap<>(); //HashMap with id player as key
-    int winner;
-    int idPlayerPlaying;
-    int playerPlaying;
 
     public GameManager(){
 
@@ -308,5 +307,4 @@ public class GameManager {
         idPlayerPlaying = idOrderOfPlay[0];
         return idOrderOfPlay;
     }
-
 }

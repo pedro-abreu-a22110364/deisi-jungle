@@ -11,6 +11,7 @@ public class Player {
     int rank; //Mudar de classe caso necessário
     int position = 0;
     boolean winner = false;
+
     public int getPosition() {
         return position;
     }
@@ -36,7 +37,6 @@ public class Player {
         return winner;
     }
 
-
     public Player() {
     }
 
@@ -61,8 +61,4 @@ public class Player {
     public void removeEnergy(int energy) {
         this.energy -= energy;
     }
-
-
-
-
 }
