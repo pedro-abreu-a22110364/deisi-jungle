@@ -215,14 +215,15 @@ public class GameManager {
         //Returning the list back to "main"
         return alSpecies;
     }
-    //Incorrect way to order (Bubble Sort)
-    /*public Player[] orderOfPlay(Player[] arrOrderOfPlay) {
-        Player[] arrOrderOfPlay = new Player[hmPlayers.size()];
-        int count = 0, lastOrdered = arrOrderOfPlay.length;
+
+    //Bubble Sort
+    public int[] idOrderOfPlay (int[] idOrderOfPlay) {
+        //int[] arrOrderOfPlay = new int[hmPlayers.size()];
+        int count = 0, lastOrdered = idOrderOfPlay.length;
         boolean allInOrder = false;
 
-        for (Player value : hmPlayers.values()) {
-            arrOrderOfPlay[count] = value;
+        for (Integer integer : hmPlayers.keySet()) {
+            idOrderOfPlay[count] = integer;
             count++;
         }
 
@@ -230,17 +231,17 @@ public class GameManager {
             allInOrder = true;
 
             for (int i = 0;i < lastOrdered -1;i++) {
-                if (arrOrderOfPlay[i].getIdentifier() > arrOrderOfPlay[i+1].getIdentifier()) {
+                if (idOrderOfPlay[i] > idOrderOfPlay[i+1]) {
                     allInOrder = false;
 
-                    int temp = arrOrderOfPlay[i].getIdentifier();
-                    arrOrderOfPlay[i].getIdentifier() = arrOrderOfPlay[i+1].getIdentifier();
-                    arrOrderOfPlay[i].getIdentifier() = temp;
+                    int temp = idOrderOfPlay[i];
+                    idOrderOfPlay[i] = idOrderOfPlay[i+1];
+                    idOrderOfPlay[i] = temp;
                 }
             }
             lastOrdered--;
         }
-        return arrOrderOfPlay;
-    }*/
+        return idOrderOfPlay;
+    }
 
 }
