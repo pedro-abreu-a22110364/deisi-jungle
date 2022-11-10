@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class GameManager {
 
@@ -46,13 +47,29 @@ public class GameManager {
             return false;
         }
 
+        //Validate number of players
+        if(playersInfo.length < 2 || playersInfo.length > 4) {
+            return false;
+        }
+
+        //Validate repeated ids
+        for (int x = 0; x < playersInfo.length; x++) {
+            for (int y = x + 1; y < playersInfo.length; y++) {
+                if(Objects.equals(playersInfo[x][0], playersInfo[y][0])) {
+                    return false;
+                }
+            }
+        }
+
         for (String[] playerInfo : playersInfo) {
             if(hmPlayers.size() < 4){
                 for (Specie  specie : alSpecies) {
                     if(playerInfo[2].charAt(0) == specie.getIdentifier()) {
+
                         if(playerInfo[1].isEmpty()) {
                             return false;
                         }
+
                         if(playerInfo[2].equals(String.valueOf('Z')) && nrOfTarzans == 1) {
                             return false;
                         }
@@ -60,6 +77,7 @@ public class GameManager {
                         if(playerInfo[2].equals(String.valueOf('Z')) && nrOfTarzans < 1) {
                             nrOfTarzans ++;
                         }
+
                         Player player = new Player(Integer.parseInt(playerInfo[0]), playerInfo[1], specie);
                         hmPlayers.put(player.getIdentifier(),player);
                     }
@@ -68,10 +86,6 @@ public class GameManager {
             else {
                 return false;
             }
-        }
-
-        if(hmPlayers.size() < minPlayers || hmPlayers.size() > maxPlayers) {
-            return false;
         }
 
         if(jungleSize <= hmPlayers.size()) {
