@@ -22,7 +22,7 @@ public class GameManager {
     //ArrayList<Player> alPlayers = new ArrayList<>();
     //ArrayList<Integer> alOrderOfPlay = new ArrayList<>();
     HashMap<Integer,Player> hmPlayers = new HashMap<>(); //HashMap with id player as key
-    Player winner = new Player();
+    int winner;
     int idPlayerPlaying;
     int playerPlaying;
 
@@ -123,22 +123,26 @@ public class GameManager {
     }
 
     public String[] getSquareInfo(int squareNr) {
-        return new String[5];
+        String[] strSquareInfo = new String[4];
+        if(squareNr > jungleSize && squareNr < 0){
+            return null;
+        }
+
+
+
+        return strSquareInfo;
     }
 
     public String[] getPlayerInfo(int playerId) {
         String[] strPlayerInfo = new String[4];
-        for (Map.Entry<Integer, Player> playerEntry : hmPlayers.entrySet()) {
-            if(hmPlayers.containsKey(playerId))
-            {
-                if(playerEntry.getKey() != null && playerEntry.getKey() == playerId){
-                        strPlayerInfo[0] = String.valueOf(playerEntry.getValue().getIdentifier());
-                        strPlayerInfo[1] = playerEntry.getValue().getName();
-                        strPlayerInfo[2] = String.valueOf(playerEntry.getValue().getSpecie().getIdentifier());
-                        strPlayerInfo[3] = String.valueOf(playerEntry.getValue().getEnergy());
-                }
-            }
+        if(hmPlayers.containsKey(playerId))
+        {
+                strPlayerInfo[0] = String.valueOf(hmPlayers.get(playerId).getIdentifier());
+                strPlayerInfo[1] = hmPlayers.get(playerId).getName();
+                strPlayerInfo[2] = String.valueOf(hmPlayers.get(playerId).getSpecie().getIdentifier());
+                strPlayerInfo[3] = String.valueOf(hmPlayers.get(playerId).getEnergy());
         }
+
 
         return strPlayerInfo;
     }
@@ -171,8 +175,8 @@ public class GameManager {
         if(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares > jungleSize){
             hmPlayers.get(idPlayerPlaying).setPosition(jungleSize);
             hmPlayers.get(idPlayerPlaying).removeEnergy(energyMoveCost);
+            winner = idPlayerPlaying;
             gameFinished = true;
-
             return true;
         }
 
@@ -189,7 +193,11 @@ public class GameManager {
         if (!gameFinished) {
             return null;
         }
-        return getPlayerInfo(winner.getIdentifier());
+        if(hmPlayers.containsKey(winner))
+        {
+            return getPlayerInfo(hmPlayers.get(winner).getIdentifier());
+        }
+        return null;
     }
 
     public ArrayList<String> getGameResults() {
