@@ -12,16 +12,19 @@ public class GameManager {
     int maxPlayers = 4;
     int jungleSize;
     int initialEnergy;
+    int energyMoveCost = 2;
     boolean gameFinished = false;
+
+    int[] orderOfPlay = idOrderOfPlay();
+
 
     ArrayList<Specie> alSpecies = createDefaultSpecies();
     //ArrayList<Player> alPlayers = new ArrayList<>();
     //ArrayList<Integer> alOrderOfPlay = new ArrayList<>();
-
     HashMap<Integer,Player> hmPlayers = new HashMap<>(); //HashMap with id player as key
-
     Player winner = new Player();
-    Player playerPlaying;
+    int idPlayerPlaying;
+    int playerPlaying;
 
     public GameManager(){
 
@@ -140,7 +143,7 @@ public class GameManager {
     }
 
     public String[] getCurrentPlayerInfo() {
-        return getPlayerInfo(playerPlaying.getIdentifier());
+        return getPlayerInfo(hmPlayers.get(idPlayerPlaying).getIdentifier());
     }
 
     public String[][] getPlayersInfo() {
@@ -159,12 +162,25 @@ public class GameManager {
         if ((nrSquares < 1 || nrSquares > 6) && bypassValidations) {
             return false;
         }
-        if(playerPlaying.getPosition() + nrSquares > jungleSize){
-            playerPlaying.setPosition(jungleSize);
+
+        if(hmPlayers.get(idPlayerPlaying).getEnergy() - 2 < 0) {
+            return false;
+        }
+
+        if(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares > jungleSize){
+            hmPlayers.get(idPlayerPlaying).setPosition(jungleSize);
+            hmPlayers.get(idPlayerPlaying).removeEnergy(energyMoveCost);
+            gameFinished = true;
+
             return true;
         }
 
-        playerPlaying.setPosition(playerPlaying.getPosition() + nrSquares);
+        hmPlayers.get(idPlayerPlaying).setPosition(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares);
+        hmPlayers.get(idPlayerPlaying).removeEnergy(energyMoveCost);
+        if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
+            idPlayerPlaying = orderOfPlay[0];
+        }
+        idPlayerPlaying = orderOfPlay[playerPlaying + 1];
         return true;
     }
 
@@ -241,6 +257,8 @@ public class GameManager {
             }
             lastOrdered--;
         }
+        playerPlaying = 0;
+        idPlayerPlaying = idOrderOfPlay[0];
         return idOrderOfPlay;
     }
 

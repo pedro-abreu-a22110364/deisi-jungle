@@ -11,13 +11,8 @@ public class Player {
     int rank; //Mudar de classe caso necessário
     int position = 0;
     boolean winner = false;
-    boolean alreadyPlayed = false;
-
     public int getPosition() {
         return position;
-    }
-    public boolean isAlreadyPlayed() {
-        return alreadyPlayed;
     }
     public void setPosition(int position) {
         this.position = position;
@@ -42,7 +37,6 @@ public class Player {
     }
 
 
-
     public Player() {
     }
 
@@ -57,27 +51,17 @@ public class Player {
         this.specie = specie;
     }
 
-    public boolean isAlreadyTarzanPlaying(ArrayList<Player> alPlayers)
-    {
-        for (Player player : alPlayers) {
-            if(player.specie.getIdentifier() == 'Z'){
-                return true;
-            }
-        }
-
-        return false;
+    public Player(int identifier, String name, Specie specie, int energy) {
+        this.identifier = identifier;
+        this.name = name;
+        this.specie = specie;
+        this.energy = energy;
     }
 
-    public Player getPlayerWithSmallerID(ArrayList<Player> players) {
-
-        Player playerWithSmallerId = new Player(Integer.MAX_VALUE, "Dummy");
-        for (Player player : players) {
-            if(playerWithSmallerId.getIdentifier() > player.getIdentifier()) {
-                playerWithSmallerId = player;
-            }
-        }
-        return playerWithSmallerId;
+    public void removeEnergy(int energy) {
+        this.energy -= energy;
     }
+
 
 
 
