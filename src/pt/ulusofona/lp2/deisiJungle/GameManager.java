@@ -118,14 +118,11 @@ public class GameManager {
                 count++;
             }
         }
-        if(arrayID[0] == 0)
+        if(count == 0)
         {
             return new int[0];
         }
-        else
-        {
             return arrayID;
-        }
     }
 
     public String[] getSquareInfo(int squareNr) {
@@ -203,21 +200,17 @@ public class GameManager {
             idPlayerPlaying = orderOfPlay[playerPlaying + 1];
             return false;
         }
-
         //Verifica se o jogo já acabou
         if(gameFinished) {
             return false;
         }
-
         //Verifica se todos os players n tem energia
         if(checkNoEnergy())
         {
-            if(checkSamePosition())
-            {
+            if(checkSamePosition()) {
                 winner = getPlayerWithLowestID();
             }
-            else
-            {
+            else {
                 winner = checkPlayerWithBiggestPosition();
             }
             gameFinished = true;
@@ -236,18 +229,8 @@ public class GameManager {
         }
 
         if(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares > jungleSize){
-
             hmPlayers.get(idPlayerPlaying).setPosition(jungleSize);
             hmPlayers.get(idPlayerPlaying).removeEnergy(energyMoveCost);
-
-            if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
-                idPlayerPlaying = orderOfPlay[0];
-                winner = idPlayerPlaying;
-                gameFinished = true;
-                return true;
-            }
-
-            idPlayerPlaying = orderOfPlay[playerPlaying + 1];
             winner = idPlayerPlaying;
             gameFinished = true;
             return true;
@@ -321,6 +304,7 @@ public class GameManager {
         //Returning the list back to "main"
         return alSpecies;
     }
+
 
     public int checkPlayerWithBiggestPosition()
     {
