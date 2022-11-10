@@ -23,6 +23,7 @@ public class GameManager {
     int[] orderOfPlay;
     ArrayList<Specie> alSpecies = createDefaultSpecies();
     HashMap<Integer,Player> hmPlayers = new HashMap<>(); //HashMap with id player as key
+    HashMap<Integer,Player> hmRankings = new HashMap<>();
 
     public GameManager(){
 
@@ -250,9 +251,11 @@ public class GameManager {
     }
 
     public String[] getWinnerInfo() {
-        if (!gameFinished) {
+        if (!gameFinished)
+        {
             return null;
         }
+
         if(winner == 0)
         {
             return null;
@@ -263,7 +266,6 @@ public class GameManager {
             return getPlayerInfo(hmPlayers.get(winner).getIdentifier());
         }
 
-
         return null;
     }
 
@@ -272,7 +274,7 @@ public class GameManager {
 
         //Caso existam 2 ou mais jogadores na mesma casa, vence o jogador com o identificador mais baixo
 
-        for (Player value : hmPlayers.values()) {
+        for (Player value : hmRankings.values()) {
             alGameResults.add("#" + value.getRank() + " " + value.getName() + ", " + value.getSpecie().getName() + ", " + value.getPosition());
         }
 
@@ -308,8 +310,6 @@ public class GameManager {
         return alSpecies;
     }
 
-
-
     public int checkPlayerWithBiggestPosition()
     {
         int position = 0;
@@ -324,6 +324,42 @@ public class GameManager {
         hmPlayers.get(playerID).setRank(1);
         return playerID;
     }
+
+    public void getRankingSorted () {
+        HashMap<Integer,Player> hmPlayersTemp = hmPlayers;
+
+        if (hmPlayersTemp.size() == 1) {
+            hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
+        }
+        if (hmPlayersTemp.size() == 2) {
+            hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
+            hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
+
+            hmRankings.put(2,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 2
+        }
+        if (hmPlayersTemp.size() == 3) {
+            hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
+            hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
+
+            hmRankings.put(2,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 2
+            hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
+
+            hmRankings.put(3,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 3
+        }
+        if (hmPlayersTemp.size() == 4) {
+            hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
+            hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
+
+            hmRankings.put(2,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 2
+            hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
+
+            hmRankings.put(3,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 3
+            hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
+
+            hmRankings.put(4,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 4
+        }
+    }
+
     public boolean checkNoEnergy(){
         for (Player player : hmPlayers.values()) {
             if(player.getEnergy() >= 2)
