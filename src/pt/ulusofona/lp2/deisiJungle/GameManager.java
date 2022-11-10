@@ -3,7 +3,6 @@ package pt.ulusofona.lp2.deisiJungle;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 public class GameManager {
@@ -15,10 +14,10 @@ public class GameManager {
     int initialEnergy;
     int energyMoveCost = 2;
     //Variaveis com informação de players
-    int winner;
+    int winner = 0;
     int idPlayerPlaying;
     int playerPlaying;
-    int playersWithoutEnergy;
+    int playersWithoutEnergy = 0;
 
     //Variaveis com informação sobre o jogo
     boolean gameFinished = false;
@@ -198,28 +197,42 @@ public class GameManager {
             return false;
         }
 
+        //Verifica se o jogo já acabou
         if(gameFinished) {
             return false;
         }
 
+        //Verifica se todos os players n tem energia
+        if(checkNoEnergy())
+        {
+            winner = checkPlayerWithBiggestPosition();
+            gameFinished = true;
+            return false;
+        }
+
         if(hmPlayers.get(idPlayerPlaying).getEnergy() - 2 < 0) {
-            if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
+            if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
+                //Jogador do inicio
                 idPlayerPlaying = orderOfPlay[0];
                 return false;
             }
+            //Próximo jogador
             idPlayerPlaying = orderOfPlay[playerPlaying + 1];
             return false;
         }
 
         if(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares > jungleSize){
+
             hmPlayers.get(idPlayerPlaying).setPosition(jungleSize);
             hmPlayers.get(idPlayerPlaying).removeEnergy(energyMoveCost);
+
             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
                 idPlayerPlaying = orderOfPlay[0];
                 winner = idPlayerPlaying;
                 gameFinished = true;
                 return true;
             }
+
             idPlayerPlaying = orderOfPlay[playerPlaying + 1];
             winner = idPlayerPlaying;
             gameFinished = true;
@@ -228,6 +241,7 @@ public class GameManager {
 
         hmPlayers.get(idPlayerPlaying).setPosition(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares);
         hmPlayers.get(idPlayerPlaying).removeEnergy(energyMoveCost);
+
         if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
             idPlayerPlaying = orderOfPlay[0];
             return true;
@@ -240,10 +254,17 @@ public class GameManager {
         if (!gameFinished) {
             return null;
         }
+        if(winner == 0)
+        {
+            return null;
+        }
+
         if(hmPlayers.containsKey(winner))
         {
             return getPlayerInfo(hmPlayers.get(winner).getIdentifier());
         }
+
+
         return null;
     }
 
@@ -288,7 +309,31 @@ public class GameManager {
         return alSpecies;
     }
 
-    //Bubble Sort
+    public int checkPlayerWithBiggestPosition()
+    {
+        int position = 0;
+        int playerID = 0;
+        for (Player player : hmPlayers.values()) {
+            if(player.getPosition() > position)
+            {
+                playerID = player.getIdentifier();
+                position = player.getPosition();
+            }
+        }
+        return playerID;
+    }
+    public boolean checkNoEnergy(){
+        for (Player player : hmPlayers.values()) {
+            if(player.getEnergy() >= 2)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+   //Bubble Sort
     public int[] idOrderOfPlay () {
         int[] idOrderOfPlay = new int[hmPlayers.size()];
         int count = 0, lastOrdered = idOrderOfPlay.length;
