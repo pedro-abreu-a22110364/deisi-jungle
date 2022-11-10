@@ -277,6 +277,8 @@ public class GameManager {
     public ArrayList<String> getGameResults() {
         ArrayList<String> alGameResults = new ArrayList<>();
 
+        getRankingSorted();
+
         for (Player value : hmRankings.values()) {
             alGameResults.add("#" + value.getRank() + " " + value.getName() + ", " + value.getSpecie().getName() + ", " + value.getPosition());
         }
