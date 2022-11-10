@@ -56,13 +56,7 @@ public class GameManager {
 
         //Validate incorrect ids
         for (String[] strings : playersInfo) {
-            if (strings[0] == null) {
-                return false;
-            }
-        }
-
-        for (String[] strings : playersInfo) {
-            if (!strings[0].matches("[0-9]+")) {
+            if (strings[0] == null || !strings[0].matches("[0-9]+")) {
                 return false;
             }
         }
