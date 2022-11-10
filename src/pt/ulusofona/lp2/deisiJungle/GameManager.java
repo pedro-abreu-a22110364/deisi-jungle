@@ -217,8 +217,8 @@ public class GameManager {
     }
 
     //Bubble Sort
-    public int[] idOrderOfPlay (int[] idOrderOfPlay) {
-        //int[] arrOrderOfPlay = new int[hmPlayers.size()];
+    public int[] idOrderOfPlay () {
+        int[] idOrderOfPlay = new int[hmPlayers.size()];
         int count = 0, lastOrdered = idOrderOfPlay.length;
         boolean allInOrder = false;
 
