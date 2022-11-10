@@ -125,7 +125,7 @@ public class GameManager {
         String[] strSquareInfo = new String[3];
         String playersInSquare = "";
 
-        if(squareNr > jungleSize && squareNr <= 0){
+        if(squareNr < 1 || squareNr > jungleSize){
             return null;
         }
 
