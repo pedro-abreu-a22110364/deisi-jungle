@@ -91,7 +91,7 @@ public class GameManager {
                             nrOfTarzans ++;
                         }
 
-                        Player player = new Player(Integer.parseInt(playerInfo[0]), playerInfo[1], specie);
+                        Player player = new Player(Integer.parseInt(playerInfo[0]), playerInfo[1], specie, initialEnergy);
                         hmPlayers.put(player.getIdentifier(),player);
                     }
                 }
