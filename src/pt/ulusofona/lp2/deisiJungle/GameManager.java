@@ -202,10 +202,12 @@ public class GameManager {
     public boolean moveCurrentPlayer(int nrSquares,boolean bypassValidations) {
         if ((nrSquares < 1 || nrSquares > 6) && !bypassValidations) {
             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
+                playerPlaying = 0;
                 idPlayerPlaying = orderOfPlay[0];
                 return false;
             }
-            idPlayerPlaying = orderOfPlay[playerPlaying + 1];
+            playerPlaying++;
+            idPlayerPlaying = orderOfPlay[playerPlaying];
             return false;
         }
         //Verifica se o jogo já acabou
@@ -228,11 +230,13 @@ public class GameManager {
         if(hmPlayers.get(idPlayerPlaying).getEnergy() - 2 < 0) {
             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                 //Jogador do inicio
+                playerPlaying = 0;
                 idPlayerPlaying = orderOfPlay[0];
                 return false;
             }
             //Próximo jogador
-            idPlayerPlaying = orderOfPlay[playerPlaying + 1];
+            playerPlaying++;
+            idPlayerPlaying = orderOfPlay[playerPlaying];
             return false;
         }
 
@@ -248,10 +252,12 @@ public class GameManager {
         hmPlayers.get(idPlayerPlaying).removeEnergy(energyMoveCost);
 
         if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
+            playerPlaying = 0;
             idPlayerPlaying = orderOfPlay[0];
             return true;
         }
-        idPlayerPlaying = orderOfPlay[playerPlaying + 1];
+        playerPlaying++;
+        idPlayerPlaying = orderOfPlay[playerPlaying];
         return true;
     }
 
@@ -335,19 +341,19 @@ public class GameManager {
         return playerID;
     }
 
-    public int checkPlayerWithMediumPosition()
+    public int checkPlayerWithMediumPosition(HashMap<Integer,Player> hmPlayersTemp)
     {
         int mediumID = 0;
-        int playerWithSmallerIDPosition = hmPlayers.get(checkPlayerWithSmallestPosition()).getPosition();
-        int playerWithBiggestIDPosition = hmPlayers.get(checkPlayerWithBiggestPosition()).getPosition();
-        for (Player player : hmPlayers.values()) {
+        int playerWithSmallerIDPosition = hmPlayersTemp.get(checkPlayerWithSmallestPosition()).getPosition();
+        int playerWithBiggestIDPosition = hmPlayersTemp.get(checkPlayerWithBiggestPosition()).getPosition();
+        for (Player player : hmPlayersTemp.values()) {
             if(player.getPosition() == playerWithSmallerIDPosition || player.getPosition() == playerWithBiggestIDPosition)
             {
 
             }
             else
             {
-             mediumID = player.getPosition();
+             mediumID = player.getIdentifier();
             }
         }
         return mediumID;
@@ -358,7 +364,7 @@ public class GameManager {
         int position = 21;
         int playerID = 0;
         for (Player player : hmPlayers.values()) {
-            if(player.getPosition() > position)
+            if(player.getPosition() < position)
             {
                 playerID = player.getIdentifier();
                 position = player.getPosition();
@@ -389,9 +395,8 @@ public class GameManager {
 
             hmRankings.put(2,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 2
             hmRankings.get(2).setRank(2);
-            hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
 
-            hmRankings.put(3,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 3
+            hmRankings.put(3,hmPlayersTemp.get(checkPlayerWithSmallestPosition())); //add top 3
             hmRankings.get(3).setRank(3);
         }
         if (hmPlayersTemp.size() == 4) {
@@ -399,16 +404,17 @@ public class GameManager {
             hmRankings.get(1).setRank(1);
             hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
 
-            hmRankings.put(2,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 2
-            hmRankings.get(2).setRank(2);
-            hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
-
-            hmRankings.put(3,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 3
-            hmRankings.get(3).setRank(3);
-            hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
-
-            hmRankings.put(4,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 4
+            hmRankings.put(4,hmPlayersTemp.get(checkPlayerWithSmallestPosition())); //add top 4
             hmRankings.get(4).setRank(4);
+            hmPlayersTemp.remove(checkPlayerWithSmallestPosition());
+
+            hmRankings.put(2, hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 2
+            hmRankings.get(2).setRank(2);
+
+            hmRankings.put(3, hmPlayersTemp.get(checkPlayerWithSmallestPosition())); //add top 3
+            hmRankings.get(3).setRank(3);
+
+
         }
     }
 

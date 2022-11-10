@@ -127,12 +127,16 @@ public class TestGame {
                 },
                 {
                         "3","Tomas","L","10"
+                },
+                {
+                        "4","Ricardo","E","10"
                 }
         };
         manager.createInitialJungle(20, 10, playerInfo);
         manager.moveCurrentPlayer(11,true);//Joga Pedro
         manager.moveCurrentPlayer(13,true);//Joga Gui
-        manager.moveCurrentPlayer(17,true);//Joga Gui, mas devia jogar Tomas
+        manager.moveCurrentPlayer(17,true);//Joga Tomas
+        manager.moveCurrentPlayer(5,false);//Joga Ricardo
         manager.getGameResults();
     }
 }
