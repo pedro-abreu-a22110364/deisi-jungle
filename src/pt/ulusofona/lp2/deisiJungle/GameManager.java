@@ -209,7 +209,7 @@ public class GameManager {
             {
                 winner = getPlayerWithLowestID();
                 gameFinished = true;
-                return true;
+                return false;
             }
             else
             {
