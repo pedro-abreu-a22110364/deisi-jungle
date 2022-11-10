@@ -104,12 +104,20 @@ public class GameManager {
     }
 
     public int[] getPlayerIds(int squareNr) {
-        int[] arrayID = new int[hmPlayers.size()];
         int count = 0;
+        int numberPlayers = 0;
 
         if (squareNr < 1 || squareNr > jungleSize) {
             return new int[0];
         }
+
+        for (Player player : hmPlayers.values()) {
+            if(player.getPosition() == squareNr)
+            {
+               numberPlayers++;
+            }
+        }
+        int[] arrayID = new int[numberPlayers];
 
         for (Player player : hmPlayers.values()) {
             if(player.getPosition() == squareNr)
