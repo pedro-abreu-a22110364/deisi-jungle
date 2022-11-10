@@ -2,6 +2,7 @@ package pt.ulusofona.lp2.deisiJungle;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
@@ -113,4 +114,25 @@ public class TestGame {
         assertEquals("2",strs[0]);
     }
 
+    @Test
+    public void testGetGameResults()
+    {
+        GameManager manager = new GameManager();
+        String[][] playerInfo = new String[][]{
+                {
+                        "1","Pedro","Z","10"
+                },
+                {
+                        "2","Guilherme","T","10"
+                },
+                {
+                        "3","Tomas","L","10"
+                }
+        };
+        manager.createInitialJungle(20, 10, playerInfo);
+        manager.moveCurrentPlayer(11,true);//Joga Pedro
+        manager.moveCurrentPlayer(13,true);//Joga Gui
+        manager.moveCurrentPlayer(17,true);//Joga Gui, mas devia jogar Tomas
+        manager.getGameResults();
+    }
 }

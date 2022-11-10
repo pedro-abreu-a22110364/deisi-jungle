@@ -283,6 +283,10 @@ public class GameManager {
             alGameResults.add("#" + value.getRank() + " " + value.getName() + ", " + value.getSpecie().getName() + ", " + value.getPosition());
         }
 
+        for (String alGameResult : alGameResults) {
+            System.out.println(alGameResult);
+        }
+
         return alGameResults;
     }
 
@@ -336,33 +340,43 @@ public class GameManager {
 
         if (hmPlayersTemp.size() == 1) {
             hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
+            hmRankings.get(1).setRank(1);
         }
         if (hmPlayersTemp.size() == 2) {
             hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
+            hmRankings.get(1).setRank(1);
             hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
 
             hmRankings.put(2,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 2
+            hmRankings.get(2).setRank(2);
         }
         if (hmPlayersTemp.size() == 3) {
             hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
+            hmRankings.get(1).setRank(1);
             hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
 
             hmRankings.put(2,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 2
+            hmRankings.get(2).setRank(2);
             hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
 
             hmRankings.put(3,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 3
+            hmRankings.get(3).setRank(3);
         }
         if (hmPlayersTemp.size() == 4) {
             hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
+            hmRankings.get(1).setRank(1);
             hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
 
             hmRankings.put(2,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 2
+            hmRankings.get(2).setRank(2);
             hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
 
             hmRankings.put(3,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 3
+            hmRankings.get(3).setRank(3);
             hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
 
             hmRankings.put(4,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 4
+            hmRankings.get(4).setRank(4);
         }
     }
 
