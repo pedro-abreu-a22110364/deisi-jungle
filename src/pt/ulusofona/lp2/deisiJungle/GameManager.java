@@ -211,16 +211,12 @@ public class GameManager {
             return false;
         }
         //Verifica se o jogo já acabou
-        if(gameFinished) {
-            return false;
-        }
+        if(gameFinished) {return false;}
         //Verifica se todos os players n tem energia
-        if(checkNoEnergy())
-        {
+        if(checkNoEnergy()) {
             if(checkSamePosition()) {
                 winner = getPlayerWithLowestID();
-            }
-            else {
+            } else {
                 winner = checkPlayerWithBiggestPosition();
             }
             gameFinished = true;
