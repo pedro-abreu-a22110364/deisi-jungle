@@ -141,7 +141,7 @@ public class GameManager {
         for (Player player : hmPlayers.values()) {
             if(player.getPosition() == squareNr)
             {
-                playersInSquare += String.valueOf(player.getIdentifier()) + ",";
+                playersInSquare += player.getIdentifier() + ",";
             }
         }
         strSquareInfo[2] = playersInSquare.substring(0, playersInSquare.length() - 2);
