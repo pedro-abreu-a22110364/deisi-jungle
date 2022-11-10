@@ -12,6 +12,8 @@ public class GameManager {
     int maxPlayers = 4;
     int jungleSize;
     int initialEnergy;
+    boolean gameFinished = false;
+
     ArrayList<Specie> alSpecies = createDefaultSpecies();
     //ArrayList<Player> alPlayers = new ArrayList<>();
     //ArrayList<Integer> alOrderOfPlay = new ArrayList<>();
@@ -164,15 +166,18 @@ public class GameManager {
             return false;
         }
         if(nowPlaying.getPosition() + nrSquares > jungleSize){
-            return false;
+            nowPlaying.setPosition(jungleSize);
+            return true;
         }
 
         nowPlaying.setPosition(nowPlaying.getPosition() + nrSquares);
-
         return true;
     }
 
     public String[] getWinnerInfo() {
+        if (!gameFinished) {
+            return null;
+        }
         return getPlayerInfo(winner.getIdentifier());
     }
 
