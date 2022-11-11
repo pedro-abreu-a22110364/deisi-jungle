@@ -133,10 +133,10 @@ public class TestGame {
                 }
         };
         manager.createInitialJungle(20, 10, playerInfo);
-        manager.moveCurrentPlayer(11,true);//Joga Pedro
-        manager.moveCurrentPlayer(11,true);//Joga Gui
-        manager.moveCurrentPlayer(17,true);//Joga Tomas
-        manager.moveCurrentPlayer(17,true);//Joga Ricardo
+        manager.moveCurrentPlayer(7,true);//Joga Pedro
+        manager.moveCurrentPlayer(7,true);//Joga Gui
+        manager.moveCurrentPlayer(7,true);//Joga Tomas
+        manager.moveCurrentPlayer(7,true);//Joga Ricardo
         manager.getGameResults();
     }
 }

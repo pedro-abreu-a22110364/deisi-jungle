@@ -17,13 +17,16 @@ public class GameManager {
     int winner = 0;
     int idPlayerPlaying;
     int playerPlaying;
+    //Variavel para contar quantidade de vezes que o bubble sort tem de ser feito
+    int maxNumOfBSRepetions = 3;
 
     //Variaveis com informação sobre o jogo
     boolean gameFinished = false;
     int[] orderOfPlay;
+    int[] orderByPosition;
+    int[] orderByID;
     ArrayList<Specie> alSpecies = createDefaultSpecies();
     HashMap<Integer,Player> hmPlayers = new HashMap<>(); //HashMap with id player as key
-    HashMap<Integer,Player> hmRankings = new HashMap<>();
     HashMap<Integer,Integer> hmKeyIdValuePos = new HashMap<>();
 
     public GameManager(){
@@ -101,6 +104,8 @@ public class GameManager {
                 return false;
             }
         }
+        orderByPosition = new int[hmKeyIdValuePos.size()];
+        orderByID = new int[hmKeyIdValuePos.size()];
         orderOfPlay = idOrderOfPlay();
         return true;
     }
@@ -277,10 +282,24 @@ public class GameManager {
     public ArrayList<String> getGameResults() {
         ArrayList<String> alGameResults = new ArrayList<>();
 
-        getRankingSorted();
+        getRanking();
 
-        for (Player value : hmRankings.values()) {
-            alGameResults.add("#" + value.getRank() + " " + value.getName() + ", " + value.getSpecie().getName() + ", " + value.getPosition());
+        if(hmPlayers.size() == 4) {
+            alGameResults.add("#" + hmPlayers.get(orderByID[3]).getRank() + " " + hmPlayers.get(orderByID[3]).getName() + ", " + hmPlayers.get(orderByID[3]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[3]).getPosition());
+            alGameResults.add("#" + hmPlayers.get(orderByID[2]).getRank() + " " + hmPlayers.get(orderByID[2]).getName() + ", " + hmPlayers.get(orderByID[2]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[2]).getPosition());
+            alGameResults.add("#" + hmPlayers.get(orderByID[1]).getRank() + " " + hmPlayers.get(orderByID[1]).getName() + ", " + hmPlayers.get(orderByID[1]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[1]).getPosition());
+            alGameResults.add("#" + hmPlayers.get(orderByID[0]).getRank() + " " + hmPlayers.get(orderByID[0]).getName() + ", " + hmPlayers.get(orderByID[0]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[0]).getPosition());
+        }
+
+        if(hmPlayers.size() == 3) {
+            alGameResults.add("#" + hmPlayers.get(orderByID[2]).getRank() + " " + hmPlayers.get(orderByID[2]).getName() + ", " + hmPlayers.get(orderByID[2]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[2]).getPosition());
+            alGameResults.add("#" + hmPlayers.get(orderByID[1]).getRank() + " " + hmPlayers.get(orderByID[1]).getName() + ", " + hmPlayers.get(orderByID[1]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[1]).getPosition());
+            alGameResults.add("#" + hmPlayers.get(orderByID[0]).getRank() + " " + hmPlayers.get(orderByID[0]).getName() + ", " + hmPlayers.get(orderByID[0]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[0]).getPosition());
+        }
+
+        if(hmPlayers.size() == 2) {
+            alGameResults.add("#" + hmPlayers.get(orderByID[1]).getRank() + " " + hmPlayers.get(orderByID[1]).getName() + ", " + hmPlayers.get(orderByID[1]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[1]).getPosition());
+            alGameResults.add("#" + hmPlayers.get(orderByID[0]).getRank() + " " + hmPlayers.get(orderByID[0]).getName() + ", " + hmPlayers.get(orderByID[0]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[0]).getPosition());
         }
 
         for (String alGameResult : alGameResults) {
@@ -339,11 +358,13 @@ public class GameManager {
     public void moveCurrentPlayerFinal () {
         hmPlayers.get(idPlayerPlaying).setPosition(jungleSize);
         hmPlayers.get(idPlayerPlaying).removeEnergy(energyMoveCost);
+        hmKeyIdValuePos.put(idPlayerPlaying,jungleSize);
     }
 
     public void moveCurrentPlayerAdd (int nrSquares) {
         hmPlayers.get(idPlayerPlaying).setPosition(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares);
         hmPlayers.get(idPlayerPlaying).removeEnergy(energyMoveCost);
+        hmKeyIdValuePos.put(idPlayerPlaying,hmKeyIdValuePos.get(idPlayerPlaying) + nrSquares);
     }
 
     public int checkPlayerWithBiggestPosition()
@@ -404,8 +425,22 @@ public class GameManager {
         return playerID;
     }
 
-    public void getRankingSorted() { // A net babou-se
-        HashMap<Integer, Player> hmPlayersTemp = new HashMap<>(hmPlayers);
+    public void getRanking() {
+
+        sortArrayByPosition();
+        int count = 0,rank = 4;
+
+        while (count != maxNumOfBSRepetions) {
+            sortArrayByPositionWithEqualID();
+            count++;
+        }
+
+        for (int i : orderByID) {
+            hmPlayers.get(i).setRank(rank);
+            rank--;
+        }
+
+        /*HashMap<Integer, Player> hmPlayersTemp = new HashMap<>(hmPlayers);
 
             if (hmPlayersTemp.size() == 2) {
                 hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
@@ -441,7 +476,7 @@ public class GameManager {
                 hmRankings.get(2).setRank(2);
 
                 hmRankings.put(3, hmPlayersTemp.get(checkPlayerWithSmallestPosition())); //add top 3
-                hmRankings.get(3).setRank(3);}
+                hmRankings.get(3).setRank(3);}*/
     }
 
     public int getPlayerWithLowestID()
@@ -495,7 +530,6 @@ public class GameManager {
         }
         return false;
     }
-
 
     public int checkSamePositionReturnPosition() //Retorna em que posição à mais que um player
     {
@@ -555,5 +589,56 @@ public class GameManager {
         playerPlaying = 0;
         idPlayerPlaying = idOrderOfPlay[0];
         return idOrderOfPlay;
+    }
+
+    public void sortArrayByPosition () {
+        int count = 0, lastOrdered = orderByPosition.length;
+        boolean allInOrder = false;
+
+        for (Integer value : hmKeyIdValuePos.values()) {
+            orderByPosition[count] = value;
+            count++;
+        }
+
+        count = 0;
+
+        for (Integer integer : hmKeyIdValuePos.keySet()) {
+            orderByID[count] = integer;
+            count++;
+        }
+
+        while(!allInOrder) {
+            allInOrder = true;
+
+            for (int i = 0;i < lastOrdered -1;i++) {
+                if (orderByPosition[i] > orderByPosition[i+1]) {
+                    allInOrder = false;
+
+                    int temp = orderByPosition[i];
+                    int temp2 = orderByID[i];
+
+                    orderByPosition[i] = orderByPosition[i+1];
+                    orderByID[i] = orderByID[i+1];
+
+                    orderByPosition[i+1] = temp;
+                    orderByID[i+1] = temp2;
+                }
+            }
+            lastOrdered--;
+        }
+
+    }
+
+    public void sortArrayByPositionWithEqualID () {
+
+        for (int i = 0;i < orderByPosition.length -1;i++) {
+            if (orderByPosition[i] == orderByPosition[i + 1]) {
+                if(orderByID[i] < orderByID[i+1]) {
+                    int temp = orderByID[i];
+                    orderByID[i] = orderByID[i+1];
+                    orderByID[i+1] = temp;
+                }
+            }
+        }
     }
 }
