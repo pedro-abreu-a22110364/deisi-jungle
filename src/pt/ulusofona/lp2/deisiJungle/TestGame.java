@@ -115,7 +115,7 @@ public class TestGame {
     }
 
     @Test
-    public void testGetGameResults()
+    public void testGetGameResultsWith4Players()
     {
         GameManager manager = new GameManager();
         String[][] playerInfo = new String[][]{
@@ -133,10 +133,32 @@ public class TestGame {
                 }
         };
         manager.createInitialJungle(20, 10, playerInfo);
-        manager.moveCurrentPlayer(7,true);//Joga Pedro
-        manager.moveCurrentPlayer(7,true);//Joga Gui
+        manager.moveCurrentPlayer(3,true);//Joga Pedro
+        manager.moveCurrentPlayer(11,true);//Joga Gui
         manager.moveCurrentPlayer(7,true);//Joga Tomas
-        manager.moveCurrentPlayer(7,true);//Joga Ricardo
+        manager.moveCurrentPlayer(19,true);//Joga Ricardo
+        manager.getGameResults();
+    }
+
+    @Test
+    public void testGetGameResultsWith3Players()
+    {
+        GameManager manager = new GameManager();
+        String[][] playerInfo = new String[][]{
+                {
+                        "1","Pedro","Z","10"
+                },
+                {
+                        "2","Guilherme","T","10"
+                },
+                {
+                        "3","Tomas","L","10"
+                }
+        };
+        manager.createInitialJungle(20, 10, playerInfo);
+        manager.moveCurrentPlayer(3,true);//Joga Pedro
+        manager.moveCurrentPlayer(11,true);//Joga Gui
+        manager.moveCurrentPlayer(7,true);//Joga Tomas
         manager.getGameResults();
     }
 }

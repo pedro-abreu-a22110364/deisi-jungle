@@ -428,7 +428,7 @@ public class GameManager {
     public void getRanking() {
 
         sortArrayByPosition();
-        int count = 0,rank = 4;
+        int count = 0,rank = hmPlayers.size();
 
         while (count != maxNumOfBSRepetions) {
             sortArrayByPositionWithEqualID();
@@ -440,43 +440,6 @@ public class GameManager {
             rank--;
         }
 
-        /*HashMap<Integer, Player> hmPlayersTemp = new HashMap<>(hmPlayers);
-
-            if (hmPlayersTemp.size() == 2) {
-                hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
-                hmRankings.get(1).setRank(1);
-                hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
-
-                hmRankings.put(2,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 2
-                hmRankings.get(2).setRank(2);
-            }
-            if (hmPlayersTemp.size() == 3)
-            {
-                hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
-                hmRankings.get(1).setRank(1);
-                hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
-
-                hmRankings.put(2,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 2
-                hmRankings.get(2).setRank(2);
-
-                hmRankings.put(3,hmPlayersTemp.get(checkPlayerWithSmallestPosition())); //add top 3
-                hmRankings.get(3).setRank(3);
-            }
-            if (hmPlayersTemp.size() == 4)
-            {
-                hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
-                hmRankings.get(1).setRank(1);
-                hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
-
-                hmRankings.put(4,hmPlayersTemp.get(checkPlayerWithSmallestPosition())); //add top 4
-                hmRankings.get(4).setRank(4);
-                hmPlayersTemp.remove(checkPlayerWithSmallestPosition());
-
-                hmRankings.put(2, hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 2
-                hmRankings.get(2).setRank(2);
-
-                hmRankings.put(3, hmPlayersTemp.get(checkPlayerWithSmallestPosition())); //add top 3
-                hmRankings.get(3).setRank(3);}*/
     }
 
     public int getPlayerWithLowestID()
