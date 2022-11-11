@@ -403,7 +403,7 @@ public class GameManager {
         return playerID;
     }
 
-    public void getRankingSorted() {
+    public void getRankingSorted() { // A net babou-se
         HashMap<Integer,Player> hmPlayersTemp = hmPlayers;
         if(checkSamePosition(hmPlayersTemp))
         {
