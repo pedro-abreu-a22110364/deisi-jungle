@@ -457,7 +457,7 @@ public class GameManager {
 
     public boolean checkNoEnergy(){
         for (Player player : hmPlayers.values()) {
-            if(player.getEnergy() - energyMoveCost > 0)
+            if(player.getEnergy() - energyMoveCost >= 0)
             {
                 return true;
             }
