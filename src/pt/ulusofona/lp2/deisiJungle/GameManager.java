@@ -24,6 +24,7 @@ public class GameManager {
     ArrayList<Specie> alSpecies = createDefaultSpecies();
     HashMap<Integer,Player> hmPlayers = new HashMap<>(); //HashMap with id player as key
     HashMap<Integer,Player> hmRankings = new HashMap<>();
+    HashMap<Integer,Integer> hmKeyIdValuePos = new HashMap<>();
 
     public GameManager(){
 
@@ -92,6 +93,7 @@ public class GameManager {
 
                         Player player = new Player(Integer.parseInt(playerInfo[0]), playerInfo[1], specie, initialEnergy);
                         hmPlayers.put(player.getIdentifier(),player);
+                        hmKeyIdValuePos.put(player.getIdentifier(),1);
                     }
                 }
             }
@@ -175,7 +177,6 @@ public class GameManager {
                 strPlayerInfo[2] = String.valueOf(hmPlayers.get(playerId).getSpecie().getIdentifier());
                 strPlayerInfo[3] = String.valueOf(hmPlayers.get(playerId).getEnergy());
         }
-
 
         return strPlayerInfo;
     }
@@ -404,15 +405,9 @@ public class GameManager {
     }
 
     public void getRankingSorted() { // A net babou-se
-        HashMap<Integer,Player> hmPlayersTemp = hmPlayers;
+        HashMap<Integer, Player> hmPlayersTemp = new HashMap<>(hmPlayers);
+
             if (hmPlayersTemp.size() == 2) {
-                if(checkSamePosition(hmPlayersTemp)) {
-                    hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithSmallestIDInSamePosition(checkSamePositionReturnPosition(hmPlayersTemp)))); //add top 1
-                    hmRankings.get(1).setRank(1);
-                    hmPlayersTemp.remove(checkPlayerWithSmallestIDInSamePosition(checkSamePositionReturnPosition(hmPlayersTemp)));
-                    hmRankings.put(2,hmPlayersTemp.get(checkPlayerWithBiggestIDInSamePosition(checkSamePositionReturnPosition(hmPlayersTemp)))); //add top 2
-                    hmRankings.get(2).setRank(2);
-                }
                 hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
                 hmRankings.get(1).setRank(1);
                 hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
