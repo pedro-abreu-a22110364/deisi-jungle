@@ -213,25 +213,18 @@ public class GameManager {
         //Verifica se o jogo já acabou
         if(gameFinished) {return false;}
         //Verifica se todos os players n tem energia
-
-        if(!checkWinner())
-        {
-            return checkWinner();
-        }
-
+        if(!checkWinner()) {return checkWinner();}
         if(hmPlayers.get(idPlayerPlaying).getEnergy() - energyMoveCost < 0) {
             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                 //Jogador do inicio
-                if(checkWinner()){
-                    playerPlaying = 0;
+                if(checkWinner()){playerPlaying = 0;
                     idPlayerPlaying = orderOfPlay[0];
                 }
                 checkWinner();
                 return false;
             }
             //Próximo jogador
-            if(checkWinner()){
-                playerPlaying++;
+            if(checkWinner()){playerPlaying++;
                 idPlayerPlaying = orderOfPlay[playerPlaying];
             }
             checkWinner();
@@ -247,18 +240,14 @@ public class GameManager {
         moveCurrentPlayerAdd (nrSquares);
 
         if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
-            if(checkWinner())
-            {
-                playerPlaying = 0;
+            if(checkWinner()) {playerPlaying = 0;
                 idPlayerPlaying = orderOfPlay[0];
             }
             checkWinner();
             return true;
         }
 
-        if(checkWinner())
-        {
-            playerPlaying++;
+        if(checkWinner()) {playerPlaying++;
             idPlayerPlaying = orderOfPlay[playerPlaying];
         }
         checkWinner();
