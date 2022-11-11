@@ -219,13 +219,14 @@ public class GameManager {
             return checkWinner();
         }
 
-        if(hmPlayers.get(idPlayerPlaying).getEnergy() - 2 < 0) {
+        if(hmPlayers.get(idPlayerPlaying).getEnergy() - energyMoveCost < 0) {
             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                 //Jogador do inicio
-                if(checkWinner()) {
+                if(checkWinner()){
                     playerPlaying = 0;
                     idPlayerPlaying = orderOfPlay[0];
                 }
+                checkWinner();
                 return false;
             }
             //Próximo jogador
@@ -233,6 +234,7 @@ public class GameManager {
                 playerPlaying++;
                 idPlayerPlaying = orderOfPlay[playerPlaying];
             }
+            checkWinner();
             return false;
         }
 
@@ -245,12 +247,21 @@ public class GameManager {
         moveCurrentPlayerAdd (nrSquares);
 
         if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
-            playerPlaying = 0;
-            idPlayerPlaying = orderOfPlay[0];
+            if(checkWinner())
+            {
+                playerPlaying = 0;
+                idPlayerPlaying = orderOfPlay[0];
+            }
+            checkWinner();
             return true;
         }
-        playerPlaying++;
-        idPlayerPlaying = orderOfPlay[playerPlaying];
+
+        if(checkWinner())
+        {
+            playerPlaying++;
+            idPlayerPlaying = orderOfPlay[playerPlaying];
+        }
+        checkWinner();
         return true;
     }
 
@@ -291,7 +302,7 @@ public class GameManager {
 
     public boolean checkWinner()
     {
-        if(checkNoEnergy()) {
+        if(!checkNoEnergy()) {
             if(checkSamePosition()) {
                 winner = checkPlayerWithSmallestIDInSamePosition(checkSamePositionReturnPosition());
             } else {
@@ -446,21 +457,24 @@ public class GameManager {
 
     public boolean checkNoEnergy(){
         for (Player player : hmPlayers.values()) {
-            if(player.getEnergy() >= 2)
+            if(player.getEnergy() - energyMoveCost > 0)
             {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public boolean checkSamePosition()
     {
-        int position = hmPlayers.get(checkPlayerWithBiggestPosition()).getPosition();
+        int position;
         for (Player player : hmPlayers.values()) {
-            if(player.getPosition() == position)
-            {
-                return true;
+            position = player.getPosition();
+            for (Player value : hmPlayers.values()) {
+                if(value.getPosition() == position && player.getIdentifier() != value.getIdentifier())
+                {
+                    return true;
+                }
             }
         }
         return false;
@@ -472,7 +486,7 @@ public class GameManager {
         for (Player player : hmPlayers.values()) {
             position = player.getPosition();
             for (Player value : hmPlayers.values()) {
-                if(position == value.getPosition())
+                if(position == value.getPosition() && player.getIdentifier() != value.getIdentifier())
                 {
                     return position;
                 }
