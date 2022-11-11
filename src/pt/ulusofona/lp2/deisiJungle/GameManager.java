@@ -422,6 +422,31 @@ public class GameManager {
             }
             if (hmPlayersTemp.size() == 3)
             {
+                if(checkSamePosition(hmPlayersTemp))
+                {
+                    if(checkSamePositionReturnPosition(hmPlayersTemp) == hmPlayersTemp.get(checkPlayerWithBiggestPosition()).getPosition())
+                    {
+                        hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
+                        hmRankings.get(1).setRank(1);
+                        hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
+
+                        hmRankings.put(2,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 2
+                        hmRankings.get(2).setRank(2);
+
+                        hmRankings.put(3,hmPlayersTemp.get(checkPlayerWithSmallestPosition())); //add top 3
+                        hmRankings.get(3).setRank(3);
+                    } else {
+                        hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
+                        hmRankings.get(1).setRank(1);
+                        hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
+
+                        hmRankings.put(2,hmPlayersTemp.get(checkPlayerWithBiggestIDInSamePosition(checkSamePositionReturnPosition(hmPlayersTemp)))); //add top 2
+                        hmRankings.get(2).setRank(2);
+
+                        hmRankings.put(3,hmPlayersTemp.get(checkPlayerWithSmallestIDInSamePosition(checkSamePositionReturnPosition(hmPlayersTemp)))); //add top 3
+                        hmRankings.get(3).setRank(3);
+                    }
+                }
                 hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
                 hmRankings.get(1).setRank(1);
                 hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
