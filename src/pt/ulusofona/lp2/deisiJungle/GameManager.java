@@ -293,7 +293,7 @@ public class GameManager {
     {
         if(checkNoEnergy()) {
             if(checkSamePosition()) {
-                winner = getPlayerWithLowestID();
+                winner = checkPlayerWithSmallestIDInSamePosition(checkSamePositionReturnPosition());
             } else {
                 winner = checkPlayerWithBiggestPosition();
             }
@@ -366,6 +366,19 @@ public class GameManager {
         int playerID = 0;
         for (Player player : hmPlayers.values()) {
             if(player.getPosition() < position)
+            {
+                playerID = player.getIdentifier();
+                position = player.getPosition();
+            }
+        }
+        return playerID;
+    }
+
+    public int checkPlayerWithSmallestIDInSamePosition(int position)
+    {
+        int playerID = 0;
+        for (Player player : hmPlayers.values()) {
+            if(player.getPosition() == position)
             {
                 playerID = player.getIdentifier();
                 position = player.getPosition();
@@ -451,6 +464,21 @@ public class GameManager {
             }
         }
         return false;
+    }
+
+    public int checkSamePositionReturnPosition() //Retorna em que posição à mais que um player
+    {
+        int position = 0;
+        for (Player player : hmPlayers.values()) {
+            position = player.getPosition();
+            for (Player value : hmPlayers.values()) {
+                if(position == value.getPosition())
+                {
+                    return position;
+                }
+            }
+        }
+        return position;
     }
 
    //Bubble Sort
