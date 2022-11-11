@@ -388,49 +388,107 @@ public class GameManager {
         return playerID;
     }
 
+
+    public int checkPlayerWithBiggestIDInSamePosition(int position)
+    {
+        int playerID = Integer.MIN_VALUE;
+        for (Player player : hmPlayers.values()) {
+            if(player.getPosition() == position)
+            {
+                if(player.getIdentifier() > playerID){
+                    playerID = player.getIdentifier();
+                }
+            }
+        }
+        return playerID;
+    }
+
     public void getRankingSorted() {
         HashMap<Integer,Player> hmPlayersTemp = hmPlayers;
+        if(checkSamePosition(hmPlayersTemp))
+        {
+            if (hmPlayersTemp.size() == 1) {
+                hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestIDInSamePosition(checkSamePositionReturnPosition()))); //add top 1
+                hmRankings.get(1).setRank(1);
+            }
+            if (hmPlayersTemp.size() == 2) {
+                hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestIDInSamePosition(checkSamePositionReturnPosition()))); //add top 1
+                hmRankings.get(1).setRank(1);
+                hmPlayersTemp.remove(checkPlayerWithBiggestIDInSamePosition(checkSamePositionReturnPosition()));
 
-        if (hmPlayersTemp.size() == 1) {
-            hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
-            hmRankings.get(1).setRank(1);
+                hmRankings.put(2,hmPlayersTemp.get(checkPlayerWithBiggestIDInSamePosition(checkSamePositionReturnPosition()))); //add top 2
+                hmRankings.get(2).setRank(2);
+            }
+            if (hmPlayersTemp.size() == 3) {
+                hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestIDInSamePosition(checkSamePositionReturnPosition()))); //add top 1
+                hmRankings.get(1).setRank(1);
+                hmPlayersTemp.remove(checkPlayerWithBiggestIDInSamePosition(checkSamePositionReturnPosition()));
+
+                hmRankings.put(2,hmPlayersTemp.get(checkPlayerWithBiggestIDInSamePosition(checkSamePositionReturnPosition()))); //add top 2
+                hmRankings.get(2).setRank(2);
+
+                hmRankings.put(3,hmPlayersTemp.get(checkPlayerWithSmallestIDInSamePosition(checkSamePositionReturnPosition()))); //add top 3
+                hmRankings.get(3).setRank(3);
+            }
+            if (hmPlayersTemp.size() == 4) {
+                hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestIDInSamePosition(checkSamePositionReturnPosition()))); //add top 1
+                hmRankings.get(1).setRank(1);
+                hmPlayersTemp.remove(checkPlayerWithBiggestIDInSamePosition(checkSamePositionReturnPosition()));
+
+                hmRankings.put(4,hmPlayersTemp.get(checkPlayerWithSmallestIDInSamePosition(checkSamePositionReturnPosition()))); //add top 4
+                hmRankings.get(4).setRank(4);
+                hmPlayersTemp.remove(checkPlayerWithSmallestIDInSamePosition(checkSamePositionReturnPosition()));
+
+                hmRankings.put(2, hmPlayersTemp.get(checkPlayerWithBiggestIDInSamePosition(checkSamePositionReturnPosition()))); //add top 2
+                hmRankings.get(2).setRank(2);
+
+                hmRankings.put(3, hmPlayersTemp.get(checkPlayerWithSmallestIDInSamePosition(checkSamePositionReturnPosition()))); //add top 3
+                hmRankings.get(3).setRank(3);
+            }
         }
-        if (hmPlayersTemp.size() == 2) {
-            hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
-            hmRankings.get(1).setRank(1);
-            hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
+        else
+        {
+            if (hmPlayersTemp.size() == 1) {
+                hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
+                hmRankings.get(1).setRank(1);
+            }
+            if (hmPlayersTemp.size() == 2) {
+                hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
+                hmRankings.get(1).setRank(1);
+                hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
 
-            hmRankings.put(2,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 2
-            hmRankings.get(2).setRank(2);
+                hmRankings.put(2,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 2
+                hmRankings.get(2).setRank(2);
+            }
+            if (hmPlayersTemp.size() == 3) {
+                hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
+                hmRankings.get(1).setRank(1);
+                hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
+
+                hmRankings.put(2,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 2
+                hmRankings.get(2).setRank(2);
+
+                hmRankings.put(3,hmPlayersTemp.get(checkPlayerWithSmallestPosition())); //add top 3
+                hmRankings.get(3).setRank(3);
+            }
+            if (hmPlayersTemp.size() == 4) {
+                hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
+                hmRankings.get(1).setRank(1);
+                hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
+
+                hmRankings.put(4,hmPlayersTemp.get(checkPlayerWithSmallestPosition())); //add top 4
+                hmRankings.get(4).setRank(4);
+                hmPlayersTemp.remove(checkPlayerWithSmallestPosition());
+
+                hmRankings.put(2, hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 2
+                hmRankings.get(2).setRank(2);
+
+                hmRankings.put(3, hmPlayersTemp.get(checkPlayerWithSmallestPosition())); //add top 3
+                hmRankings.get(3).setRank(3);
+            }
         }
-        if (hmPlayersTemp.size() == 3) {
-            hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
-            hmRankings.get(1).setRank(1);
-            hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
-
-            hmRankings.put(2,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 2
-            hmRankings.get(2).setRank(2);
-
-            hmRankings.put(3,hmPlayersTemp.get(checkPlayerWithSmallestPosition())); //add top 3
-            hmRankings.get(3).setRank(3);
-        }
-        if (hmPlayersTemp.size() == 4) {
-            hmRankings.put(1,hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 1
-            hmRankings.get(1).setRank(1);
-            hmPlayersTemp.remove(checkPlayerWithBiggestPosition());
-
-            hmRankings.put(4,hmPlayersTemp.get(checkPlayerWithSmallestPosition())); //add top 4
-            hmRankings.get(4).setRank(4);
-            hmPlayersTemp.remove(checkPlayerWithSmallestPosition());
-
-            hmRankings.put(2, hmPlayersTemp.get(checkPlayerWithBiggestPosition())); //add top 2
-            hmRankings.get(2).setRank(2);
-
-            hmRankings.put(3, hmPlayersTemp.get(checkPlayerWithSmallestPosition())); //add top 3
-            hmRankings.get(3).setRank(3);
 
 
-        }
     }
 
     public int getPlayerWithLowestID()
@@ -470,12 +528,43 @@ public class GameManager {
         return false;
     }
 
+    public boolean checkSamePosition(HashMap<Integer, Player> hmPlayersTemp)
+    {
+        int position;
+        for (Player player : hmPlayersTemp.values()) {
+            position = player.getPosition();
+            for (Player value : hmPlayersTemp.values()) {
+                if(value.getPosition() == position && player.getIdentifier() != value.getIdentifier())
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
     public int checkSamePositionReturnPosition() //Retorna em que posição à mais que um player
     {
         int position;
         for (Player player : hmPlayers.values()) {
             position = player.getPosition();
             for (Player value : hmPlayers.values()) {
+                if(position == value.getPosition() && player.getIdentifier() != value.getIdentifier())
+                {
+                    return position;
+                }
+            }
+        }
+        return 0;
+    }
+
+    public int checkSamePositionReturnPosition(HashMap<Integer, Player> hmPlayersTemp) //Retorna em que posição à mais que um player
+    {
+        int position;
+        for (Player player : hmPlayersTemp.values()) {
+            position = player.getPosition();
+            for (Player value : hmPlayersTemp.values()) {
                 if(position == value.getPosition() && player.getIdentifier() != value.getIdentifier())
                 {
                     return position;
