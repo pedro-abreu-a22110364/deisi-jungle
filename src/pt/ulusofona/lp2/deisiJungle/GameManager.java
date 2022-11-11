@@ -387,12 +387,13 @@ public class GameManager {
 
     public int checkPlayerWithSmallestIDInSamePosition(int position)
     {
-        int playerID = 0;
+        int playerID = Integer.MAX_VALUE;
         for (Player player : hmPlayers.values()) {
             if(player.getPosition() == position)
             {
-                playerID = player.getIdentifier();
-                position = player.getPosition();
+                if(player.getIdentifier() < playerID){
+                    playerID = player.getIdentifier();
+                }
             }
         }
         return playerID;
@@ -482,7 +483,7 @@ public class GameManager {
 
     public int checkSamePositionReturnPosition() //Retorna em que posição à mais que um player
     {
-        int position = 0;
+        int position;
         for (Player player : hmPlayers.values()) {
             position = player.getPosition();
             for (Player value : hmPlayers.values()) {
@@ -492,7 +493,7 @@ public class GameManager {
                 }
             }
         }
-        return position;
+        return 0;
     }
 
    //Bubble Sort
