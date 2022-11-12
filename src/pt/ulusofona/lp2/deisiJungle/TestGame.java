@@ -2,6 +2,8 @@ package pt.ulusofona.lp2.deisiJungle;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -134,7 +136,9 @@ public class TestGame {
         manager.moveCurrentPlayer(11,true);//Joga Gui
         manager.moveCurrentPlayer(7,true);//Joga Tomas
         manager.moveCurrentPlayer(19,true);//Joga Ricardo
-        manager.getGameResults();
+        ArrayList<String> strs = manager.getGameResults();
+
+        assertEquals("#1 Ricardo, Elefante, 20",strs.get(0));
     }
 
     @Test
@@ -156,6 +160,8 @@ public class TestGame {
         manager.moveCurrentPlayer(3,true);//Joga Pedro
         manager.moveCurrentPlayer(11,true);//Joga Gui
         manager.moveCurrentPlayer(7,true);//Joga Tomas
-        manager.getGameResults();
+        ArrayList<String> strs = manager.getGameResults();
+
+        assertEquals("#1 Guilherme, Tartaruga, 12",strs.get(0));
     }
 }

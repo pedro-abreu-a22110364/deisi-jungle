@@ -1,3 +1,11 @@
+//paginas 2,3,7,8,9
+//Falta:
+//
+//Fazer UML (2)
+//Identar, comentar e limpar melhor o código (2)
+//Adicionar novas especies e imagens (3,8)
+//Fazer os créditos (7)
+//Testes do moveCurrentPlayer 4 (9)
 package pt.ulusofona.lp2.deisiJungle;
 
 import javax.swing.*;
@@ -290,10 +298,6 @@ public class GameManager {
         if(hmPlayers.size() == 2) {
             alGameResults.add("#" + hmPlayers.get(orderByID[1]).getRank() + " " + hmPlayers.get(orderByID[1]).getName() + ", " + hmPlayers.get(orderByID[1]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[1]).getPosition());
             alGameResults.add("#" + hmPlayers.get(orderByID[0]).getRank() + " " + hmPlayers.get(orderByID[0]).getName() + ", " + hmPlayers.get(orderByID[0]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[0]).getPosition());
-        }
-
-        for (String alGameResult : alGameResults) {
-            System.out.println(alGameResult);
         }
 
         return alGameResults;
