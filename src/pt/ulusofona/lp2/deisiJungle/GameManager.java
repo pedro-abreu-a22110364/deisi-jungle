@@ -53,21 +53,15 @@ public class GameManager {
         int nrOfTarzans = 0;
 
         //Validate number of players
-        if(playersInfo == null || playersInfo.length < minPlayers || playersInfo.length > maxPlayers || jungleSize < playersInfo.length * 2) {
-            return false;
-        }
+        if(playersInfo == null || playersInfo.length < minPlayers || playersInfo.length > maxPlayers || jungleSize < playersInfo.length * 2) {return false;}
         //Validate incorrect ids and names
         for (String[] strings : playersInfo) {
-            if (strings[0] == null || !strings[0].matches("[0-9]+") || strings[1] == null || strings[1].equals("")) {
-                return false;
-            }
+            if (strings[0] == null || !strings[0].matches("[0-9]+") || strings[1] == null || strings[1].equals("")) {return false;}
         }
         //Validate repeated ids
         for (int x = 0; x < playersInfo.length; x++) {
             for (int y = x + 1; y < playersInfo.length; y++) {
-                if(Objects.equals(playersInfo[x][0], playersInfo[y][0])) {
-                    return false;
-                }
+                if(Objects.equals(playersInfo[x][0], playersInfo[y][0])) {return false;}
             }
         }
         //Validate incorrect species
@@ -82,13 +76,9 @@ public class GameManager {
                 for (Specie  specie : alSpecies) {
                     if(playerInfo[2].charAt(0) == specie.getIdentifier()) {
 
-                        if(playerInfo[1].isEmpty()) {
-                            return false;
-                        }
+                        if(playerInfo[1].isEmpty()) {return false;}
 
-                        if(playerInfo[2].equals(String.valueOf('Z')) && nrOfTarzans == 1) {
-                            return false;
-                        }
+                        if(playerInfo[2].equals(String.valueOf('Z')) && nrOfTarzans == 1) {return false;}
 
                         if(playerInfo[2].equals(String.valueOf('Z')) && nrOfTarzans < 1) {
                             nrOfTarzans ++;
