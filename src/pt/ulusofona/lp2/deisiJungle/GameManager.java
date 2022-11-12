@@ -1,4 +1,4 @@
-//paginas 2,3,7,8,9
+//paginas 2,3,7,8,9,10,11
 //Falta:
 //
 //Fazer UML (2)
@@ -6,6 +6,9 @@
 //Adicionar novas especies e imagens (3,8)
 //Fazer os créditos (7)
 //Testes do moveCurrentPlayer 4 (9)
+//Criatividade (10)
+//Ficheiro README.md (11)
+
 package pt.ulusofona.lp2.deisiJungle;
 
 import javax.swing.*;
