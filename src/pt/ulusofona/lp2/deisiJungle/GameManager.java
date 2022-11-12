@@ -372,20 +372,6 @@ public class GameManager {
         return playerID;
     }
 
-    public int checkPlayerWithSmallestPosition()
-    {
-        int position = 21;
-        int playerID = 0;
-        for (Player player : hmPlayers.values()) {
-            if(player.getPosition() < position)
-            {
-                playerID = player.getIdentifier();
-                position = player.getPosition();
-            }
-        }
-        return playerID;
-    }
-
     public int checkPlayerWithSmallestIDInSamePosition(int position)
     {
         int playerID = Integer.MAX_VALUE;
@@ -393,21 +379,6 @@ public class GameManager {
             if(player.getPosition() == position)
             {
                 if(player.getIdentifier() < playerID){
-                    playerID = player.getIdentifier();
-                }
-            }
-        }
-        return playerID;
-    }
-
-
-    public int checkPlayerWithBiggestIDInSamePosition(int position)
-    {
-        int playerID = Integer.MIN_VALUE;
-        for (Player player : hmPlayers.values()) {
-            if(player.getPosition() == position)
-            {
-                if(player.getIdentifier() > playerID){
                     playerID = player.getIdentifier();
                 }
             }
@@ -430,18 +401,6 @@ public class GameManager {
             rank--;
         }
 
-    }
-
-    public int getPlayerWithLowestID()
-    {
-        int id = Integer.MAX_VALUE;
-        for (Player player : hmPlayers.values()) {
-            if(player.getIdentifier() < id)
-            {
-                id = player.getIdentifier();
-            }
-        }
-        return id;
     }
 
     public boolean checkNoEnergy(){
