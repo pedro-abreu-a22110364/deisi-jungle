@@ -147,11 +147,11 @@ public class GameManager {
 
         if(squareNr == jungleSize)
         {
-            strSquareInfo[0] = "finishretro.png";
+            strSquareInfo[0] = "finish.png";
             strSquareInfo[1] = "Meta";
         }
         else{
-            strSquareInfo[0] = "blankretro.png";
+            strSquareInfo[0] = "blank.png";
             strSquareInfo[1] = "Vazio";
         }
 
