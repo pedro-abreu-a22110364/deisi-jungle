@@ -1,8 +1,6 @@
-//paginas 2,3,7,8,9,10,11
 //Falta:
 //
 //Fazer UML (2)
-//Ficheiro README.md (11)
 
 package pt.ulusofona.lp2.deisiJungle;
 
