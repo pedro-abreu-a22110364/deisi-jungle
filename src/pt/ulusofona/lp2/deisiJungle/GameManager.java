@@ -2,9 +2,6 @@
 //Falta:
 //
 //Fazer UML (2)
-//Adicionar novas especies e imagens (3,8)
-//Fazer os créditos (7)
-//Criatividade (10)
 //Ficheiro README.md (11)
 
 package pt.ulusofona.lp2.deisiJungle;
@@ -76,7 +73,7 @@ public class GameManager {
         }
         //Validate incorrect species
         for (String[] strings : playersInfo) {
-            if(strings[2] == null || !((strings[2].equals("E")) || (strings[2].equals("L")) || (strings[2].equals("T")) || (strings[2].equals("P")) || (strings[2].equals("Z")))) {
+            if(strings[2] == null || !((strings[2].equals("E")) || (strings[2].equals("L")) || (strings[2].equals("T")) || (strings[2].equals("P")) || (strings[2].equals("Z")) || (strings[2].equals("M")) || (strings[2].equals("G")) || (strings[2].equals("Y")) || (strings[2].equals("X")))) {
                 return false;
             }
         }
@@ -150,11 +147,11 @@ public class GameManager {
 
         if(squareNr == jungleSize)
         {
-            strSquareInfo[0] = "finish.png";
+            strSquareInfo[0] = "finishretro.png";
             strSquareInfo[1] = "Meta";
         }
         else{
-            strSquareInfo[0] = "blank.png";
+            strSquareInfo[0] = "blankretro.png";
             strSquareInfo[1] = "Vazio";
         }
 
@@ -355,12 +352,22 @@ public class GameManager {
         Specie passaro = new Specie('P', "Pássaro","bird.png");
         Specie tarzan = new Specie('Z', "Tarzan","tarzan.png");
 
+        Specie mario = new Specie('M',"Mario","mario.png");
+        Specie ghost = new Specie('G',"PacMan","pacman.png");
+        Specie pikachu = new Specie('Y',"Pikachu","pikachu.png");
+        Specie zelda = new Specie('X',"Zelda","zelda.png");
+
         //Adding objects to list
         alSpecies.add(elefante);
         alSpecies.add(leao);
         alSpecies.add(tartaruga);
         alSpecies.add(passaro);
         alSpecies.add(tarzan);
+
+        alSpecies.add(mario);
+        alSpecies.add(ghost);
+        alSpecies.add(pikachu);
+        alSpecies.add(zelda);
 
         //Returning the list back to "main"
         return alSpecies;
