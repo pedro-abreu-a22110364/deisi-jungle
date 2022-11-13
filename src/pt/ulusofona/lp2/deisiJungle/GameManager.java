@@ -1,7 +1,3 @@
-//Falta:
-//
-//Fazer UML (2)
-
 package pt.ulusofona.lp2.deisiJungle;
 
 import javax.swing.*;
