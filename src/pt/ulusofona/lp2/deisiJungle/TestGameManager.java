@@ -5,8 +5,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 
 public class TestGameManager {
     @Test
@@ -163,5 +161,105 @@ public class TestGameManager {
         ArrayList<String> strs = manager.getGameResults();
 
         assertEquals("#1 Guilherme, Tartaruga, 12",strs.get(0));
+    }
+
+    @Test
+    public void testMoveCurrentPlayerWithoutEnergy()
+    {
+        GameManager manager = new GameManager();
+        String[][] playerInfo = new String[][]{
+                {
+                        "1","Pedro","Z","10"
+                },
+                {
+                        "2","Guilherme","T","10"
+                },
+                {
+                        "3","Tomas","L","10"
+                }
+        };
+        manager.createInitialJungle(20, 1, playerInfo);
+        manager.moveCurrentPlayer(3,true);//Joga Pedro
+        manager.moveCurrentPlayer(11,true);//Joga Gui
+        manager.moveCurrentPlayer(7,true);//Joga Tomas
+        ArrayList<String> strs = manager.getGameResults();
+
+        assertEquals("#1 Pedro, Tarzan, 1",strs.get(0));
+    }
+
+    @Test
+    public void testMoveCurrentPlayerFullTurn()
+    {
+        GameManager manager = new GameManager();
+        String[][] playerInfo = new String[][]{
+                {
+                        "1","Pedro","Z","10"
+                },
+                {
+                        "2","Guilherme","T","10"
+                },
+                {
+                        "3","Tomas","L","10"
+                }
+        };
+        manager.createInitialJungle(20, 10, playerInfo);
+        manager.moveCurrentPlayer(3,false);//Joga Pedro
+        manager.moveCurrentPlayer(11,false);//Joga Gui
+        manager.moveCurrentPlayer(7,false);//Joga Tomas
+        ArrayList<String> strs = manager.getGameResults();
+
+        assertEquals("#1 Pedro, Tarzan, 4",strs.get(0));
+    }
+
+    @Test
+    public void testMoveCurrentPlayerMoraThan1Turn()
+    {
+        GameManager manager = new GameManager();
+        String[][] playerInfo = new String[][]{
+                {
+                        "1","Pedro","Z","10"
+                },
+                {
+                        "2","Guilherme","T","10"
+                },
+                {
+                        "3","Tomas","L","10"
+                }
+        };
+        manager.createInitialJungle(20, 10, playerInfo);
+        manager.moveCurrentPlayer(3,true);//Joga Pedro
+        manager.moveCurrentPlayer(11,true);//Joga Gui
+        manager.moveCurrentPlayer(7,true);//Joga Tomas
+        manager.moveCurrentPlayer(12,true);//Joga Pedro
+        manager.moveCurrentPlayer(17,true);//Joga Gui
+        manager.moveCurrentPlayer(4,true);//Joga Tomas
+        ArrayList<String> strs = manager.getGameResults();
+
+        assertEquals("#1 Guilherme, Tartaruga, 20",strs.get(0));
+    }
+
+    @Test
+    public void testMoveCurrentPlayerMoraThan1TurnWithoutEnergy()
+    {
+        GameManager manager = new GameManager();
+        String[][] playerInfo = new String[][]{
+                {
+                        "1","Pedro","Z","10"
+                },
+                {
+                        "2","Guilherme","T","10"
+                }
+        };
+        manager.createInitialJungle(20, 6, playerInfo);
+        manager.moveCurrentPlayer(3,false);//Joga Pedro
+        manager.moveCurrentPlayer(6,false);//Joga Gui
+        manager.moveCurrentPlayer(1,false);//Joga Pedro
+        manager.moveCurrentPlayer(8,false);//Joga Gui
+        manager.moveCurrentPlayer(6,false);//Joga Pedro
+        manager.moveCurrentPlayer(2,false);//Joga Gui
+        ArrayList<String> strs = manager.getGameResults();
+
+        assertEquals("#1 Pedro, Tarzan, 11",strs.get(0));
+        assertEquals("#2 Guilherme, Tartaruga, 9",strs.get(1));
     }
 }

@@ -2,10 +2,8 @@
 //Falta:
 //
 //Fazer UML (2)
-//Identar, comentar e limpar melhor o código (2)
 //Adicionar novas especies e imagens (3,8)
 //Fazer os créditos (7)
-//Testes do moveCurrentPlayer 4 (9)
 //Criatividade (10)
 //Ficheiro README.md (11)
 
@@ -393,23 +391,6 @@ public class GameManager {
         return playerID;
     }
 
-    public void getRanking() {
-
-        sortArrayByPosition();
-        int count = 0,rank = hmPlayers.size();
-
-        while (count != maxNumOfBSRepetions) {
-            sortArrayByPositionWithEqualID();
-            count++;
-        }
-
-        for (int i : orderByID) {
-            hmPlayers.get(i).setRank(rank);
-            rank--;
-        }
-
-    }
-
     public boolean checkNoEnergy(){
         for (Player player : hmPlayers.values()) {
             if(player.getEnergy() - energyMoveCost >= 0)
@@ -435,42 +416,12 @@ public class GameManager {
         return false;
     }
 
-    public boolean checkSamePosition(HashMap<Integer, Player> hmPlayersTemp)
-    {
-        int position;
-        for (Player player : hmPlayersTemp.values()) {
-            position = player.getPosition();
-            for (Player value : hmPlayersTemp.values()) {
-                if(value.getPosition() == position && player.getIdentifier() != value.getIdentifier())
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     public int checkSamePositionReturnPosition() //Retorna em que posição à mais que um player
     {
         int position;
         for (Player player : hmPlayers.values()) {
             position = player.getPosition();
             for (Player value : hmPlayers.values()) {
-                if(position == value.getPosition() && player.getIdentifier() != value.getIdentifier())
-                {
-                    return position;
-                }
-            }
-        }
-        return 0;
-    }
-
-    public int checkSamePositionReturnPosition(HashMap<Integer, Player> hmPlayersTemp) //Retorna em que posição à mais que um player
-    {
-        int position;
-        for (Player player : hmPlayersTemp.values()) {
-            position = player.getPosition();
-            for (Player value : hmPlayersTemp.values()) {
                 if(position == value.getPosition() && player.getIdentifier() != value.getIdentifier())
                 {
                     return position;
@@ -508,6 +459,23 @@ public class GameManager {
         playerPlaying = 0;
         idPlayerPlaying = idOrderOfPlay[0];
         return idOrderOfPlay;
+    }
+
+    public void getRanking() {
+
+        sortArrayByPosition();
+        int count = 0,rank = hmPlayers.size();
+
+        while (count != maxNumOfBSRepetions) {
+            sortArrayByPositionWithEqualID();
+            count++;
+        }
+
+        for (int i : orderByID) {
+            hmPlayers.get(i).setRank(rank);
+            rank--;
+        }
+
     }
 
     public void sortArrayByPosition () {
