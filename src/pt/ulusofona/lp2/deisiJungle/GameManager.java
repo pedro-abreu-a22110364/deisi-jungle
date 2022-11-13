@@ -10,6 +10,7 @@
 package pt.ulusofona.lp2.deisiJungle;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -321,7 +322,23 @@ public class GameManager {
     }
 
     public JPanel getAuthorsPanel() {
-        return null;
+        JPanel jPanel = new JPanel();
+
+        jPanel.setBackground(Color.LIGHT_GRAY);
+
+        JLabel intro1 = new JLabel("Trabalho desenvolvido no âmbito");
+        JLabel intro2 = new JLabel("da cadeira de LP2 por:");
+        JLabel partition = new JLabel("---------------------------------------------------------------------------------");
+        JLabel student1 = new JLabel("Guilherme Simão, a22106142");
+        JLabel student2 = new JLabel("Pedro Abreu, a22110364");
+
+        jPanel.add(intro1);
+        jPanel.add(intro2);
+        jPanel.add(partition);
+        jPanel.add(student1);
+        jPanel.add(student2);
+
+        return jPanel;
     }
 
     public String whoIsTaborda() {
