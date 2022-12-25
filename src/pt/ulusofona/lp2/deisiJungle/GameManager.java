@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
+//Classe Specie passar a herança, classe Food(nova) também herança, classe casa, que contenha informação de cada casa
 public class GameManager {
 
     int minPlayers = 2;
