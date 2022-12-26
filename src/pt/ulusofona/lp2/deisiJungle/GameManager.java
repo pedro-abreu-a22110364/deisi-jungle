@@ -341,16 +341,16 @@ public class GameManager {
         ArrayList<Specie> alSpecies = new ArrayList<>(); //Creating the list to return it later
 
         //Creating the objects
-        Specie elefante = new Specie('E', "Elefante","elephant.png");
-        Specie leao = new Specie('L', "Leão","lion.png");
-        Specie tartaruga = new Specie('T', "Tartaruga","turtle.png");
-        Specie passaro = new Specie('P', "Pássaro","bird.png");
-        Specie tarzan = new Specie('Z', "Tarzan","tarzan.png");
+        Elefante elefante = new Elefante('E', "Elefante","elephant.png",180, 4, 10, 1,6);
+        Leao leao = new Leao('L', "Leão","lion.png",80, 2, 10, 4,6);
+        Tartaruga tartaruga = new Tartaruga('T', "Tartaruga","turtle.png",150,1,5,1,3);
+        Passaro passaro = new Passaro('P', "Pássaro","bird.png",70,4,50,5,6);
+        Tarzan tarzan = new Tarzan('Z', "Tarzan","tarzan.png",70,2,20,1,6);
 
-        Specie mario = new Specie('M',"Mario","mario.png");
-        Specie ghost = new Specie('G',"PacMan","pacman.png");
-        Specie pikachu = new Specie('Y',"Pikachu","pikachu.png");
-        Specie zelda = new Specie('X',"Zelda","zelda.png");
+        Mario mario = new Mario('M',"Mario","mario.png",100,2,20,2,6);
+        Ghost ghost = new Ghost('G',"PacMan","pacman.png",100,2,20,2,2);
+        Pikachu pikachu = new Pikachu('Y',"Pikachu","pikachu.png",100,2,20,2,2);
+        Zelda zelda = new Zelda('X',"Zelda","zelda.png",100,2,20,2,2);
 
         //Adding objects to list
         alSpecies.add(elefante);
