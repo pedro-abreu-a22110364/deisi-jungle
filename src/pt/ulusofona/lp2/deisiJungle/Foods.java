@@ -23,7 +23,4 @@ public abstract class Foods {
     public abstract String getFoodImage();
     public abstract int getEnergyCarnivoros();
     public abstract int getEnergyHerbivoros();
-
-
-
 }

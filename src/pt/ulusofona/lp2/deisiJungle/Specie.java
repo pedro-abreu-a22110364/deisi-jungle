@@ -47,6 +47,4 @@ public abstract class Specie {
     public abstract int getMinSpeed();
     public abstract int getMaxSpeed();
     public abstract String getSpecieType();
-
-
 }

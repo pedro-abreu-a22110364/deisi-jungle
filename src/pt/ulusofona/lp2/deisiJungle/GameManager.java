@@ -394,9 +394,7 @@ public class GameManager {
         ArrayList<Foods> alfood = new ArrayList<>(); //Creating the list to return it later
 
         Erva erva = new Erva('e', "erva", "grass.png", 20, 20);
-
         Banana banana = new Banana('b', "Cacho de Bananas", "bananas.png", 40, 40, 3);
-
         Carne carne = new Carne('c', "Carne", "meat.png", 50,0, 12);
 
         Random r = new Random();
@@ -404,9 +402,15 @@ public class GameManager {
         int high = 51;
         int result = r.nextInt(high-low) + low;
 
-        CogumelosMagicos cogumelo = new CogumelosMagicos('c', "Cogumelos magicos", "mushroom.png", result, result);
-
+        CogumelosMagicos cogumelo = new CogumelosMagicos('m', "Cogumelos magicos", "mushroom.png", result, result);
         Agua agua = new Agua('a', "Agua", "water.png", 15,20);
+
+        //Adding objects to list
+        alfood.add(erva);
+        alfood.add(banana);
+        alfood.add(carne);
+        alfood.add(cogumelo);
+        alfood.add(agua);
 
         //Returning the list back to "main"
         return alfood;
