@@ -1,8 +1,11 @@
 package pt.ulusofona.lp2.deisiJungle;
 
-public class CogumelosMagicos extends Foods {
-    public CogumelosMagicos(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros) {
+public class Banana extends Foods{
+    int quantidade;
+
+    public Banana(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int quantidade) {
         super(identifier, nome, foodImage, energyCarnivoros, energyHerbivoros);
+        this.quantidade = quantidade;
     }
 
     @Override
@@ -28,5 +31,9 @@ public class CogumelosMagicos extends Foods {
     @Override
     public int getEnergyHerbivoros() {
         return energyHerbivoros;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
     }
 }
