@@ -17,7 +17,6 @@ public abstract class Specie {
     char identifier;
     String nome;
     String specieImage;
-
     String specieType;
     // New specs
     int initalEnergy;

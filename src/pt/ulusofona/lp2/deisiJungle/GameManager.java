@@ -1,10 +1,13 @@
 package pt.ulusofona.lp2.deisiJungle;
 
+import org.junit.runners.model.InitializationError;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Random;
 
 //Classe Specie passar a herança, classe Food(nova) também herança, classe casa, que contenha informação de cada casa
 public class GameManager {
@@ -12,9 +15,7 @@ public class GameManager {
     int minPlayers = 2;
     int maxPlayers = 4;
     int jungleSize;
-    //Variaveis de energia
-    int initialEnergy;
-    int energyMoveCost = 2;
+
     //Variaveis com informação de players
     int winner = 0;
     int idPlayerPlaying;
@@ -50,12 +51,8 @@ public class GameManager {
             species[count][5] = specie.getEnergyRecovery() + "";
             species[count][6] = specie.getMinSpeed() + ".." + specie.getMaxSpeed();
 
-
-
-
             count++;
         }
-
         return species;
     }
 
@@ -73,27 +70,27 @@ public class GameManager {
         return foods;
     }
 
-    public boolean createInitialJungle(int jungleSize,int initialEnergy,String[][] playersInfo) {
-        this.initialEnergy = initialEnergy;
+    public InitializationError createInitialJungle(int jungleSize,String[][] playersInfo, String[][] foodsInfo)
+    {
         this.jungleSize = jungleSize;
         int nrOfTarzans = 0;
 
         //Validate number of players
-        if(playersInfo == null || playersInfo.length < minPlayers || playersInfo.length > maxPlayers || jungleSize < playersInfo.length * 2) {return false;}
+        if(playersInfo == null || playersInfo.length < minPlayers || playersInfo.length > maxPlayers || jungleSize < playersInfo.length * 2) {return new InitializationError("Invalid Number Of Players");}
         //Validate incorrect ids and names
         for (String[] strings : playersInfo) {
-            if (strings[0] == null || !strings[0].matches("[0-9]+") || strings[1] == null || strings[1].equals("")) {return false;}
+            if (strings[0] == null || !strings[0].matches("[0-9]+") || strings[1] == null || strings[1].equals("")) {return new InitializationError("Incorrect id or name");}
         }
         //Validate repeated ids
         for (int x = 0; x < playersInfo.length; x++) {
             for (int y = x + 1; y < playersInfo.length; y++) {
-                if(Objects.equals(playersInfo[x][0], playersInfo[y][0])) {return false;}
+                if(Objects.equals(playersInfo[x][0], playersInfo[y][0])) {return new InitializationError("Repeated ids found");}
             }
         }
         //Validate incorrect species
         for (String[] strings : playersInfo) {
             if(strings[2] == null || !((strings[2].equals("E")) || (strings[2].equals("L")) || (strings[2].equals("T")) || (strings[2].equals("P")) || (strings[2].equals("Z")) || (strings[2].equals("M")) || (strings[2].equals("G")) || (strings[2].equals("Y")) || (strings[2].equals("X")))) {
-                return false;
+                return new InitializationError("Incorrect specie found");
             }
         }
 
@@ -102,28 +99,28 @@ public class GameManager {
                 for (Specie  specie : alSpecies) {
                     if(playerInfo[2].charAt(0) == specie.getIdentifier()) {
 
-                        if(playerInfo[1].isEmpty()) {return false;}
+                        if(playerInfo[1].isEmpty()) {return new InitializationError("Name invalid") ;}
 
-                        if(playerInfo[2].equals(String.valueOf('Z')) && nrOfTarzans == 1) {return false;}
+                        if(playerInfo[2].equals(String.valueOf('Z')) && nrOfTarzans == 1) {return new InitializationError("There is already a tarzan player");}
 
                         if(playerInfo[2].equals(String.valueOf('Z')) && nrOfTarzans < 1) {
                             nrOfTarzans ++;
                         }
 
-                        Player player = new Player(Integer.parseInt(playerInfo[0]), playerInfo[1], specie, initialEnergy);
+                        Player player = new Player(Integer.parseInt(playerInfo[0]), playerInfo[1], specie, specie.getInitalEnergy());
                         hmPlayers.put(player.getIdentifier(),player);
                         hmKeyIdValuePos.put(player.getIdentifier(),1);
                     }
                 }
             }
             else {
-                return false;
+                return new InitializationError("Incorrect number of players");
             }
         }
         orderByPosition = new int[hmKeyIdValuePos.size()];
         orderByID = new int[hmKeyIdValuePos.size()];
         orderOfPlay = idOrderOfPlay();
-        return true;
+        return null;
     }
 
     public int[] getPlayerIds(int squareNr) {
@@ -190,13 +187,14 @@ public class GameManager {
     }
 
     public String[] getPlayerInfo(int playerId) {
-        String[] strPlayerInfo = new String[4];
+        String[] strPlayerInfo = new String[5];
         if(hmPlayers.containsKey(playerId))
         {
                 strPlayerInfo[0] = String.valueOf(hmPlayers.get(playerId).getIdentifier());
                 strPlayerInfo[1] = hmPlayers.get(playerId).getName();
                 strPlayerInfo[2] = String.valueOf(hmPlayers.get(playerId).getSpecie().getIdentifier());
                 strPlayerInfo[3] = String.valueOf(hmPlayers.get(playerId).getEnergy());
+                strPlayerInfo[4] = hmPlayers.get(playerId).getSpecie().getMinSpeed() + ".." + hmPlayers.get(playerId).getSpecie().getMaxSpeed() ;
         }
 
         return strPlayerInfo;
@@ -236,7 +234,7 @@ public class GameManager {
         if(gameFinished) {return false;}
         //Verifica se todos os players n tem energia
         if(!checkWinner()) {return checkWinner();}
-        if(hmPlayers.get(idPlayerPlaying).getEnergy() - energyMoveCost < 0) {
+        if(hmPlayers.get(idPlayerPlaying).getEnergy() - hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() < 0) {
             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                 //Jogador do inicio
                 if(checkWinner()){playerPlaying = 0;
@@ -396,11 +394,19 @@ public class GameManager {
         ArrayList<Foods> alfood = new ArrayList<>(); //Creating the list to return it later
 
         Erva erva = new Erva('e', "erva", "grass.png", 20, 20);
-        Banana banana = new Banana();
-        Carne carne = new Carne();
-        CogumelosMagicos cogumelo = new CogumelosMagicos();
 
-        Agua agua = new Agua();
+        Banana banana = new Banana('b', "Cacho de Bananas", "bananas.png", 40, 40, 3);
+
+        Carne carne = new Carne('c', "Carne", "meat.png", 50,0, 12);
+
+        Random r = new Random();
+        int low = 10;
+        int high = 51;
+        int result = r.nextInt(high-low) + low;
+
+        CogumelosMagicos cogumelo = new CogumelosMagicos('c', "Cogumelos magicos", "mushroom.png", result, result);
+
+        Agua agua = new Agua('a', "Agua", "water.png", 15,20);
 
         //Returning the list back to "main"
         return alfood;
@@ -408,13 +414,13 @@ public class GameManager {
 
     public void moveCurrentPlayerFinal () {
         hmPlayers.get(idPlayerPlaying).setPosition(jungleSize);
-        hmPlayers.get(idPlayerPlaying).removeEnergy(energyMoveCost);
+        hmPlayers.get(idPlayerPlaying).removeEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy());
         hmKeyIdValuePos.put(idPlayerPlaying,jungleSize);
     }
 
     public void moveCurrentPlayerAdd (int nrSquares) {
         hmPlayers.get(idPlayerPlaying).setPosition(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares);
-        hmPlayers.get(idPlayerPlaying).removeEnergy(energyMoveCost);
+        hmPlayers.get(idPlayerPlaying).removeEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy());
         hmKeyIdValuePos.put(idPlayerPlaying,hmKeyIdValuePos.get(idPlayerPlaying) + nrSquares);
     }
 
@@ -449,7 +455,7 @@ public class GameManager {
 
     public boolean checkNoEnergy(){
         for (Player player : hmPlayers.values()) {
-            if(player.getEnergy() - energyMoveCost >= 0)
+            if(player.getEnergy() - player.getSpecie().getNeededEnergy() >= 0)
             {
                 return true;
             }

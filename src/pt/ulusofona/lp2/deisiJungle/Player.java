@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.deisiJungle;
 
+import java.util.ArrayList;
+
 public class Player {
     int identifier;
     String name;
@@ -7,6 +9,8 @@ public class Player {
     int energy; //Mudar tipo de variavel consoante o que é pedido
     int rank; //Mudar de classe caso necessário
     int position = 1;
+
+    ArrayList<Foods> eatenFoods = new ArrayList<>();
 
     public int getPosition() {
         return position;
