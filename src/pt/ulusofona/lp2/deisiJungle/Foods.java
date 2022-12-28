@@ -5,17 +5,32 @@ public abstract class Foods {
     String nome;
 
     String foodImage;
-
     int energyCarnivoros;
+
+    int energyOmnivoros;
     int energyHerbivoros;
 
+    int position;
 
-    public Foods(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros) {
+
+    public Foods(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros) {
         this.identifier = identifier;
         this.nome = nome;
         this.foodImage = foodImage;
         this.energyCarnivoros = energyCarnivoros;
+        this.energyOmnivoros = energyOmnivoros;
         this.energyHerbivoros = energyHerbivoros;
+    }
+
+
+    public Foods(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros, int position) {
+        this.identifier = identifier;
+        this.nome = nome;
+        this.foodImage = foodImage;
+        this.energyCarnivoros = energyCarnivoros;
+        this.energyOmnivoros = energyOmnivoros;
+        this.energyHerbivoros = energyHerbivoros;
+        this.position = position;
     }
 
     public abstract char getIdentifier();
@@ -23,4 +38,5 @@ public abstract class Foods {
     public abstract String getFoodImage();
     public abstract int getEnergyCarnivoros();
     public abstract int getEnergyHerbivoros();
+    public abstract int getPosition();
 }

@@ -20,6 +20,7 @@ public class GameManager {
     int winner = 0;
     int idPlayerPlaying;
     int playerPlaying;
+
     //Variavel para contar quantidade de vezes que o bubble sort tem de ser feito
     int maxNumOfBSRepetions = 3;
 
@@ -31,6 +32,7 @@ public class GameManager {
     ArrayList<Specie> alSpecies = createDefaultSpecies();
     ArrayList<Foods> alFoods = createDefaultFoods();
 
+    ArrayList<Foods> gameFoods = new ArrayList<>();
     HashMap<Integer,Player> hmPlayers = new HashMap<>(); //HashMap with id player as key
     HashMap<Integer,Integer> hmKeyIdValuePos = new HashMap<>();
 
@@ -72,6 +74,12 @@ public class GameManager {
 
     public InitializationError createInitialJungle(int jungleSize,String[][] playersInfo, String[][] foodsInfo)
     {
+        return createInitialJungle(jungleSize, playersInfo);
+
+
+    }
+
+    public InitializationError createInitialJungle(int jungleSize, String[][] playersInfo){
         this.jungleSize = jungleSize;
         int nrOfTarzans = 0;
 
@@ -217,6 +225,14 @@ public class GameManager {
             }
         }
         return strPlayerInfo;
+    }
+
+    public String[] getCurrentPlayerEnergyInfo(int nrPositions){
+        String[] strPlayerEnergyInfo = new String[2];
+        strPlayerEnergyInfo[0] = hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() * nrPositions + "";
+        strPlayerEnergyInfo[1] = hmPlayers.get(idPlayerPlaying).getSpecie().getEnergyRecovery() + "";
+
+        return strPlayerEnergyInfo;
     }
 
     public boolean moveCurrentPlayer(int nrSquares,boolean bypassValidations) {
@@ -393,17 +409,17 @@ public class GameManager {
     public ArrayList<Foods> createDefaultFoods() {
         ArrayList<Foods> alfood = new ArrayList<>(); //Creating the list to return it later
 
-        Erva erva = new Erva('e', "erva", "grass.png", 20, 20);
-        Banana banana = new Banana('b', "Cacho de Bananas", "bananas.png", 40, 40, 3);
-        Carne carne = new Carne('c', "Carne", "meat.png", 50,0, 12);
+        Erva erva = new Erva('e', "erva", "grass.png", 20,20,20);
+        Banana banana = new Banana('b', "Cacho de Bananas", "bananas.png", 40, 40,40, 3);
+        Carne carne = new Carne('c', "Carne", "meat.png", 50,0,50, 12);
+        Agua agua = new Agua('a', "Agua", "water.png", 15,20,20);
 
         Random r = new Random();
         int low = 10;
         int high = 51;
         int result = r.nextInt(high-low) + low;
 
-        CogumelosMagicos cogumelo = new CogumelosMagicos('m', "Cogumelos magicos", "mushroom.png", result, result);
-        Agua agua = new Agua('a', "Agua", "water.png", 15,20);
+        CogumelosMagicos cogumelo = new CogumelosMagicos('m', "Cogumelos magicos", "mushroom.png", result, result,result);
 
         //Adding objects to list
         alfood.add(erva);

@@ -3,8 +3,8 @@ package pt.ulusofona.lp2.deisiJungle;
 public class Banana extends Foods{
     int quantidade;
 
-    public Banana(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int quantidade) {
-        super(identifier, nome, foodImage, energyCarnivoros, energyHerbivoros);
+    public Banana(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros, int quantidade) {
+        super(identifier, nome, foodImage, energyCarnivoros, energyHerbivoros, energyOmnivoros);
         this.quantidade = quantidade;
     }
 
@@ -35,5 +35,9 @@ public class Banana extends Foods{
 
     public int getQuantidade() {
         return quantidade;
+    }
+    @Override
+    public int getPosition() {
+        return position;
     }
 }

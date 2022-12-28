@@ -4,8 +4,8 @@ public class Carne extends Foods{
 
     int spoilTime;
 
-    public Carne(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int spoilTime) {
-        super(identifier, nome, foodImage, energyCarnivoros, energyHerbivoros);
+    public Carne(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros, int spoilTime) {
+        super(identifier, nome, foodImage, energyCarnivoros, energyHerbivoros, energyOmnivoros);
         this.spoilTime = spoilTime;
     }
 
@@ -32,6 +32,10 @@ public class Carne extends Foods{
     @Override
     public int getEnergyHerbivoros() {
         return energyHerbivoros;
+    }
+    @Override
+    public int getPosition() {
+        return position;
     }
 
 }
