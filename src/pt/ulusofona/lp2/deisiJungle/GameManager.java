@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
 
-//Classe Specie passar a herança, classe Food(nova) também herança, classe casa, que contenha informação de cada casa
 public class GameManager {
 
     int minPlayers = 2;
@@ -72,19 +71,13 @@ public class GameManager {
         return foods;
     }
 
-    public InitializationError createInitialJungle(int jungleSize,String[][] playersInfo, String[][] foodsInfo)
-    {
-        return createInitialJungle(jungleSize, playersInfo);
-
-
-    }
-
     public InitializationError createInitialJungle(int jungleSize, String[][] playersInfo){
         this.jungleSize = jungleSize;
         int nrOfTarzans = 0;
 
         //Validate number of players
-        if(playersInfo == null || playersInfo.length < minPlayers || playersInfo.length > maxPlayers || jungleSize < playersInfo.length * 2) {return new InitializationError("Invalid Number Of Players");}
+        if(playersInfo == null || playersInfo.length < minPlayers || playersInfo.length > maxPlayers || jungleSize < playersInfo.length * 2) {return new InitializationError("Invalid number of players");}
+
         //Validate incorrect ids and names
         for (String[] strings : playersInfo) {
             if (strings[0] == null || !strings[0].matches("[0-9]+") || strings[1] == null || strings[1].equals("")) {return new InitializationError("Incorrect id or name");}
@@ -101,33 +94,45 @@ public class GameManager {
                 return new InitializationError("Incorrect specie found");
             }
         }
-
+        //Creating players and adding them to the HashMaps
         for (String[] playerInfo : playersInfo) {
-            if(hmPlayers.size() < 4){
-                for (Specie  specie : alSpecies) {
-                    if(playerInfo[2].charAt(0) == specie.getIdentifier()) {
+            for (Specie  specie : alSpecies) {
+                if(playerInfo[2].charAt(0) == specie.getIdentifier()) {
 
-                        if(playerInfo[1].isEmpty()) {return new InitializationError("Name invalid") ;}
+                    if(playerInfo[2].equals(String.valueOf('Z')) && nrOfTarzans == 1) {return new InitializationError("There is already a tarzan player");}
 
-                        if(playerInfo[2].equals(String.valueOf('Z')) && nrOfTarzans == 1) {return new InitializationError("There is already a tarzan player");}
-
-                        if(playerInfo[2].equals(String.valueOf('Z')) && nrOfTarzans < 1) {
-                            nrOfTarzans ++;
-                        }
-
-                        Player player = new Player(Integer.parseInt(playerInfo[0]), playerInfo[1], specie, specie.getInitalEnergy());
-                        hmPlayers.put(player.getIdentifier(),player);
-                        hmKeyIdValuePos.put(player.getIdentifier(),1);
+                    if(playerInfo[2].equals(String.valueOf('Z')) && nrOfTarzans < 1) {
+                        nrOfTarzans ++;
                     }
+
+                    Player player = new Player(Integer.parseInt(playerInfo[0]), playerInfo[1], specie, specie.getInitalEnergy());
+                    hmPlayers.put(player.getIdentifier(),player);
+                    hmKeyIdValuePos.put(player.getIdentifier(),1);
                 }
             }
-            else {
-                return new InitializationError("Incorrect number of players");
-            }
         }
+
         orderByPosition = new int[hmKeyIdValuePos.size()];
         orderByID = new int[hmKeyIdValuePos.size()];
         orderOfPlay = idOrderOfPlay();
+
+        return null;
+    }
+
+    public InitializationError createInitialJungle(int jungleSize,String[][] playersInfo, String[][] foodsInfo)
+    {
+        createInitialJungle(jungleSize, playersInfo);
+
+        //Validate incorrect foods and incorrect positions for them
+        for (String[] strings : foodsInfo) {
+            if(strings[0] == null || !((strings[0].equals("e")) || (strings[0].equals("a")) || (strings[0].equals("b")) || (strings[0].equals("c")) || (strings[0].equals("m")))) {
+                return new InitializationError("Incorrect food found");
+            }
+            if(Integer.parseInt(strings[1]) <= 1 || Integer.parseInt(strings[1]) >= jungleSize) {
+                return new InitializationError("Ilegal position for food");
+            }
+        }
+
         return null;
     }
 
