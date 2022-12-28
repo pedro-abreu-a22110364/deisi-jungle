@@ -8,6 +8,11 @@ public class Banana extends Foods{
         this.quantidade = quantidade;
     }
 
+    public Banana(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros, int quantidade, int position) {
+        super(identifier, nome, foodImage, energyCarnivoros, energyHerbivoros, energyOmnivoros, position);
+        this.quantidade = quantidade;
+    }
+
     @Override
     public char getIdentifier() {
         return identifier;

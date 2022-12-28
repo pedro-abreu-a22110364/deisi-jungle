@@ -6,6 +6,10 @@ public class Erva extends Foods{
         super(identifier, nome, foodImage, energyCarnivoros, energyHerbivoros, energyOmnivoros);
     }
 
+    public Erva(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros, int position) {
+        super(identifier, nome, foodImage, energyCarnivoros, energyHerbivoros, energyOmnivoros, position);
+    }
+
     @Override
     public char getIdentifier() {
         return identifier;

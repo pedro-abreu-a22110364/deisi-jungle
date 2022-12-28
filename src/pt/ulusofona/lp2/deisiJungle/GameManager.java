@@ -133,6 +133,25 @@ public class GameManager {
             }
         }
 
+        for (String[] strings : foodsInfo) {
+            if(strings[0].equals("e")){
+                gameFoods.add(new Erva('e',"Erva","grass.png",-20,20,20,Integer.parseInt(strings[1])));
+            } else if (strings[0].equals("a")) {
+                gameFoods.add(new Agua('a',"Agua","water.png",15,15,20,Integer.parseInt(strings[1])));
+            } else if (strings[0].equals("b")) {
+                gameFoods.add(new Banana('b',"Banana","bananas.png",40,40,40,3,Integer.parseInt(strings[1])));
+            } else if (strings[0].equals("c")) {
+                gameFoods.add(new Carne('c',"Carne","meat.png",50,0,50,12,Integer.parseInt(strings[1])));
+            } else if (strings[0].equals("m")) {
+                Random r = new Random();
+                int low = 10;
+                int high = 51;
+                int result = r.nextInt(high-low) + low;
+
+                gameFoods.add(new CogumelosMagicos('m',"Cogumelos Magicos","mushroom.png",result,result,result,Integer.parseInt(strings[1])));
+            }
+        }
+
         return null;
     }
 

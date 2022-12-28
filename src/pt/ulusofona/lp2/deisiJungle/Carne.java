@@ -9,6 +9,11 @@ public class Carne extends Foods{
         this.spoilTime = spoilTime;
     }
 
+    public Carne(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros, int spoilTime, int position) {
+        super(identifier, nome, foodImage, energyCarnivoros, energyHerbivoros, energyOmnivoros, position);
+        this.spoilTime = spoilTime;
+    }
+
     @Override
     public char getIdentifier() {
         return identifier;
