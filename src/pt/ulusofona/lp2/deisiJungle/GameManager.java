@@ -4,6 +4,7 @@ import org.junit.runners.model.InitializationError;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -620,6 +621,109 @@ public class GameManager {
             lastOrdered--;
         }
 
+    }
+
+    public boolean saveGame(File file){
+        try {
+            // Check if the file already exists
+            if (!file.exists()) {
+                // If the file doesn't exist, create it
+                file.createNewFile();
+            }
+
+            // Open the file for writing
+            FileWriter writer = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(writer);
+
+            // Write some content to the file
+            bw.write("");
+
+            for (Specie specie : alSpecies) {
+                bw.write(specie.getSpecieClass() + "," +specie.getIdentifier() + "," + specie.getName() + "," + specie.getSpecieImage() + "," + specie.getSpecieType()
+                        + "," + specie.getInitalEnergy() + "," + specie.getNeededEnergy() + "," + specie.getEnergyRecovery() + "," + specie.getMinSpeed() + "," + specie.getMaxSpeed());
+                bw.newLine();
+            }
+
+            bw.newLine();
+
+            for (Foods foods : alFoods) {
+                if(foods.getFoodType().equals("carne"))
+                {
+                    bw.write(foods.getFoodType() + "," +foods.getIdentifier() + "," + foods.getNome() + "," + foods.getFoodImage() + "," + foods.getEnergyCarnivoros() +
+                            "," + foods.getEnergyOmnivoros() + "," + foods.getEnergyHerbivoros() + "," + foods.getPosition() + "," + ((Carne) foods).getSpoilTime());
+                }
+                else if(foods.getFoodType().equals("banana"))
+                {
+                    bw.write(foods.getFoodType() + "," +foods.getIdentifier() + "," + foods.getNome() + "," + foods.getFoodImage() + "," + foods.getEnergyCarnivoros() +
+                            "," + foods.getEnergyOmnivoros() + "," + foods.getEnergyHerbivoros() + "," + foods.getPosition() + "," + ((Banana) foods).getQuantidade());
+                }
+                else{
+                    bw.write(foods.getFoodType() + "," +foods.getIdentifier() + "," + foods.getNome() + "," + foods.getFoodImage() + "," + foods.getEnergyCarnivoros() +
+                            "," + foods.getEnergyOmnivoros() + "," + foods.getEnergyHerbivoros() + "," + foods.getPosition());
+                }
+
+                bw.newLine();
+            }
+
+            bw.newLine();
+
+            for (Player player : hmPlayers.values()) {
+                bw.write(player.getIdentifier() + "," + player.getName() + "," + player.getSpecie() + "," +
+                        player.getEnergy() + "," + player.getRank() + "," + player.getPosition());
+                bw.newLine();
+            }
+
+            bw.newLine();
+
+            for (Foods food : gameFoods) {
+                if(food.getFoodType().equals("carne"))
+                {
+                    bw.write(food.getFoodType() + "," +food.getIdentifier() + "," + food.getNome() + "," + food.getFoodImage() + "," + food.getEnergyCarnivoros() +
+                            "," + food.getEnergyOmnivoros() + "," + food.getEnergyHerbivoros() + "," + food.getPosition() + "," + ((Carne) food).getSpoilTime());
+                }
+                else if(food.getFoodType().equals("banana"))
+                {
+                    bw.write(food.getFoodType() + "," +food.getIdentifier() + "," + food.getNome() + "," + food.getFoodImage() + "," + food.getEnergyCarnivoros() +
+                            "," + food.getEnergyOmnivoros() + "," + food.getEnergyHerbivoros() + "," + food.getPosition() + "," + ((Banana) food).getQuantidade());
+                }
+                else{
+                    bw.write(food.getFoodType() + "," +food.getIdentifier() + "," + food.getNome() + "," + food.getFoodImage() + "," + food.getEnergyCarnivoros() +
+                            "," + food.getEnergyOmnivoros() + "," + food.getEnergyHerbivoros() + "," + food.getPosition());
+                }
+
+                bw.newLine();
+            }
+            // Close the writer to save the changes
+            bw.close();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    public boolean loadGame(File file){
+        try {
+            // Check if the file exists
+            if (!file.exists()) {
+                return false;
+            }
+
+            // Open the file for reading
+            FileReader reader = new FileReader(file);
+            BufferedReader br = new BufferedReader(reader);
+
+            // Read the contents of the file line by line
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+
+            // Close the reader
+            br.close();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     public void sortArrayByPositionWithEqualID () {

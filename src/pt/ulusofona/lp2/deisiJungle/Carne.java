@@ -33,7 +33,10 @@ public class Carne extends Foods{
     public int getEnergyCarnivoros() {
         return energyCarnivoros;
     }
-
+    @Override
+    public int getEnergyOmnivoros() {
+        return energyOmnivoros;
+    }
     @Override
     public int getEnergyHerbivoros() {
         return energyHerbivoros;
@@ -41,6 +44,15 @@ public class Carne extends Foods{
     @Override
     public int getPosition() {
         return position;
+    }
+
+    public int getSpoilTime() {
+        return spoilTime;
+    }
+
+    @Override
+    public String getFoodType() {
+        return "carne";
     }
 
 }

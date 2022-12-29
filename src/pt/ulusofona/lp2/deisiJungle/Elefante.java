@@ -51,5 +51,10 @@ public class Elefante extends Specie{
         return specieType;
     }
 
+    @Override
+    public String getSpecieClass() {
+        return "elefante";
+    }
+
 
 }

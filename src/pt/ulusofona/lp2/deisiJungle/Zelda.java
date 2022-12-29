@@ -47,4 +47,8 @@ public class Zelda extends Specie{
     public String getSpecieType() {
         return specieType;
     }
+    @Override
+    public String getSpecieClass() {
+        return "zelda";
+    }
 }

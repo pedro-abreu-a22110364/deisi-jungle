@@ -29,7 +29,10 @@ public class CogumelosMagicos extends Foods {
     public int getEnergyCarnivoros() {
         return energyCarnivoros;
     }
-
+    @Override
+    public int getEnergyOmnivoros() {
+        return energyOmnivoros;
+    }
     @Override
     public int getEnergyHerbivoros() {
         return energyHerbivoros;
@@ -37,5 +40,9 @@ public class CogumelosMagicos extends Foods {
     @Override
     public int getPosition() {
         return position;
+    }
+    @Override
+    public String getFoodType() {
+        return "cogumelos";
     }
 }

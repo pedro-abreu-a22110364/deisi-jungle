@@ -48,4 +48,8 @@ public class Passaro extends Specie{
     public String getSpecieType() {
         return specieType;
     }
+    @Override
+    public String getSpecieClass() {
+        return "passaro";
+    }
 }

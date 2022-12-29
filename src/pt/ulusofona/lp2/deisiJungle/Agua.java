@@ -36,7 +36,18 @@ public class Agua extends Foods{
     }
 
     @Override
+    public int getEnergyOmnivoros() {
+        return energyOmnivoros;
+    }
+
+
+    @Override
     public int getPosition() {
         return position;
+    }
+
+    @Override
+    public String getFoodType() {
+        return "agua";
     }
 }

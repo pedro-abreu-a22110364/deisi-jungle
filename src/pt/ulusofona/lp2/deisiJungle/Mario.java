@@ -23,7 +23,6 @@ public class Mario extends Specie{
     public int getInitalEnergy() {
         return initalEnergy;
     }
-
     @Override
     public int getNeededEnergy() {
         return neededEnergy;
@@ -46,5 +45,9 @@ public class Mario extends Specie{
     @Override
     public String getSpecieType() {
         return specieType;
+    }
+    @Override
+    public String getSpecieClass() {
+        return "mario";
     }
 }
