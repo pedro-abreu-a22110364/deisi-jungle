@@ -16,6 +16,10 @@ public class House {
         return players;
     }
 
+    public Food getFood() {
+        return food;
+    }
+
     public int getPosition() {
         return position;
     }

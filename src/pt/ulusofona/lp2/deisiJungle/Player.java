@@ -9,8 +9,16 @@ public class Player {
     int energy; //Mudar tipo de variavel consoante o que é pedido
     int rank; //Mudar de classe caso necessário
     int position = 1;
+    int distance = 0;
 
     ArrayList<Food> eatenFoods = new ArrayList<>();
+
+    public Player(int identifier, String name, Specie specie, int energy) {
+        this.identifier = identifier;
+        this.name = name;
+        this.specie = specie;
+        this.energy = energy;
+    }
 
     public int getPosition() {
         return position;
@@ -44,14 +52,19 @@ public class Player {
         return energy;
     }
 
-    public Player(int identifier, String name, Specie specie, int energy) {
-        this.identifier = identifier;
-        this.name = name;
-        this.specie = specie;
-        this.energy = energy;
-    }
-
     public void removeEnergy(int energy) {
         this.energy -= energy;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void increseDistance(int distance){
+        this.distance += distance;
+    }
+
+    public ArrayList<Food> getEatenFoods() {
+        return eatenFoods;
     }
 }

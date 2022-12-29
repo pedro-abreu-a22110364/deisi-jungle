@@ -1,6 +1,7 @@
 package pt.ulusofona.lp2.deisiJungle;
 
 public class Banana extends Food{
+
     int quantidade;
 
     public Banana(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros, int quantidade) {

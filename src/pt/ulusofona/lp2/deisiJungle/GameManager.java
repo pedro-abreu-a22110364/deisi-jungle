@@ -215,25 +215,22 @@ public class GameManager {
         }
 
         for (Player player : hmPlayers.values()) {
-            if(player.getPosition() == squareNr)
-            {
+            if(player.getPosition() == squareNr) {
                numberPlayers++;
             }
         }
         int[] arrayID = new int[numberPlayers];
 
         for (Player player : hmPlayers.values()) {
-            if(player.getPosition() == squareNr)
-            {
+            if(player.getPosition() == squareNr) {
                 arrayID[count] = player.getIdentifier();
                 count++;
             }
         }
-        if(count == 0)
-        {
+        if(count == 0) {
             return new int[0];
         }
-            return arrayID;
+        return arrayID;
     }
 
     public String[] getSquareInfo(int squareNr) {
@@ -244,13 +241,41 @@ public class GameManager {
             return null;
         }
 
-        if(squareNr == jungleSize)
-        {
+        for (House house : alHouses) {
+            if (house.getPosition() == squareNr) {
+                strSquareInfo[0] = "blank.png";
+                strSquareInfo[1] = "Vazio";
+
+                if (house.getFood() != null) {
+                    switch (house.getFood().getIdentifier()) {
+                        case 'e' -> {
+                            strSquareInfo[0] = "grass.png";
+                            strSquareInfo[1] = "Erva : +- 20 energia";
+                        }
+                        case 'a' -> {
+                            strSquareInfo[0] = "water.png";
+                            strSquareInfo[1] = "Agua : + 15U|20% energia";
+                        }
+                        case 'b' -> {
+                            strSquareInfo[0] = "bananas.png";
+                            strSquareInfo[1] = "Bananas : " + ((Banana) house.getFood()).getQuantidade() + " : + 40 energia";
+                        }
+                        case 'c' -> {
+                            strSquareInfo[0] = "meat.png";
+                            strSquareInfo[1] = "Carne : +- 50 energia : " + ((Carne) house.getFood()).getSpoilTime() + " jogadas";
+                        }
+                        case 'm' -> {
+                            strSquareInfo[0] = "mushroom.png";
+                            strSquareInfo[1] = "Cogumelo Magico: +- " + house.getFood().getEnergyOmnivoros() + "% energia";
+                        }
+                    }
+                }
+            }
+        }
+
+        if(squareNr == jungleSize) {
             strSquareInfo[0] = "finish.png";
             strSquareInfo[1] = "Meta";
-        }else{
-            strSquareInfo[0] = "blank.png";
-            strSquareInfo[1] = "Vazio";
         }
 
         //string with player identifiers
@@ -324,6 +349,7 @@ public class GameManager {
         }
         //Verifica se o jogo já acabou
         if(gameFinished) {return false;}
+
         //Verifica se todos os players n tem energia
         if(!checkWinner()) {return checkWinner();}
         if(hmPlayers.get(idPlayerPlaying).getEnergy() - hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() < 0) {
@@ -391,21 +417,21 @@ public class GameManager {
         getRanking();
 
         if(hmPlayers.size() == 4) {
-            alGameResults.add("#" + hmPlayers.get(orderByID[3]).getRank() + " " + hmPlayers.get(orderByID[3]).getName() + ", " + hmPlayers.get(orderByID[3]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[3]).getPosition());
-            alGameResults.add("#" + hmPlayers.get(orderByID[2]).getRank() + " " + hmPlayers.get(orderByID[2]).getName() + ", " + hmPlayers.get(orderByID[2]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[2]).getPosition());
-            alGameResults.add("#" + hmPlayers.get(orderByID[1]).getRank() + " " + hmPlayers.get(orderByID[1]).getName() + ", " + hmPlayers.get(orderByID[1]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[1]).getPosition());
-            alGameResults.add("#" + hmPlayers.get(orderByID[0]).getRank() + " " + hmPlayers.get(orderByID[0]).getName() + ", " + hmPlayers.get(orderByID[0]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[0]).getPosition());
+            alGameResults.add("#" + hmPlayers.get(orderByID[3]).getRank() + " " + hmPlayers.get(orderByID[3]).getName() + ", " + hmPlayers.get(orderByID[3]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[3]).getPosition() + ", " + hmPlayers.get(orderByID[3]).getDistance() + ", " + hmPlayers.get(orderByID[3]).getEatenFoods().size());
+            alGameResults.add("#" + hmPlayers.get(orderByID[2]).getRank() + " " + hmPlayers.get(orderByID[2]).getName() + ", " + hmPlayers.get(orderByID[2]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[2]).getPosition() + ", " + hmPlayers.get(orderByID[2]).getDistance() + ", " + hmPlayers.get(orderByID[2]).getEatenFoods().size());
+            alGameResults.add("#" + hmPlayers.get(orderByID[1]).getRank() + " " + hmPlayers.get(orderByID[1]).getName() + ", " + hmPlayers.get(orderByID[1]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[1]).getPosition() + ", " + hmPlayers.get(orderByID[1]).getDistance() + ", " + hmPlayers.get(orderByID[1]).getEatenFoods().size());
+            alGameResults.add("#" + hmPlayers.get(orderByID[0]).getRank() + " " + hmPlayers.get(orderByID[0]).getName() + ", " + hmPlayers.get(orderByID[0]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[0]).getPosition() + ", " + hmPlayers.get(orderByID[0]).getDistance() + ", " + hmPlayers.get(orderByID[0]).getEatenFoods().size());
         }
 
         if(hmPlayers.size() == 3) {
-            alGameResults.add("#" + hmPlayers.get(orderByID[2]).getRank() + " " + hmPlayers.get(orderByID[2]).getName() + ", " + hmPlayers.get(orderByID[2]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[2]).getPosition());
-            alGameResults.add("#" + hmPlayers.get(orderByID[1]).getRank() + " " + hmPlayers.get(orderByID[1]).getName() + ", " + hmPlayers.get(orderByID[1]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[1]).getPosition());
-            alGameResults.add("#" + hmPlayers.get(orderByID[0]).getRank() + " " + hmPlayers.get(orderByID[0]).getName() + ", " + hmPlayers.get(orderByID[0]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[0]).getPosition());
+            alGameResults.add("#" + hmPlayers.get(orderByID[2]).getRank() + " " + hmPlayers.get(orderByID[2]).getName() + ", " + hmPlayers.get(orderByID[2]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[2]).getPosition() + ", " + hmPlayers.get(orderByID[2]).getDistance() + ", " + hmPlayers.get(orderByID[2]).getEatenFoods().size());
+            alGameResults.add("#" + hmPlayers.get(orderByID[1]).getRank() + " " + hmPlayers.get(orderByID[1]).getName() + ", " + hmPlayers.get(orderByID[1]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[1]).getPosition() + ", " + hmPlayers.get(orderByID[1]).getDistance() + ", " + hmPlayers.get(orderByID[1]).getEatenFoods().size());
+            alGameResults.add("#" + hmPlayers.get(orderByID[0]).getRank() + " " + hmPlayers.get(orderByID[0]).getName() + ", " + hmPlayers.get(orderByID[0]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[0]).getPosition() + ", " + hmPlayers.get(orderByID[0]).getDistance() + ", " + hmPlayers.get(orderByID[0]).getEatenFoods().size());
         }
 
         if(hmPlayers.size() == 2) {
-            alGameResults.add("#" + hmPlayers.get(orderByID[1]).getRank() + " " + hmPlayers.get(orderByID[1]).getName() + ", " + hmPlayers.get(orderByID[1]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[1]).getPosition());
-            alGameResults.add("#" + hmPlayers.get(orderByID[0]).getRank() + " " + hmPlayers.get(orderByID[0]).getName() + ", " + hmPlayers.get(orderByID[0]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[0]).getPosition());
+            alGameResults.add("#" + hmPlayers.get(orderByID[1]).getRank() + " " + hmPlayers.get(orderByID[1]).getName() + ", " + hmPlayers.get(orderByID[1]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[1]).getPosition() + ", " + hmPlayers.get(orderByID[1]).getDistance() + ", " + hmPlayers.get(orderByID[1]).getEatenFoods().size());
+            alGameResults.add("#" + hmPlayers.get(orderByID[0]).getRank() + " " + hmPlayers.get(orderByID[0]).getName() + ", " + hmPlayers.get(orderByID[0]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[0]).getPosition() + ", " + hmPlayers.get(orderByID[0]).getDistance() + ", " + hmPlayers.get(orderByID[0]).getEatenFoods().size());
         }
 
         return alGameResults;

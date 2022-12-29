@@ -3,15 +3,13 @@ package pt.ulusofona.lp2.deisiJungle;
 public abstract class Food {
     char identifier;
     String nome;
-
     String foodImage;
-    int energyCarnivoros;
 
+    int energyCarnivoros;
     int energyOmnivoros;
     int energyHerbivoros;
 
     int position;
-
 
     public Food(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros) {
         this.identifier = identifier;
@@ -21,7 +19,6 @@ public abstract class Food {
         this.energyOmnivoros = energyOmnivoros;
         this.energyHerbivoros = energyHerbivoros;
     }
-
 
     public Food(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros, int position) {
         this.identifier = identifier;
@@ -36,12 +33,12 @@ public abstract class Food {
     public abstract char getIdentifier();
     public abstract String getNome();
     public abstract String getFoodImage();
+
     public abstract int getEnergyCarnivoros();
     public abstract int getEnergyOmnivoros();
-
     public abstract int getEnergyHerbivoros();
-    public abstract int getPosition();
 
+    public abstract int getPosition();
     public abstract String getFoodType();
 
 
