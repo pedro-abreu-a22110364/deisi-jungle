@@ -1,6 +1,6 @@
 package pt.ulusofona.lp2.deisiJungle;
 
-public class Erva extends Foods{
+public class Erva extends Food{
 
     public Erva(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros) {
         super(identifier, nome, foodImage, energyCarnivoros, energyHerbivoros, energyOmnivoros);
@@ -29,20 +29,24 @@ public class Erva extends Foods{
     public int getEnergyCarnivoros() {
         return energyCarnivoros;
     }
+
     @Override
     public int getEnergyOmnivoros() {
         return energyOmnivoros;
     }
+
     @Override
     public int getEnergyHerbivoros() {
         return energyHerbivoros;
     }
+
     @Override
     public int getPosition() {
         return position;
     }
+
     @Override
     public String getFoodType() {
-        return "erva";
+        return "Erva";
     }
 }

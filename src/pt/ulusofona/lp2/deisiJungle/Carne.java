@@ -1,6 +1,6 @@
 package pt.ulusofona.lp2.deisiJungle;
 
-public class Carne extends Foods{
+public class Carne extends Food{
 
     int spoilTime;
 
@@ -33,14 +33,17 @@ public class Carne extends Foods{
     public int getEnergyCarnivoros() {
         return energyCarnivoros;
     }
+
     @Override
     public int getEnergyOmnivoros() {
         return energyOmnivoros;
     }
+
     @Override
     public int getEnergyHerbivoros() {
         return energyHerbivoros;
     }
+
     @Override
     public int getPosition() {
         return position;
@@ -52,7 +55,7 @@ public class Carne extends Foods{
 
     @Override
     public String getFoodType() {
-        return "carne";
+        return "Carne";
     }
 
 }

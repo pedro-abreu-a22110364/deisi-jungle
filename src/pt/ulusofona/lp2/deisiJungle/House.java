@@ -1,5 +1,22 @@
 package pt.ulusofona.lp2.deisiJungle;
 
+import java.util.ArrayList;
+
 public class House {
-    Foods food;
+    ArrayList<Player> players;
+    Food food;
+    int position = 0;
+
+    House() {
+        players = new ArrayList<>();
+        this.position++;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void colocarComida(Food food) {
+        this.food = food;
+    }
 }

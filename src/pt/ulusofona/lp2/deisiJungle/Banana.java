@@ -1,6 +1,6 @@
 package pt.ulusofona.lp2.deisiJungle;
 
-public class Banana extends Foods{
+public class Banana extends Food{
     int quantidade;
 
     public Banana(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros, int quantidade) {
@@ -32,10 +32,12 @@ public class Banana extends Foods{
     public int getEnergyCarnivoros() {
         return energyCarnivoros;
     }
+
     @Override
     public int getEnergyOmnivoros() {
         return energyOmnivoros;
     }
+
     @Override
     public int getEnergyHerbivoros() {
         return energyHerbivoros;
@@ -44,6 +46,7 @@ public class Banana extends Foods{
     public int getQuantidade() {
         return quantidade;
     }
+
     @Override
     public int getPosition() {
         return position;
@@ -51,6 +54,6 @@ public class Banana extends Foods{
 
     @Override
     public String getFoodType() {
-        return "banana";
+        return "Banana";
     }
 }

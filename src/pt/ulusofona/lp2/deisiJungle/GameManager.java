@@ -29,10 +29,13 @@ public class GameManager {
     int[] orderOfPlay;
     int[] orderByPosition;
     int[] orderByID;
-    ArrayList<Specie> alSpecies = createDefaultSpecies();
-    ArrayList<Foods> alFoods = createDefaultFoods();
 
-    ArrayList<Foods> gameFoods = new ArrayList<>();
+    ArrayList<Player> alPlayer = new ArrayList<>();
+    ArrayList<Specie> alSpecies = createDefaultSpecies();
+    ArrayList<Food> alFoods = createDefaultFoods();
+    ArrayList<House> alHouses = new ArrayList<>();
+
+    ArrayList<Food> gameFoods = new ArrayList<>();
     HashMap<Integer,Player> hmPlayers = new HashMap<>(); //HashMap with id player as key
     HashMap<Integer,Integer> hmKeyIdValuePos = new HashMap<>();
 
@@ -62,13 +65,13 @@ public class GameManager {
         String[][] foods = new String[alFoods.size()][3];
         int count = 0;
 
-        for (Foods alFood : alFoods) {
+        for (Food alFood : alFoods) {
             foods[count][0] = alFood.getIdentifier() + "" ;
             foods[count][1] = alFood.getNome() + "";
             foods[count][2] = alFood.getFoodImage() + "";
+
             count++;
         }
-
         return foods;
     }
 
@@ -107,10 +110,16 @@ public class GameManager {
                     }
 
                     Player player = new Player(Integer.parseInt(playerInfo[0]), playerInfo[1], specie, specie.getInitalEnergy());
+                    alPlayer.add(player);
                     hmPlayers.put(player.getIdentifier(),player);
                     hmKeyIdValuePos.put(player.getIdentifier(),1);
                 }
             }
+        }
+
+        for (int i = 0; i < jungleSize; i++) {
+            House house = new House();
+            alHouses.add(house);
         }
 
         orderByPosition = new int[hmKeyIdValuePos.size()];
@@ -122,6 +131,7 @@ public class GameManager {
 
     public InitializationError createInitialJungle(int jungleSize,String[][] playersInfo, String[][] foodsInfo)
     {
+
         createInitialJungle(jungleSize, playersInfo);
 
         //Validate incorrect foods and incorrect positions for them
@@ -135,24 +145,59 @@ public class GameManager {
         }
 
         for (String[] strings : foodsInfo) {
-            if(strings[0].equals("e")){
-                gameFoods.add(new Erva('e',"Erva","grass.png",-20,20,20,Integer.parseInt(strings[1])));
+
+            if (strings[0].equals("e")) {
+                Erva erva = new Erva('e', "Erva", "grass.png", -20, 20, 20, Integer.parseInt(strings[1]));
+                gameFoods.add(erva);
+
+                for (House alHouse : alHouses) {
+                    if (alHouse.getPosition() == Integer.parseInt(strings[1])) {
+                        alHouse.colocarComida(erva);
+                    }
+                }
             } else if (strings[0].equals("a")) {
-                gameFoods.add(new Agua('a',"Agua","water.png",15,15,20,Integer.parseInt(strings[1])));
+                Agua agua = new Agua('a', "Agua", "water.png", 15, 15, 20, Integer.parseInt(strings[1]));
+                gameFoods.add(agua);
+
+                for (House alHouse : alHouses) {
+                    if (alHouse.getPosition() == Integer.parseInt(strings[1])) {
+                        alHouse.colocarComida(agua);
+                    }
+                }
             } else if (strings[0].equals("b")) {
-                gameFoods.add(new Banana('b',"Banana","bananas.png",40,40,40,3,Integer.parseInt(strings[1])));
+                Banana banana = new Banana('b', "Banana", "bananas.png", 40, 40, 40, 3, Integer.parseInt(strings[1]));
+                gameFoods.add(banana);
+
+                for (House alHouse : alHouses) {
+                    if (alHouse.getPosition() == Integer.parseInt(strings[1])) {
+                        alHouse.colocarComida(banana);
+                    }
+                }
             } else if (strings[0].equals("c")) {
-                gameFoods.add(new Carne('c',"Carne","meat.png",50,0,50,12,Integer.parseInt(strings[1])));
+                Carne carne = new Carne('c', "Carne", "meat.png", 50, 0, 50, 12, Integer.parseInt(strings[1]));
+                gameFoods.add(carne);
+
+                for (House alHouse : alHouses) {
+                    if (alHouse.getPosition() == Integer.parseInt(strings[1])) {
+                        alHouse.colocarComida(carne);
+                    }
+                }
             } else if (strings[0].equals("m")) {
                 Random r = new Random();
                 int low = 10;
                 int high = 51;
-                int result = r.nextInt(high-low) + low;
+                int result = r.nextInt(high - low) + low;
 
-                gameFoods.add(new CogumelosMagicos('m',"Cogumelos Magicos","mushroom.png",result,result,result,Integer.parseInt(strings[1])));
+                CogumelosMagicos cogumelosMagicos = new CogumelosMagicos('m', "Cogumelos Magicos", "mushroom.png", result, result, result, Integer.parseInt(strings[1]));
+                gameFoods.add(cogumelosMagicos);
+
+                for (House alHouse : alHouses) {
+                    if (alHouse.getPosition() == Integer.parseInt(strings[1])) {
+                        alHouse.colocarComida(cogumelosMagicos);
+                    }
+                }
             }
         }
-
         return null;
     }
 
@@ -198,12 +243,12 @@ public class GameManager {
         {
             strSquareInfo[0] = "finish.png";
             strSquareInfo[1] = "Meta";
-        }
-        else{
+        }else{
             strSquareInfo[0] = "blank.png";
             strSquareInfo[1] = "Vazio";
         }
 
+        //string with player identifiers
         strSquareInfo[2] = playersInSquare;
 
         for (Player player : hmPlayers.values()) {
@@ -212,6 +257,7 @@ public class GameManager {
                 playersInSquare += player.getIdentifier() + ",";
             }
         }
+
         if (!playersInSquare.equals("")) {
             strSquareInfo[2] = playersInSquare.substring(0, playersInSquare.length() - 1);
         }
@@ -431,8 +477,8 @@ public class GameManager {
         return alSpecies;
     }
 
-    public ArrayList<Foods> createDefaultFoods() {
-        ArrayList<Foods> alfood = new ArrayList<>(); //Creating the list to return it later
+    public ArrayList<Food> createDefaultFoods() {
+        ArrayList<Food> alfood = new ArrayList<>(); //Creating the list to return it later
 
         Erva erva = new Erva('e', "erva", "grass.png", 20,20,20);
         Banana banana = new Banana('b', "Cacho de Bananas", "bananas.png", 40, 40,40, 3);
@@ -646,7 +692,7 @@ public class GameManager {
 
             bw.newLine();
 
-            for (Foods foods : alFoods) {
+            for (Food foods : alFoods) {
                 if(foods.getFoodType().equals("carne"))
                 {
                     bw.write(foods.getFoodType() + "," +foods.getIdentifier() + "," + foods.getNome() + "," + foods.getFoodImage() + "," + foods.getEnergyCarnivoros() +
@@ -675,7 +721,7 @@ public class GameManager {
 
             bw.newLine();
 
-            for (Foods food : gameFoods) {
+            for (Food food : gameFoods) {
                 if(food.getFoodType().equals("carne"))
                 {
                     bw.write(food.getFoodType() + "," +food.getIdentifier() + "," + food.getNome() + "," + food.getFoodImage() + "," + food.getEnergyCarnivoros() +

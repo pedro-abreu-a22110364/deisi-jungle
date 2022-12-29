@@ -1,6 +1,6 @@
 package pt.ulusofona.lp2.deisiJungle;
 
-public abstract class Foods {
+public abstract class Food {
     char identifier;
     String nome;
 
@@ -13,7 +13,7 @@ public abstract class Foods {
     int position;
 
 
-    public Foods(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros) {
+    public Food(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros) {
         this.identifier = identifier;
         this.nome = nome;
         this.foodImage = foodImage;
@@ -23,7 +23,7 @@ public abstract class Foods {
     }
 
 
-    public Foods(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros, int position) {
+    public Food(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros, int position) {
         this.identifier = identifier;
         this.nome = nome;
         this.foodImage = foodImage;

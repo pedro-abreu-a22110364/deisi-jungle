@@ -10,7 +10,7 @@ public class Player {
     int rank; //Mudar de classe caso necessário
     int position = 1;
 
-    ArrayList<Foods> eatenFoods = new ArrayList<>();
+    ArrayList<Food> eatenFoods = new ArrayList<>();
 
     public int getPosition() {
         return position;

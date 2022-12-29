@@ -1,6 +1,6 @@
 package pt.ulusofona.lp2.deisiJungle;
 
-public class Agua extends Foods{
+public class Agua extends Food{
 
     public Agua(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros) {
         super(identifier, nome, foodImage, energyCarnivoros, energyHerbivoros, energyOmnivoros);
@@ -40,7 +40,6 @@ public class Agua extends Foods{
         return energyOmnivoros;
     }
 
-
     @Override
     public int getPosition() {
         return position;
@@ -48,6 +47,6 @@ public class Agua extends Foods{
 
     @Override
     public String getFoodType() {
-        return "agua";
+        return "Agua";
     }
 }
