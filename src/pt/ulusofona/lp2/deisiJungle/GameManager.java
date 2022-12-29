@@ -119,6 +119,11 @@ public class GameManager {
 
         for (int i = 0; i < jungleSize; i++) {
             House house = new House();
+            if (house.getPosition() == 1) {
+                for (Player player : alPlayer) {
+                    house.getPlayers().add(player);
+                }
+            }
             alHouses.add(house);
         }
 
