@@ -681,64 +681,28 @@ public class GameManager {
             FileWriter writer = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(writer);
 
-            // Write some content to the file
+            //Cleans File first.
             bw.write("");
 
-            for (Specie specie : alSpecies) {
-                bw.write(specie.getSpecieClass() + "," +specie.getIdentifier() + "," + specie.getName() + "," + specie.getSpecieImage() + "," + specie.getSpecieType()
-                        + "," + specie.getInitalEnergy() + "," + specie.getNeededEnergy() + "," + specie.getEnergyRecovery() + "," + specie.getMinSpeed() + "," + specie.getMaxSpeed());
-                bw.newLine();
-            }
 
-            bw.newLine();
-
-            for (Food foods : alFoods) {
-                if(foods.getFoodType().equals("carne"))
-                {
-                    bw.write(foods.getFoodType() + "," +foods.getIdentifier() + "," + foods.getNome() + "," + foods.getFoodImage() + "," + foods.getEnergyCarnivoros() +
-                            "," + foods.getEnergyOmnivoros() + "," + foods.getEnergyHerbivoros() + "," + foods.getPosition() + "," + ((Carne) foods).getSpoilTime());
-                }
-                else if(foods.getFoodType().equals("banana"))
-                {
-                    bw.write(foods.getFoodType() + "," +foods.getIdentifier() + "," + foods.getNome() + "," + foods.getFoodImage() + "," + foods.getEnergyCarnivoros() +
-                            "," + foods.getEnergyOmnivoros() + "," + foods.getEnergyHerbivoros() + "," + foods.getPosition() + "," + ((Banana) foods).getQuantidade());
-                }
-                else{
-                    bw.write(foods.getFoodType() + "," +foods.getIdentifier() + "," + foods.getNome() + "," + foods.getFoodImage() + "," + foods.getEnergyCarnivoros() +
-                            "," + foods.getEnergyOmnivoros() + "," + foods.getEnergyHerbivoros() + "," + foods.getPosition());
-                }
-
-                bw.newLine();
-            }
-
-            bw.newLine();
-
+            // Write some content to the file
+            bw.write("Players");
             for (Player player : hmPlayers.values()) {
                 bw.write(player.getIdentifier() + "," + player.getName() + "," + player.getSpecie() + "," +
                         player.getEnergy() + "," + player.getRank() + "," + player.getPosition());
                 bw.newLine();
             }
 
-            bw.newLine();
-
+            bw.write("Food");
             for (Food food : gameFoods) {
-                if(food.getFoodType().equals("carne"))
-                {
-                    bw.write(food.getFoodType() + "," +food.getIdentifier() + "," + food.getNome() + "," + food.getFoodImage() + "," + food.getEnergyCarnivoros() +
-                            "," + food.getEnergyOmnivoros() + "," + food.getEnergyHerbivoros() + "," + food.getPosition() + "," + ((Carne) food).getSpoilTime());
-                }
-                else if(food.getFoodType().equals("banana"))
-                {
-                    bw.write(food.getFoodType() + "," +food.getIdentifier() + "," + food.getNome() + "," + food.getFoodImage() + "," + food.getEnergyCarnivoros() +
-                            "," + food.getEnergyOmnivoros() + "," + food.getEnergyHerbivoros() + "," + food.getPosition() + "," + ((Banana) food).getQuantidade());
-                }
-                else{
-                    bw.write(food.getFoodType() + "," +food.getIdentifier() + "," + food.getNome() + "," + food.getFoodImage() + "," + food.getEnergyCarnivoros() +
-                            "," + food.getEnergyOmnivoros() + "," + food.getEnergyHerbivoros() + "," + food.getPosition());
-                }
-
+                bw.write(food.getIdentifier() + "," + food.getPosition());
                 bw.newLine();
             }
+
+            bw.write("GameManager");
+            bw.write(gameFinished + "," + jungleSize + "," + idPlayerPlaying + "," + playerPlaying);
+
+
             // Close the writer to save the changes
             bw.close();
             return true;
@@ -757,11 +721,25 @@ public class GameManager {
             // Open the file for reading
             FileReader reader = new FileReader(file);
             BufferedReader br = new BufferedReader(reader);
-
+            String[] arrPlayer = new String[6];
+            String[] arrFood = new String[6];
+            String[] arrGameManager = new String[6];
             // Read the contents of the file line by line
             String line;
-            while ((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null)
+            {
+
+                if(!line.equals("Players")){
+
+                }
+                if(line.equals("Foods")){
+                    break;
+                }
                 System.out.println(line);
+            }
+            while ((line = br.readLine()) != null)
+            {
+
             }
 
             // Close the reader
