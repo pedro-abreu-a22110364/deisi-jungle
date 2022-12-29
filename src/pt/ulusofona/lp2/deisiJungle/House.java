@@ -12,6 +12,10 @@ public class House {
         this.position++;
     }
 
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
     public int getPosition() {
         return position;
     }
