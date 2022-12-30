@@ -37,6 +37,8 @@ public class GameManager {
     HashMap<Integer,Player> hmPlayers = new HashMap<>(); //HashMap with id player as key
     HashMap<Integer,Integer> hmKeyIdValuePos = new HashMap<>();
 
+    InitializationError errorTemp;
+
     public GameManager(){
 
     }
@@ -82,22 +84,32 @@ public class GameManager {
         int nrOfTarzans = 0;
 
         //Validate number of players
-        if(playersInfo == null || playersInfo.length < minPlayers || playersInfo.length > maxPlayers || jungleSize < playersInfo.length * 2) {return new InitializationError("Invalid number of players");}
+        if(playersInfo == null || playersInfo.length < minPlayers || playersInfo.length > maxPlayers || jungleSize < playersInfo.length * 2) {
+            errorTemp = new InitializationError("Invalid number of players");
+            return errorTemp;
+        }
 
         //Validate incorrect ids and names
         for (String[] strings : playersInfo) {
-            if (strings[0] == null || !strings[0].matches("[0-9]+") || strings[1] == null || strings[1].equals("")) {return new InitializationError("Incorrect id or name");}
+            if (strings[0] == null || !strings[0].matches("[0-9]+") || strings[1] == null || strings[1].equals("")) {
+                errorTemp = new InitializationError("Incorrect id or name");
+                return errorTemp;
+            }
         }
         //Validate repeated ids
         for (int x = 0; x < playersInfo.length; x++) {
             for (int y = x + 1; y < playersInfo.length; y++) {
-                if(Objects.equals(playersInfo[x][0], playersInfo[y][0])) {return new InitializationError("Repeated ids found");}
+                if(Objects.equals(playersInfo[x][0], playersInfo[y][0])) {
+                    errorTemp = new InitializationError("Repeated ids found");
+                    return errorTemp;
+                }
             }
         }
         //Validate incorrect species
         for (String[] strings : playersInfo) {
             if(strings[2] == null || !((strings[2].equals("E")) || (strings[2].equals("L")) || (strings[2].equals("T")) || (strings[2].equals("P")) || (strings[2].equals("Z")) || (strings[2].equals("M")) || (strings[2].equals("G")) || (strings[2].equals("Y")) || (strings[2].equals("X")))) {
-                return new InitializationError("Incorrect specie found");
+                errorTemp = new InitializationError("Incorrect specie found");
+                return errorTemp;
             }
         }
         //Creating players and adding them to the HashMaps
@@ -138,8 +150,18 @@ public class GameManager {
 
     public InitializationError createInitialJungle(int jungleSize,String[][] playersInfo, String[][] foodsInfo)
     {
-
         createInitialJungle(jungleSize, playersInfo);
+        if (errorTemp != null) {
+            if (Objects.equals(errorTemp.getMessage(), "Invalid number of players")) {
+                return new InitializationError("Invalid number of players");
+            } else if (Objects.equals(errorTemp.getMessage(), "Incorrect id or name")) {
+                return new InitializationError("Incorrect id or name");
+            } else if (Objects.equals(errorTemp.getMessage(), "Repeated ids found")) {
+                return new InitializationError("Repeated ids found");
+            } else if (Objects.equals(errorTemp.getMessage(), "Incorrect specie found")) {
+                return new InitializationError("Incorrect specie found");
+            }
+        }
 
         //Validate incorrect foods and incorrect positions for them
         for (String[] strings : foodsInfo) {
@@ -399,7 +421,21 @@ public class GameManager {
         }
 
         if (nrSquares == 0) {
+            if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
+                hmPlayers.get(idPlayerPlaying).addEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getEnergyRecovery());
+                if (hmPlayers.get(idPlayerPlaying).getEnergy() > 200) {
+                    hmPlayers.get(idPlayerPlaying).setEnergy(200);
+                }
+                idPlayerPlaying = orderOfPlay[0];
+                nrPlays++;
+                return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
+            }
             hmPlayers.get(idPlayerPlaying).addEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getEnergyRecovery());
+            if (hmPlayers.get(idPlayerPlaying).getEnergy() > 200) {
+                hmPlayers.get(idPlayerPlaying).setEnergy(200);
+            }
+            playerPlaying++;
+            idPlayerPlaying = orderOfPlay[playerPlaying];
             nrPlays++;
             return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
         }
@@ -597,10 +633,10 @@ public class GameManager {
         Passaro passaro = new Passaro('P', "Pássaro","bird.png","Omnivoro",70,4,50,5,6);
         Tarzan tarzan = new Tarzan('Z', "Tarzan","tarzan.png", "Omnivoro",70,2,20,1,6);
 
-        Mario mario = new Mario('M',"Mario","mario.png","Omnivoro",100,2,20,2,6);
-        Ghost ghost = new Ghost('G',"PacMan","pacman.png","Herbivoro",100,2,20,2,2);
-        Pikachu pikachu = new Pikachu('Y',"Pikachu","pikachu.png","Herbivoro",100,2,20,2,2);
-        Zelda zelda = new Zelda('X',"Zelda","zelda.png","Omnivoro",100,2,20,2,2);
+        Mario mario = new Mario('M',"Mario","mario.png","Omnivoro",100,2,20,2,5);
+        Ghost ghost = new Ghost('G',"PacMan","pacman.png","Herbivoro",100,2,20,1,3);
+        Pikachu pikachu = new Pikachu('Y',"Pikachu","pikachu.png","Herbivoro",100,2,20,4,6);
+        Zelda zelda = new Zelda('X',"Zelda","zelda.png","Omnivoro",100,2,20,3,5);
 
         //Adding objects to list
         alSpecies.add(elefante);
