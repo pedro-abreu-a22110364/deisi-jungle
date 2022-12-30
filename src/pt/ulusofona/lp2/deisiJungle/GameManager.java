@@ -373,6 +373,11 @@ public class GameManager {
 
     public String[] getCurrentPlayerEnergyInfo(int nrPositions){
         String[] strPlayerEnergyInfo = new String[2];
+
+        if (nrPositions < 0) {
+            nrPositions = nrPositions * (-1);
+        }
+
         strPlayerEnergyInfo[0] = hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() * nrPositions + "";
         strPlayerEnergyInfo[1] = hmPlayers.get(idPlayerPlaying).getSpecie().getEnergyRecovery() + "";
 
