@@ -20,6 +20,15 @@ public class Player {
         this.energy = energy;
     }
 
+    public Player(int identifier, String name, Specie specie, int energy, int rank, int position) {
+        this.identifier = identifier;
+        this.name = name;
+        this.specie = specie;
+        this.energy = energy;
+        this.rank = rank;
+        this.position = position;
+    }
+
     public int getPosition() {
         return position;
     }
