@@ -1006,10 +1006,10 @@ public class GameManager {
             // Open the file for reading
             FileReader reader = new FileReader(file);
             BufferedReader br = new BufferedReader(reader);
-            String[] arrPlayer = new String[6];
-            String[] arrEatenFoods = new String[2];
-            String[] arrFood = new String[3];
-            String[] arrGameManager = new String[4];
+            String[] arrPlayer;
+            String[] arrEatenFoods;
+            String[] arrFood;
+            String[] arrGameManager;
             // Read the contents of the file line by line
             String line;
 
@@ -1133,6 +1133,8 @@ public class GameManager {
             return false;
         }
     }
+
+    //o abreu gosta muito de hashmaps
 
     public void sortArrayByPositionWithEqualID () {
 
