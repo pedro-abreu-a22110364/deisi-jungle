@@ -481,16 +481,16 @@ public class GameManager {
         ArrayList<Specie> alSpecies = new ArrayList<>(); //Creating the list to return it later
 
         //Creating the objects
-        Elefante elefante = new Elefante('E', "Elefante","Carnivoro","elephant.png",180, 4, 10, 1,6);
+        Elefante elefante = new Elefante('E', "Elefante","elephant.png", "Carnivoro",180, 4, 10, 1,6);
         Leao leao = new Leao('L', "Leão","lion.png","Carnivoro",80, 2, 10, 4,6);
-        Tartaruga tartaruga = new Tartaruga('T', "Tartaruga","Carnivoro","turtle.png",150,1,5,1,3);
-        Passaro passaro = new Passaro('P', "Pássaro","Carnivoro","bird.png",70,4,50,5,6);
-        Tarzan tarzan = new Tarzan('Z', "Tarzan","Carnivoro","tarzan.png",70,2,20,1,6);
+        Tartaruga tartaruga = new Tartaruga('T', "Tartaruga","turtle.png", "Carnivoro",150,1,5,1,3);
+        Passaro passaro = new Passaro('P', "Pássaro","bird.png","Carnivoro",70,4,50,5,6);
+        Tarzan tarzan = new Tarzan('Z', "Tarzan","tarzan.png", "Carnivoro",70,2,20,1,6);
 
-        Mario mario = new Mario('M',"Mario","Carnivoro","mario.png",100,2,20,2,6);
-        Ghost ghost = new Ghost('G',"PacMan","Carnivoro","pacman.png",100,2,20,2,2);
-        Pikachu pikachu = new Pikachu('Y',"Pikachu","Carnivoro","pikachu.png",100,2,20,2,2);
-        Zelda zelda = new Zelda('X',"Zelda","Carnivoro","zelda.png",100,2,20,2,2);
+        Mario mario = new Mario('M',"Mario","mario.png","Carnivoro",100,2,20,2,6);
+        Ghost ghost = new Ghost('G',"PacMan","pacman.png","Carnivoro",100,2,20,2,2);
+        Pikachu pikachu = new Pikachu('Y',"Pikachu","pikachu.png","Carnivoro",100,2,20,2,2);
+        Zelda zelda = new Zelda('X',"Zelda","zelda.png","Carnivoro",100,2,20,2,2);
 
         //Adding objects to list
         alSpecies.add(elefante);
