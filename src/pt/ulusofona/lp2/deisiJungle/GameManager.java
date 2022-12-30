@@ -1,7 +1,5 @@
 package pt.ulusofona.lp2.deisiJungle;
 
-import org.junit.runners.model.InitializationError;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
