@@ -997,6 +997,8 @@ public class GameManager {
                 createInitialJungle(jungleSize,getPlayersInfo());
             }
 
+            idOrderOfPlay();
+
             // Close the reader
             br.close();
             return true;
