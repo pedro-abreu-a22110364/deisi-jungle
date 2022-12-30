@@ -48,6 +48,10 @@ public class Banana extends Food{
         return quantidade;
     }
 
+    public void removeQuantidade() {
+        this.quantidade--;
+    }
+
     @Override
     public int getPosition() {
         return position;

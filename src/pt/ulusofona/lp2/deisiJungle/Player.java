@@ -56,6 +56,18 @@ public class Player {
         this.energy -= energy;
     }
 
+    public void addEnergy(int energy) {
+        this.energy += energy;
+    }
+
+    public void percentageEnergy(int percentage) {
+        this.energy = (int) (this.energy * (percentage * 0.01));
+    }
+
+    public void halfEnergy () {
+        this.energy = this.energy/2;
+    }
+
     public int getDistance() {
         return distance;
     }
@@ -66,5 +78,15 @@ public class Player {
 
     public ArrayList<Food> getEatenFoods() {
         return eatenFoods;
+    }
+
+    public boolean countEatenBananas() {
+        int count = 0;
+        for (Food eatenFood : eatenFoods) {
+            if (eatenFood.getIdentifier() == 'b') {
+                count++;
+            }
+        }
+        return count >= 1;
     }
 }

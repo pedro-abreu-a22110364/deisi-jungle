@@ -53,6 +53,10 @@ public class Carne extends Food{
         return spoilTime;
     }
 
+    public void remnoveSpoilTime() {
+        this.spoilTime--;
+    }
+
     @Override
     public String getFoodType() {
         return "Carne";

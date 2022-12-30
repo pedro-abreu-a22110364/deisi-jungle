@@ -261,6 +261,11 @@ public class GameManager {
                         case 'c' -> {
                             strSquareInfo[0] = "meat.png";
                             strSquareInfo[1] = "Carne : +- 50 energia : " + ((Carne) house.getFood()).getSpoilTime() + " jogadas";
+
+                            if (((Carne) house.getFood()).getSpoilTime() <= 0) {
+                                strSquareInfo[0] = "meat.png";
+                                strSquareInfo[1] = "Carne toxica";
+                            }
                         }
                         case 'm' -> {
                             strSquareInfo[0] = "mushroom.png";
@@ -349,7 +354,6 @@ public class GameManager {
         if(gameFinished) {return new MovementResult(MovementResultCode.INVALID_MOVEMENT,"jogo já acabou");}
 
         //Verifica se todos os players n tem energia
-        //if(!checkWinner()) {return checkWinner();}
         if(hmPlayers.get(idPlayerPlaying).getEnergy() - hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() < 0) {
             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                 //Jogador do inicio
@@ -369,23 +373,81 @@ public class GameManager {
             return new MovementResult(MovementResultCode.NO_ENERGY,"energia insuficiente");
         }
 
-        if(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares >= jungleSize){
+        moveCurrentPlayerAdd(nrSquares);
+
+        for (House house : alHouses) {
+            if (hmPlayers.get(idPlayerPlaying).getPosition() == house.getPosition()) {
+                if (house.getFood() != null) {
+                    switch (house.getFood().getIdentifier()) {
+                        case 'e' -> {
+                            if (Objects.equals(hmPlayers.get(idPlayerPlaying).getSpecie().getSpecieType(), "Carnivoro")) {
+                                hmPlayers.get(idPlayerPlaying).removeEnergy(20);
+                            } else {
+                                hmPlayers.get(idPlayerPlaying).addEnergy(20);
+                            }
+                            return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou" + house.getFood().getNome());
+                        }
+                        case 'a' -> {
+                            if (Objects.equals(hmPlayers.get(idPlayerPlaying).getSpecie().getSpecieType(), "Omnivoro")) {
+                                hmPlayers.get(idPlayerPlaying).percentageEnergy(20);
+                            } else {
+                                hmPlayers.get(idPlayerPlaying).addEnergy(15);
+                            }
+                            return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou" + house.getFood().getNome());
+                        }
+                        case 'b' -> {
+                            if (((Banana) house.getFood()).getQuantidade() <= 0) {
+                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou" + house.getFood().getNome());
+                            }
+
+                            if (hmPlayers.get(idPlayerPlaying).countEatenBananas()) {
+                                hmPlayers.get(idPlayerPlaying).removeEnergy(40);
+                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou" + house.getFood().getNome());
+                            }
+
+                            hmPlayers.get(idPlayerPlaying).addEnergy(40);
+                            ((Banana) house.getFood()).removeQuantidade();
+                            return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou" + house.getFood().getNome());
+                        }
+                        case 'c' -> {
+                            if (((Carne) house.getFood()).getSpoilTime() <= 0) {
+                                hmPlayers.get(idPlayerPlaying).halfEnergy();
+                            }
+
+                            if (Objects.equals(hmPlayers.get(idPlayerPlaying).getSpecie().getSpecieType(), "Herbivoro")) {
+                                ((Carne) house.getFood()).remnoveSpoilTime();
+                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou" + house.getFood().getNome());
+                            }
+                            hmPlayers.get(idPlayerPlaying).addEnergy(50);
+                            ((Carne) house.getFood()).remnoveSpoilTime();
+                            return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou" + house.getFood().getNome());
+                        }
+                        case 'm' -> {
+                            return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou" + house.getFood().getNome());
+                        }
+                    }
+                }
+            }
+        }
+
+        if(hmPlayers.get(idPlayerPlaying).getPosition() >= jungleSize){
             moveCurrentPlayerFinal();
             winner = idPlayerPlaying;
             gameFinished = true;
             return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
         }
-        moveCurrentPlayerAdd (nrSquares);
 
         if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
-            if(checkWinner()) {playerPlaying = 0;
+            if(checkWinner()) {
+                playerPlaying = 0;
                 idPlayerPlaying = orderOfPlay[0];
             }
             checkWinner();
             return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
         }
 
-        if(checkWinner()) {playerPlaying++;
+        if(checkWinner()) {
+            playerPlaying++;
             idPlayerPlaying = orderOfPlay[playerPlaying];
         }
         checkWinner();
@@ -481,16 +543,16 @@ public class GameManager {
         ArrayList<Specie> alSpecies = new ArrayList<>(); //Creating the list to return it later
 
         //Creating the objects
-        Elefante elefante = new Elefante('E', "Elefante","elephant.png", "Carnivoro",180, 4, 10, 1,6);
+        Elefante elefante = new Elefante('E', "Elefante","elephant.png", "Herbivoro",180, 4, 10, 1,6);
         Leao leao = new Leao('L', "Leão","lion.png","Carnivoro",80, 2, 10, 4,6);
-        Tartaruga tartaruga = new Tartaruga('T', "Tartaruga","turtle.png", "Carnivoro",150,1,5,1,3);
-        Passaro passaro = new Passaro('P', "Pássaro","bird.png","Carnivoro",70,4,50,5,6);
-        Tarzan tarzan = new Tarzan('Z', "Tarzan","tarzan.png", "Carnivoro",70,2,20,1,6);
+        Tartaruga tartaruga = new Tartaruga('T', "Tartaruga","turtle.png", "Omnivoro",150,1,5,1,3);
+        Passaro passaro = new Passaro('P', "Pássaro","bird.png","Omnivoro",70,4,50,5,6);
+        Tarzan tarzan = new Tarzan('Z', "Tarzan","tarzan.png", "Omnivoro",70,2,20,1,6);
 
-        Mario mario = new Mario('M',"Mario","mario.png","Carnivoro",100,2,20,2,6);
-        Ghost ghost = new Ghost('G',"PacMan","pacman.png","Carnivoro",100,2,20,2,2);
-        Pikachu pikachu = new Pikachu('Y',"Pikachu","pikachu.png","Carnivoro",100,2,20,2,2);
-        Zelda zelda = new Zelda('X',"Zelda","zelda.png","Carnivoro",100,2,20,2,2);
+        Mario mario = new Mario('M',"Mario","mario.png","Omnivoro",100,2,20,2,6);
+        Ghost ghost = new Ghost('G',"PacMan","pacman.png","Herbivoro",100,2,20,2,2);
+        Pikachu pikachu = new Pikachu('Y',"Pikachu","pikachu.png","Herbivoro",100,2,20,2,2);
+        Zelda zelda = new Zelda('X',"Zelda","zelda.png","Omnivoro",100,2,20,2,2);
 
         //Adding objects to list
         alSpecies.add(elefante);
@@ -536,7 +598,6 @@ public class GameManager {
 
     public void moveCurrentPlayerFinal () {
         hmPlayers.get(idPlayerPlaying).setPosition(jungleSize);
-        hmPlayers.get(idPlayerPlaying).removeEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy());
         hmKeyIdValuePos.put(idPlayerPlaying,jungleSize);
     }
 
