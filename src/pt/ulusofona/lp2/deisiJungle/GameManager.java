@@ -41,6 +41,10 @@ public class GameManager {
 
     }
 
+    public ArrayList<House> getAlHouses() {
+        return alHouses;
+    }
+
     public String[][] getSpecies() {
         String[][] species = new String[alSpecies.size()][7];
         int count = 0;
@@ -115,8 +119,8 @@ public class GameManager {
             }
         }
 
-        for (int i = 0; i < jungleSize; i++) {
-            House house = new House();
+        for (int i = 1; i <= jungleSize; i++) {
+            House house = new House(i);
             if (house.getPosition() == 1) {
                 for (Player player : alPlayer) {
                     house.getPlayers().add(player);
@@ -371,6 +375,11 @@ public class GameManager {
             }
             checkWinner();
             return new MovementResult(MovementResultCode.NO_ENERGY,"energia insuficiente");
+        }
+
+        if (nrSquares == 0) {
+            hmPlayers.get(idPlayerPlaying).addEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getEnergyRecovery());
+            return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
         }
 
         moveCurrentPlayerAdd(nrSquares);

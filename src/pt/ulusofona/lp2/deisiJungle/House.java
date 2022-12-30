@@ -5,11 +5,11 @@ import java.util.ArrayList;
 public class House {
     ArrayList<Player> players;
     Food food;
-    int position = 0;
+    int position;
 
-    House() {
+    House(int position) {
         players = new ArrayList<>();
-        this.position++;
+        this.position = position;
     }
 
     public ArrayList<Player> getPlayers() {
