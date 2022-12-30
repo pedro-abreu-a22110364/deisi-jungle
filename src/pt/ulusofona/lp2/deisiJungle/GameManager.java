@@ -849,6 +849,14 @@ public class GameManager {
                 bw.newLine();
             }
 
+            bw.write("Eaten Foods");
+            for (Player player : hmPlayers.values()) {
+                for (Food eatenFood : player.getEatenFoods()) {
+                    bw.write(player.getIdentifier() + "," + eatenFood.getIdentifier() + "," + eatenFood.getPosition());
+                    bw.newLine();
+                }
+            }
+
             bw.write("GameManager");
             bw.write(gameFinished + "," + jungleSize + "," + idPlayerPlaying + "," + playerPlaying);
 
@@ -872,6 +880,7 @@ public class GameManager {
             FileReader reader = new FileReader(file);
             BufferedReader br = new BufferedReader(reader);
             String[] arrPlayer = new String[6];
+            String[] arrEatenFoods = new String[2];
             String[] arrFood = new String[3];
             String[] arrGameManager = new String[4];
             // Read the contents of the file line by line
@@ -880,7 +889,7 @@ public class GameManager {
             //Players
             while ((line = br.readLine()) != null)
             {
-                if(line.equals("Foods"))
+                if(line.equals("EatenFoods"))
                 {
                     break;
                 }
@@ -898,10 +907,11 @@ public class GameManager {
                 }
             }
 
+
             //Foods
             while ((line = br.readLine()) != null)
             {
-                if(line.equals("GameManager")){
+                if(line.equals("Eaten Foods")){
                     break;
                 }
                 arrFood = line.split(",");
@@ -909,6 +919,7 @@ public class GameManager {
                     for (House house : alHouses) {
                         if(house.getPosition() == Integer.parseInt(arrFood[1])){
                             Carne carne = new Carne('c', "Carne", "meat.png", 50,0,50, Integer.parseInt(arrFood[2]), Integer.parseInt(arrFood[1]));
+                            gameFoods.add(carne);
                             house.food = carne;
                         }
                     }
@@ -916,18 +927,24 @@ public class GameManager {
                     for (House house : alHouses) {
                         if(house.getPosition() == Integer.parseInt(arrFood[1])){
                             Banana banana = new Banana('b', "Cacho de Bananas", "bananas.png", 40, 40,40, Integer.parseInt(arrFood[2]), Integer.parseInt(arrFood[1]));
+                            gameFoods.add(banana);
+                            house.food = banana;
                         }
                     }
                 } else if (arrFood[0].charAt(1) == 'a') {
                     for (House house : alHouses) {
                         if(house.getPosition() == Integer.parseInt(arrFood[1])){
                             Agua agua = new Agua('a', "Agua", "water.png", 15,20,20, Integer.parseInt(arrFood[1]));
+                            gameFoods.add(agua);
+                            house.food = agua;
                         }
                     }
                 }else if(arrFood[0].charAt(1) == 'e'){
                     for (House house : alHouses) {
                         if(house.getPosition() == Integer.parseInt(arrFood[1])){
                             Erva erva = new Erva('e', "erva", "grass.png", 20,20,20,Integer.parseInt(arrFood[1]));
+                            gameFoods.add(erva);
+                            house.food = erva;
                         }
                     }
 
@@ -939,10 +956,27 @@ public class GameManager {
                             int high = 51;
                             int result = r.nextInt(high-low) + low;
                             CogumelosMagicos cogumelo = new CogumelosMagicos('m', "Cogumelos magicos", "mushroom.png", result, result,result,Integer.parseInt(arrFood[1]));
+                            gameFoods.add(cogumelo);
+                            house.food = cogumelo;
                         }
                     }
                 }
+            }
 
+            //EatenFoods
+            while ((line = br.readLine()) != null)
+            {
+                if(line.equals("GameManager"))
+                {
+                    break;
+                }
+                arrEatenFoods = line.split(",");
+                for (Food gameFood : gameFoods) {
+                    if(gameFood.getIdentifier() == arrEatenFoods[1].charAt(1) && gameFood.getPosition() == Integer.parseInt(arrEatenFoods[2]))
+                    {
+                        hmPlayers.get(Integer.parseInt(arrEatenFoods[0])).eatenFoods.add(gameFood);
+                    }
+                }
             }
 
             //Gamemanager

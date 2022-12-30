@@ -30,6 +30,7 @@ public class Player {
     }
 
     public int getPosition() {
+
         return position;
     }
 
@@ -64,6 +65,8 @@ public class Player {
     public void removeEnergy(int energy) {
         this.energy -= energy;
     }
+
+
 
     public void addEnergy(int energy) {
         this.energy += energy;
