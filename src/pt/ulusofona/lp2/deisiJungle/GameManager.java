@@ -432,6 +432,7 @@ public class GameManager {
                     hmPlayers.get(idPlayerPlaying).setEnergy(200);
                 }
                 idPlayerPlaying = orderOfPlay[0];
+                playerPlaying = 0;
                 nrPlays++;
                 return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
             }
@@ -462,7 +463,7 @@ public class GameManager {
                             }
                             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                                 idPlayerPlaying = orderOfPlay[0];
-                                nrPlays++;
+                                playerPlaying = 0;
                             } else {
                                 playerPlaying++;
                                 idPlayerPlaying = orderOfPlay[playerPlaying];
@@ -484,7 +485,7 @@ public class GameManager {
                             }
                             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                                 idPlayerPlaying = orderOfPlay[0];
-                                nrPlays++;
+                                playerPlaying = 0;
                             } else {
                                 playerPlaying++;
                                 idPlayerPlaying = orderOfPlay[playerPlaying];
@@ -496,7 +497,7 @@ public class GameManager {
                             if (((Banana) house.getFood()).getQuantidade() <= 0) {
                                 if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                                     idPlayerPlaying = orderOfPlay[0];
-                                    nrPlays++;
+                                    playerPlaying = 0;
                                 } else {
                                     playerPlaying++;
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
@@ -509,7 +510,7 @@ public class GameManager {
                                 hmPlayers.get(idPlayerPlaying).removeEnergy(40);
                                 if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                                     idPlayerPlaying = orderOfPlay[0];
-                                    nrPlays++;
+                                    playerPlaying = 0;
                                 } else {
                                     playerPlaying++;
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
@@ -525,7 +526,7 @@ public class GameManager {
                             ((Banana) house.getFood()).removeQuantidade();
                             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                                 idPlayerPlaying = orderOfPlay[0];
-                                nrPlays++;
+                                playerPlaying = 0;
                             } else {
                                 playerPlaying++;
                                 idPlayerPlaying = orderOfPlay[playerPlaying];
@@ -538,7 +539,7 @@ public class GameManager {
                                 hmPlayers.get(idPlayerPlaying).halfEnergy();
                                 if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                                     idPlayerPlaying = orderOfPlay[0];
-                                    nrPlays++;
+                                    playerPlaying = 0;
                                 } else {
                                     playerPlaying++;
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
@@ -550,7 +551,7 @@ public class GameManager {
                             if (Objects.equals(hmPlayers.get(idPlayerPlaying).getSpecie().getSpecieType(), "Herbivoro")) {
                                 if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                                     idPlayerPlaying = orderOfPlay[0];
-                                    nrPlays++;
+                                    playerPlaying = 0;
                                 } else {
                                     playerPlaying++;
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
@@ -564,7 +565,7 @@ public class GameManager {
                             }
                             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                                 idPlayerPlaying = orderOfPlay[0];
-                                nrPlays++;
+                                playerPlaying = 0;
                             } else {
                                 playerPlaying++;
                                 idPlayerPlaying = orderOfPlay[playerPlaying];
@@ -580,7 +581,7 @@ public class GameManager {
                                 }
                                 if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                                     idPlayerPlaying = orderOfPlay[0];
-                                    nrPlays++;
+                                    playerPlaying = 0;
                                 } else {
                                     playerPlaying++;
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
@@ -591,7 +592,7 @@ public class GameManager {
                             hmPlayers.get(idPlayerPlaying).percentageEnergy(-1 * (house.getFood().getEnergyOmnivoros()));
                             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                                 idPlayerPlaying = orderOfPlay[0];
-                                nrPlays++;
+                                playerPlaying = 0;
                             } else {
                                 playerPlaying++;
                                 idPlayerPlaying = orderOfPlay[playerPlaying];
@@ -612,21 +613,13 @@ public class GameManager {
             return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
         }
 
-        if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
-            if(checkWinner()) {
-                playerPlaying = 0;
-                idPlayerPlaying = orderOfPlay[0];
-            }
-            checkWinner();
-            nrPlays++;
-            return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
-        }
-
-        if(checkWinner()) {
+        if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
+            idPlayerPlaying = orderOfPlay[0];
+            playerPlaying = 0;
+        } else {
             playerPlaying++;
             idPlayerPlaying = orderOfPlay[playerPlaying];
         }
-        checkWinner();
         nrPlays++;
         return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
     }
