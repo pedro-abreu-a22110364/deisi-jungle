@@ -286,9 +286,9 @@ public class GameManager {
                         }
                         case 'c' -> {
                             strSquareInfo[0] = "meat.png";
-                            strSquareInfo[1] = "Carne : +- 50 energia : " + ((Carne) house.getFood()).getSpoilTime() + " jogadas";
+                            strSquareInfo[1] = "Carne : +- 50 energia : " + nrPlays + " jogadas";
 
-                            if (((Carne) house.getFood()).getSpoilTime() >= 12) {
+                            if (nrPlays >= 12) {
                                 strSquareInfo[0] = "meat.png";
                                 strSquareInfo[1] = "Carne toxica";
                             }
@@ -420,26 +420,6 @@ public class GameManager {
             return new MovementResult(MovementResultCode.NO_ENERGY,"energia insuficiente");
         }
 
-        if (nrSquares == 0) {
-            if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
-                hmPlayers.get(idPlayerPlaying).addEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getEnergyRecovery());
-                if (hmPlayers.get(idPlayerPlaying).getEnergy() > 200) {
-                    hmPlayers.get(idPlayerPlaying).setEnergy(200);
-                }
-                idPlayerPlaying = orderOfPlay[0];
-                nrPlays++;
-                return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
-            }
-            hmPlayers.get(idPlayerPlaying).addEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getEnergyRecovery());
-            if (hmPlayers.get(idPlayerPlaying).getEnergy() > 200) {
-                hmPlayers.get(idPlayerPlaying).setEnergy(200);
-            }
-            playerPlaying++;
-            idPlayerPlaying = orderOfPlay[playerPlaying];
-            nrPlays++;
-            return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
-        }
-
         moveCurrentPlayerAdd(nrSquares);
 
         for (House house : alHouses) {
@@ -482,17 +462,16 @@ public class GameManager {
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
                         case 'c' -> {
-                            if (((Carne) house.getFood()).getSpoilTime() >= 12) {
+                            if (nrPlays >= 12) {
                                 hmPlayers.get(idPlayerPlaying).halfEnergy();
+                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                             }
 
                             if (Objects.equals(hmPlayers.get(idPlayerPlaying).getSpecie().getSpecieType(), "Herbivoro")) {
-                                ((Carne) house.getFood()).addSpoilTime();
                                 nrPlays++;
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                             }
                             hmPlayers.get(idPlayerPlaying).addEnergy(50);
-                            ((Carne) house.getFood()).addSpoilTime();
                             nrPlays++;
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
@@ -509,6 +488,26 @@ public class GameManager {
                     }
                 }
             }
+        }
+
+        if (nrSquares == 0) {
+            if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
+                hmPlayers.get(idPlayerPlaying).addEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getEnergyRecovery());
+                if (hmPlayers.get(idPlayerPlaying).getEnergy() > 200) {
+                    hmPlayers.get(idPlayerPlaying).setEnergy(200);
+                }
+                idPlayerPlaying = orderOfPlay[0];
+                nrPlays++;
+                return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
+            }
+            hmPlayers.get(idPlayerPlaying).addEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getEnergyRecovery());
+            if (hmPlayers.get(idPlayerPlaying).getEnergy() > 200) {
+                hmPlayers.get(idPlayerPlaying).setEnergy(200);
+            }
+            playerPlaying++;
+            idPlayerPlaying = orderOfPlay[playerPlaying];
+            nrPlays++;
+            return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
         }
 
         if(hmPlayers.get(idPlayerPlaying).getPosition() >= jungleSize){
@@ -657,8 +656,8 @@ public class GameManager {
     public ArrayList<Food> createDefaultFoods() {
         ArrayList<Food> alfood = new ArrayList<>(); //Creating the list to return it later
 
-        Erva erva = new Erva('e', "erva", "grass.png", 20,20,20);
-        Banana banana = new Banana('b', "Cacho de Bananas", "bananas.png", 40, 40,40, 3);
+        Erva erva = new Erva('e', "Erva", "grass.png", 20,20,20);
+        Banana banana = new Banana('b', "Bananas", "bananas.png", 40, 40,40, 3);
         Carne carne = new Carne('c', "Carne", "meat.png", 50,0,50, 0);
         Agua agua = new Agua('a', "Agua", "water.png", 15,20,20);
 
@@ -667,7 +666,7 @@ public class GameManager {
         int high = 51;
         int result = r.nextInt(high-low) + low;
 
-        CogumelosMagicos cogumelo = new CogumelosMagicos('m', "Cogumelos magicos", "mushroom.png", result, result,result);
+        CogumelosMagicos cogumelo = new CogumelosMagicos('m', "Cogumelos magicos", "mushroom.png", result, result, result);
 
         //Adding objects to list
         alfood.add(erva);
@@ -688,7 +687,12 @@ public class GameManager {
     public void moveCurrentPlayerAdd (int nrSquares) {
         hmPlayers.get(idPlayerPlaying).setPosition(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares);
         hmPlayers.get(idPlayerPlaying).removeEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy());
-        hmKeyIdValuePos.put(idPlayerPlaying,hmKeyIdValuePos.get(idPlayerPlaying) + nrSquares);
+
+        if (hmPlayers.get(idPlayerPlaying).getPosition() <= 0) {
+            hmPlayers.get(idPlayerPlaying).setPosition(1);
+        }
+
+        hmKeyIdValuePos.put(idPlayerPlaying,hmPlayers.get(idPlayerPlaying).getPosition());
     }
 
     public int checkPlayerWithBiggestPosition()
