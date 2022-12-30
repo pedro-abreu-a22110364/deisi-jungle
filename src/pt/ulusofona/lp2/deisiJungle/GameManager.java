@@ -334,44 +334,46 @@ public class GameManager {
         return strPlayerEnergyInfo;
     }
 
-    public boolean moveCurrentPlayer(int nrSquares,boolean bypassValidations) {
-        if ((nrSquares < 1 || nrSquares > 6) && !bypassValidations) {
+    public MovementResult moveCurrentPlayer(int nrSquares,boolean bypassValidations) {
+        if ((nrSquares < -6 || nrSquares > 6) && !bypassValidations) {
             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
                 playerPlaying = 0;
                 idPlayerPlaying = orderOfPlay[0];
-                return false;
+                return new MovementResult(MovementResultCode.INVALID_MOVEMENT,"nrSquares ultrapassa os limites");
             }
             playerPlaying++;
             idPlayerPlaying = orderOfPlay[playerPlaying];
-            return false;
+            return new MovementResult(MovementResultCode.INVALID_MOVEMENT,"nrSquares ultrapassa os limites");
         }
         //Verifica se o jogo já acabou
-        if(gameFinished) {return false;}
+        if(gameFinished) {return new MovementResult(MovementResultCode.INVALID_MOVEMENT,"jogo já acabou");}
 
         //Verifica se todos os players n tem energia
-        if(!checkWinner()) {return checkWinner();}
+        //if(!checkWinner()) {return checkWinner();}
         if(hmPlayers.get(idPlayerPlaying).getEnergy() - hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() < 0) {
             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                 //Jogador do inicio
-                if(checkWinner()){playerPlaying = 0;
+                if(checkWinner()) {
+                    playerPlaying = 0;
                     idPlayerPlaying = orderOfPlay[0];
                 }
                 checkWinner();
-                return false;
+                return new MovementResult(MovementResultCode.NO_ENERGY,"energia insuficiente");
             }
             //Próximo jogador
-            if(checkWinner()){playerPlaying++;
+            if(checkWinner()){
+                playerPlaying++;
                 idPlayerPlaying = orderOfPlay[playerPlaying];
             }
             checkWinner();
-            return false;
+            return new MovementResult(MovementResultCode.NO_ENERGY,"energia insuficiente");
         }
 
         if(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares >= jungleSize){
             moveCurrentPlayerFinal();
             winner = idPlayerPlaying;
             gameFinished = true;
-            return true;
+            return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
         }
         moveCurrentPlayerAdd (nrSquares);
 
@@ -380,14 +382,14 @@ public class GameManager {
                 idPlayerPlaying = orderOfPlay[0];
             }
             checkWinner();
-            return true;
+            return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
         }
 
         if(checkWinner()) {playerPlaying++;
             idPlayerPlaying = orderOfPlay[playerPlaying];
         }
         checkWinner();
-        return true;
+        return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
     }
 
     public String[] getWinnerInfo() {
