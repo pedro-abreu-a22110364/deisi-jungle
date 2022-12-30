@@ -59,6 +59,6 @@ public class Banana extends Food{
 
     @Override
     public String getFoodType() {
-        return "Banana";
+        return "Bananas";
     }
 }

@@ -13,6 +13,7 @@ public class GameManager {
     int minPlayers = 2;
     int maxPlayers = 4;
     int jungleSize;
+    int nrPlays = 0;
 
     //Variaveis com informação de players
     int winner = 0;
@@ -266,7 +267,7 @@ public class GameManager {
                             strSquareInfo[0] = "meat.png";
                             strSquareInfo[1] = "Carne : +- 50 energia : " + ((Carne) house.getFood()).getSpoilTime() + " jogadas";
 
-                            if (((Carne) house.getFood()).getSpoilTime() <= 0) {
+                            if (((Carne) house.getFood()).getSpoilTime() >= 12) {
                                 strSquareInfo[0] = "meat.png";
                                 strSquareInfo[1] = "Carne toxica";
                             }
@@ -348,14 +349,19 @@ public class GameManager {
             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
                 playerPlaying = 0;
                 idPlayerPlaying = orderOfPlay[0];
+                nrPlays++;
                 return new MovementResult(MovementResultCode.INVALID_MOVEMENT,"nrSquares ultrapassa os limites");
             }
             playerPlaying++;
             idPlayerPlaying = orderOfPlay[playerPlaying];
+            nrPlays++;
             return new MovementResult(MovementResultCode.INVALID_MOVEMENT,"nrSquares ultrapassa os limites");
         }
         //Verifica se o jogo já acabou
-        if(gameFinished) {return new MovementResult(MovementResultCode.INVALID_MOVEMENT,"jogo já acabou");}
+        if(gameFinished) {
+            nrPlays++;
+            return new MovementResult(MovementResultCode.INVALID_MOVEMENT,"jogo já acabou");
+        }
 
         //Verifica se todos os players n tem energia
         if(hmPlayers.get(idPlayerPlaying).getEnergy() - hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() < 0) {
@@ -366,6 +372,7 @@ public class GameManager {
                     idPlayerPlaying = orderOfPlay[0];
                 }
                 checkWinner();
+                nrPlays++;
                 return new MovementResult(MovementResultCode.NO_ENERGY,"energia insuficiente");
             }
             //Próximo jogador
@@ -374,11 +381,13 @@ public class GameManager {
                 idPlayerPlaying = orderOfPlay[playerPlaying];
             }
             checkWinner();
+            nrPlays++;
             return new MovementResult(MovementResultCode.NO_ENERGY,"energia insuficiente");
         }
 
         if (nrSquares == 0) {
             hmPlayers.get(idPlayerPlaying).addEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getEnergyRecovery());
+            nrPlays++;
             return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
         }
 
@@ -394,7 +403,8 @@ public class GameManager {
                             } else {
                                 hmPlayers.get(idPlayerPlaying).addEnergy(20);
                             }
-                            return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou" + house.getFood().getNome());
+                            nrPlays++;
+                            return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
                         case 'a' -> {
                             if (Objects.equals(hmPlayers.get(idPlayerPlaying).getSpecie().getSpecieType(), "Omnivoro")) {
@@ -402,37 +412,50 @@ public class GameManager {
                             } else {
                                 hmPlayers.get(idPlayerPlaying).addEnergy(15);
                             }
-                            return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou" + house.getFood().getNome());
+                            nrPlays++;
+                            return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
                         case 'b' -> {
                             if (((Banana) house.getFood()).getQuantidade() <= 0) {
-                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou" + house.getFood().getNome());
+                                nrPlays++;
+                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                             }
 
                             if (hmPlayers.get(idPlayerPlaying).countEatenBananas()) {
                                 hmPlayers.get(idPlayerPlaying).removeEnergy(40);
-                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou" + house.getFood().getNome());
+                                nrPlays++;
+                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                             }
 
                             hmPlayers.get(idPlayerPlaying).addEnergy(40);
                             ((Banana) house.getFood()).removeQuantidade();
-                            return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou" + house.getFood().getNome());
+                            nrPlays++;
+                            return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
                         case 'c' -> {
-                            if (((Carne) house.getFood()).getSpoilTime() <= 0) {
+                            if (((Carne) house.getFood()).getSpoilTime() >= 12) {
                                 hmPlayers.get(idPlayerPlaying).halfEnergy();
                             }
 
                             if (Objects.equals(hmPlayers.get(idPlayerPlaying).getSpecie().getSpecieType(), "Herbivoro")) {
-                                ((Carne) house.getFood()).remnoveSpoilTime();
-                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou" + house.getFood().getNome());
+                                ((Carne) house.getFood()).addSpoilTime();
+                                nrPlays++;
+                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                             }
                             hmPlayers.get(idPlayerPlaying).addEnergy(50);
-                            ((Carne) house.getFood()).remnoveSpoilTime();
-                            return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou" + house.getFood().getNome());
+                            ((Carne) house.getFood()).addSpoilTime();
+                            nrPlays++;
+                            return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
                         case 'm' -> {
-                            return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou" + house.getFood().getNome());
+                            if (nrPlays % 2 == 0) {
+                                hmPlayers.get(idPlayerPlaying).percentageEnergy(house.getFood().getEnergyOmnivoros());
+                                nrPlays++;
+                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
+                            }
+                            hmPlayers.get(idPlayerPlaying).percentageEnergy(-1 * (house.getFood().getEnergyOmnivoros()));
+                            nrPlays++;
+                            return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
                     }
                 }
@@ -443,6 +466,7 @@ public class GameManager {
             moveCurrentPlayerFinal();
             winner = idPlayerPlaying;
             gameFinished = true;
+            nrPlays++;
             return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
         }
 
@@ -452,6 +476,7 @@ public class GameManager {
                 idPlayerPlaying = orderOfPlay[0];
             }
             checkWinner();
+            nrPlays++;
             return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
         }
 
@@ -460,6 +485,7 @@ public class GameManager {
             idPlayerPlaying = orderOfPlay[playerPlaying];
         }
         checkWinner();
+        nrPlays++;
         return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
     }
 
@@ -584,7 +610,7 @@ public class GameManager {
 
         Erva erva = new Erva('e', "erva", "grass.png", 20,20,20);
         Banana banana = new Banana('b', "Cacho de Bananas", "bananas.png", 40, 40,40, 3);
-        Carne carne = new Carne('c', "Carne", "meat.png", 50,0,50, 12);
+        Carne carne = new Carne('c', "Carne", "meat.png", 50,0,50, 0);
         Agua agua = new Agua('a', "Agua", "water.png", 15,20,20);
 
         Random r = new Random();

@@ -53,8 +53,8 @@ public class Carne extends Food{
         return spoilTime;
     }
 
-    public void remnoveSpoilTime() {
-        this.spoilTime--;
+    public void addSpoilTime() {
+        this.spoilTime++;
     }
 
     @Override
