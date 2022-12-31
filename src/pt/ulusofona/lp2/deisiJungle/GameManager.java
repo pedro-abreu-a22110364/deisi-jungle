@@ -510,28 +510,12 @@ public class GameManager {
         //Verifica se todos os players n tem energia
         if (nrSquares < 0) {
             if(hmPlayers.get(idPlayerPlaying).getEnergy() - hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() * (-1 * nrSquares) < 0) {
-                if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
-                    idPlayerPlaying = orderOfPlay[0];
-                    playerPlaying = 0;
-                } else {
-                    playerPlaying++;
-                    idPlayerPlaying = orderOfPlay[playerPlaying];
-                }
-                nrPlays++;
-                nrPlaysMushrooms++;
+                chacingTurnAndAddingNrPlays();
                 return new MovementResult(MovementResultCode.NO_ENERGY,null);
             }
         } else if (nrSquares > 0) {
             if (hmPlayers.get(idPlayerPlaying).getEnergy() - hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() * nrSquares < 0) {
-                if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
-                    idPlayerPlaying = orderOfPlay[0];
-                    playerPlaying = 0;
-                } else {
-                    playerPlaying++;
-                    idPlayerPlaying = orderOfPlay[playerPlaying];
-                }
-                nrPlays++;
-                nrPlaysMushrooms++;
+                chacingTurnAndAddingNrPlays();
                 return new MovementResult(MovementResultCode.NO_ENERGY,null);
             }
         }
@@ -539,9 +523,7 @@ public class GameManager {
         if (nrSquares == 0) {
             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                 hmPlayers.get(idPlayerPlaying).addEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getEnergyRecovery());
-                if (hmPlayers.get(idPlayerPlaying).getEnergy() > 200) {
-                    hmPlayers.get(idPlayerPlaying).setEnergy(200);
-                }
+                eatMoreThan200();
                 idPlayerPlaying = orderOfPlay[0];
                 playerPlaying = 0;
                 nrPlays++;
@@ -549,9 +531,7 @@ public class GameManager {
                 return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
             }
             hmPlayers.get(idPlayerPlaying).addEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getEnergyRecovery());
-            if (hmPlayers.get(idPlayerPlaying).getEnergy() > 200) {
-                hmPlayers.get(idPlayerPlaying).setEnergy(200);
-            }
+            eatMoreThan200();
             playerPlaying++;
             idPlayerPlaying = orderOfPlay[playerPlaying];
             nrPlays++;
@@ -570,164 +550,75 @@ public class GameManager {
                                 hmPlayers.get(idPlayerPlaying).removeEnergy(20);
                             } else {
                                 hmPlayers.get(idPlayerPlaying).addEnergy(20);
-                                if (hmPlayers.get(idPlayerPlaying).getEnergy() > 200) {
-                                    hmPlayers.get(idPlayerPlaying).setEnergy(200);
-                                }
+                                eatMoreThan200();
                             }
-                            if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
-                                idPlayerPlaying = orderOfPlay[0];
-                                playerPlaying = 0;
-                            } else {
-                                playerPlaying++;
-                                idPlayerPlaying = orderOfPlay[playerPlaying];
-                            }
-                            nrPlays++;
-                            nrPlaysMushrooms++;
+                            chacingTurnAndAddingNrPlays();
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
                         case 'a' -> {
                             if (Objects.equals(hmPlayers.get(idPlayerPlaying).getSpecie().getSpecieType(), "Omnivoro")) {
                                 hmPlayers.get(idPlayerPlaying).percentageEnergy(20);
-                                if (hmPlayers.get(idPlayerPlaying).getEnergy() > 200) {
-                                    hmPlayers.get(idPlayerPlaying).setEnergy(200);
-                                }
+                                eatMoreThan200();
                             } else {
                                 hmPlayers.get(idPlayerPlaying).addEnergy(15);
-                                if (hmPlayers.get(idPlayerPlaying).getEnergy() > 200) {
-                                    hmPlayers.get(idPlayerPlaying).setEnergy(200);
-                                }
+                                eatMoreThan200();
                             }
-                            if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
-                                idPlayerPlaying = orderOfPlay[0];
-                                playerPlaying = 0;
-                            } else {
-                                playerPlaying++;
-                                idPlayerPlaying = orderOfPlay[playerPlaying];
-                            }
-                            nrPlays++;
-                            nrPlaysMushrooms++;
+                            chacingTurnAndAddingNrPlays();
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
                         case 'b' -> {
                             if (((Banana) house.getFood()).getQuantidade() <= 0) {
-                                if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
-                                    idPlayerPlaying = orderOfPlay[0];
-                                    playerPlaying = 0;
-                                } else {
-                                    playerPlaying++;
-                                    idPlayerPlaying = orderOfPlay[playerPlaying];
-                                }
-                                nrPlays++;
-                                nrPlaysMushrooms++;
+                                chacingTurnAndAddingNrPlays();
                                 return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
                             }
 
                             if (hmPlayers.get(idPlayerPlaying).getNrBananas() >= 1) {
                                 hmPlayers.get(idPlayerPlaying).removeEnergy(40);
-                                if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
-                                    idPlayerPlaying = orderOfPlay[0];
-                                    playerPlaying = 0;
-                                } else {
-                                    playerPlaying++;
-                                    idPlayerPlaying = orderOfPlay[playerPlaying];
-                                }
 
                                 ((Banana) house.getFood()).removeQuantidade();
                                 hmPlayers.get(idPlayerPlaying).comerBananas();
 
-                                nrPlays++;
-                                nrPlaysMushrooms++;
+                                chacingTurnAndAddingNrPlays();
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                             }
 
                             hmPlayers.get(idPlayerPlaying).addEnergy(40);
-                            if (hmPlayers.get(idPlayerPlaying).getEnergy() > 200) {
-                                hmPlayers.get(idPlayerPlaying).setEnergy(200);
-                            }
+                            eatMoreThan200();
 
                             ((Banana) house.getFood()).removeQuantidade();
                             hmPlayers.get(idPlayerPlaying).comerBananas();
 
-                            if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
-                                idPlayerPlaying = orderOfPlay[0];
-                                playerPlaying = 0;
-                            } else {
-                                playerPlaying++;
-                                idPlayerPlaying = orderOfPlay[playerPlaying];
-                            }
-                            nrPlays++;
-                            nrPlaysMushrooms++;
+                            chacingTurnAndAddingNrPlays();
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                         }
                         case 'c' -> {
                             if (nrPlays >= 12) {
                                 hmPlayers.get(idPlayerPlaying).halfEnergy();
-                                if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
-                                    idPlayerPlaying = orderOfPlay[0];
-                                    playerPlaying = 0;
-                                } else {
-                                    playerPlaying++;
-                                    idPlayerPlaying = orderOfPlay[playerPlaying];
-                                }
-                                nrPlays++;
-                                nrPlaysMushrooms++;
+                                chacingTurnAndAddingNrPlays();
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                             }
 
                             if (Objects.equals(hmPlayers.get(idPlayerPlaying).getSpecie().getSpecieType(), "Herbivoro")) {
-                                if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
-                                    idPlayerPlaying = orderOfPlay[0];
-                                    playerPlaying = 0;
-                                } else {
-                                    playerPlaying++;
-                                    idPlayerPlaying = orderOfPlay[playerPlaying];
-                                }
-                                nrPlays++;
-                                nrPlaysMushrooms++;
+                                chacingTurnAndAddingNrPlays();
                                 return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
                             }
                             hmPlayers.get(idPlayerPlaying).addEnergy(50);
-                            if (hmPlayers.get(idPlayerPlaying).getEnergy() > 200) {
-                                hmPlayers.get(idPlayerPlaying).setEnergy(200);
-                            }
-                            if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
-                                idPlayerPlaying = orderOfPlay[0];
-                                playerPlaying = 0;
-                            } else {
-                                playerPlaying++;
-                                idPlayerPlaying = orderOfPlay[playerPlaying];
-                            }
-                            nrPlays++;
-                            nrPlaysMushrooms++;
+
+                            eatMoreThan200();
+
+                            chacingTurnAndAddingNrPlays();
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
                         case 'm' -> {
                             if (nrPlaysMushrooms % 2 == 0) {
                                 hmPlayers.get(idPlayerPlaying).percentageEnergy(house.getFood().getEnergyOmnivoros());
-                                if (hmPlayers.get(idPlayerPlaying).getEnergy() > 200) {
-                                    hmPlayers.get(idPlayerPlaying).setEnergy(200);
-                                }
-                                if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
-                                    idPlayerPlaying = orderOfPlay[0];
-                                    playerPlaying = 0;
-                                } else {
-                                    playerPlaying++;
-                                    idPlayerPlaying = orderOfPlay[playerPlaying];
-                                }
-                                nrPlays++;
-                                nrPlaysMushrooms++;
+                                eatMoreThan200();
+
+                                chacingTurnAndAddingNrPlays();
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                             } else {
                                 hmPlayers.get(idPlayerPlaying).percentageEnergyNegative(house.getFood().getEnergyOmnivoros());
-                                if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
-                                    idPlayerPlaying = orderOfPlay[0];
-                                    playerPlaying = 0;
-                                } else {
-                                    playerPlaying++;
-                                    idPlayerPlaying = orderOfPlay[playerPlaying];
-                                }
-                                nrPlays++;
-                                nrPlaysMushrooms++;
+                                chacingTurnAndAddingNrPlays();
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                             }
                         }
@@ -745,15 +636,7 @@ public class GameManager {
             return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
         }
 
-        if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
-            idPlayerPlaying = orderOfPlay[0];
-            playerPlaying = 0;
-        } else {
-            playerPlaying++;
-            idPlayerPlaying = orderOfPlay[playerPlaying];
-        }
-        nrPlays++;
-        nrPlaysMushrooms++;
+        chacingTurnAndAddingNrPlays();
         return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
     }
 
@@ -773,6 +656,24 @@ public class GameManager {
         if (hmPlayers.get(idPlayerPlaying).getPosition() <= 0) {
             hmPlayers.get(idPlayerPlaying).setPosition(1);
         }
+    }
+
+    public void eatMoreThan200() {
+        if (hmPlayers.get(idPlayerPlaying).getEnergy() > 200) {
+            hmPlayers.get(idPlayerPlaying).setEnergy(200);
+        }
+    }
+
+    public void chacingTurnAndAddingNrPlays() {
+        if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
+            idPlayerPlaying = orderOfPlay[0];
+            playerPlaying = 0;
+        } else {
+            playerPlaying++;
+            idPlayerPlaying = orderOfPlay[playerPlaying];
+        }
+        nrPlays++;
+        nrPlaysMushrooms++;
     }
 
     public String[] getWinnerInfo() {
