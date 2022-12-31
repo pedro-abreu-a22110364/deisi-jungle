@@ -77,6 +77,10 @@ public class Player {
         this.energy += (int) (this.energy * (percentage * 0.01));
     }
 
+    public void percentageEnergyNegative(int percentage) {
+        this.energy -= (int) (this.energy * (percentage * 0.01));
+    }
+
     public void halfEnergy () {
         this.energy = this.energy/2;
     }

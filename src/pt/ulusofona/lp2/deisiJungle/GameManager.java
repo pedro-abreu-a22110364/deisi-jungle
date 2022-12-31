@@ -13,7 +13,7 @@ public class GameManager {
     int minPlayers = 2;
     int maxPlayers = 4;
     int jungleSize;
-    int nrPlays = 0;
+    int nrPlays = 1;
 
     //Variaveis com informação de players
     int winner = 0;
@@ -45,6 +45,10 @@ public class GameManager {
 
     public ArrayList<Player> getAlPlayer() {
         return alPlayer;
+    }
+
+    public ArrayList<Food> getAlFoods() {
+        return alFoods;
     }
 
     public String[][] getSpecies() {
@@ -606,7 +610,7 @@ public class GameManager {
                                 nrPlays++;
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                             } else {
-                                hmPlayers.get(idPlayerPlaying).percentageEnergy(-1 * (house.getFood().getEnergyOmnivoros()));
+                                hmPlayers.get(idPlayerPlaying).percentageEnergyNegative(house.getFood().getEnergyOmnivoros());
                                 if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                                     idPlayerPlaying = orderOfPlay[0];
                                     playerPlaying = 0;

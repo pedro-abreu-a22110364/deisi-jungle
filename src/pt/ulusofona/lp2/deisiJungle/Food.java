@@ -40,6 +40,4 @@ public abstract class Food {
 
     public abstract int getPosition();
     public abstract String getFoodType();
-
-
 }
