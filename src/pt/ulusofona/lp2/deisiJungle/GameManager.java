@@ -156,7 +156,38 @@ public class GameManager {
 
     public InitializationError createInitialJungle(int jungleSize,String[][] playersInfo, String[][] foodsInfo) {
         createInitialJungle(jungleSize, playersInfo);
-        if (errorTemp != null) {
+
+        //Validate number of players
+        if(playersInfo == null || playersInfo.length < minPlayers || playersInfo.length > maxPlayers || jungleSize < playersInfo.length * 2) {
+            errorTemp = new InitializationError("Invalid number of players");
+            return errorTemp;
+        }
+
+        //Validate incorrect ids and names
+        for (String[] strings : playersInfo) {
+            if (strings[0] == null || !strings[0].matches("[0-9]+") || strings[1] == null || strings[1].equals("")) {
+                errorTemp = new InitializationError("Incorrect id or name");
+                return errorTemp;
+            }
+        }
+        //Validate repeated ids
+        for (int x = 0; x < playersInfo.length; x++) {
+            for (int y = x + 1; y < playersInfo.length; y++) {
+                if(Objects.equals(playersInfo[x][0], playersInfo[y][0])) {
+                    errorTemp = new InitializationError("Repeated ids found");
+                    return errorTemp;
+                }
+            }
+        }
+        //Validate incorrect species
+        for (String[] strings : playersInfo) {
+            if(strings[2] == null || !((strings[2].equals("E")) || (strings[2].equals("L")) || (strings[2].equals("T")) || (strings[2].equals("P")) || (strings[2].equals("Z")) || (strings[2].equals("M")) || (strings[2].equals("G")) || (strings[2].equals("Y")) || (strings[2].equals("X")))) {
+                errorTemp = new InitializationError("Incorrect specie");
+                return errorTemp;
+            }
+        }
+
+        /*if (errorTemp != null) {
             if (Objects.equals(errorTemp.getMessage(), "Invalid number of players")) {
                 return errorTemp;
             } else if (Objects.equals(errorTemp.getMessage(), "Incorrect id or name")) {
@@ -168,7 +199,7 @@ public class GameManager {
             } else if (Objects.equals(errorTemp.getMessage(), "There is already a tarzan player")) {
                 return errorTemp;
             }
-        }
+        }*/
 
         //Validate incorrect foods and incorrect positions for them
         for (String[] strings : foodsInfo) {

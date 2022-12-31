@@ -5,28 +5,34 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class TestGameManager {
 
     @Test
     public void testCreateInitialJungleWrongSpecie () {
-        String[][] players = new String[2][3];
+        String[][] players = new String[3][3];
 
         players[0][0] = "1";
         players[0][1] = "Pedro";
-        players[0][2] = "A";
+        players[0][2] = "Z";
         players[1][0] = "2";
         players[1][1] = "Gui";
         players[1][2] = "L";
+        players[2][0] = "3";
+        players[2][1] = "Ricardo";
+        players[2][2] = "P";
 
         String[][] foods = new String[1][2];
 
-        foods[0][0] = "z";
+        foods[0][0] = "e";
         foods[0][1] = "5";
 
         GameManager game = new GameManager();
 
-        assertEquals("Incorrect specie",game.createInitialJungle(8,players,foods).getMessage());
+        assertNull(game.createInitialJungle(8, players, foods));
+
+        assertNull(game.createInitialJungle(8, players));
     }
 
     @Test
