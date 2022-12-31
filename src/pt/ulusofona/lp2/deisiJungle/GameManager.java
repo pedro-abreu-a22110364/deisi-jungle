@@ -573,6 +573,7 @@ public class GameManager {
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
                                 }
                                 nrPlays++;
+                                //Not sure too
                                 return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
                             }
                             hmPlayers.get(idPlayerPlaying).addEnergy(50);
@@ -951,109 +952,70 @@ public class GameManager {
 
     public boolean saveGame(File file){
         try {
-            // Check if the file already exists
-            if (!file.exists()) {
-                // If the file doesn't exist, create it
-                file.createNewFile();
-            }
-
+            //Check if files does not exists and if not, creates it
+            if (!file.exists()) {file.createNewFile();}
             // Open the file for writing
             FileWriter writer = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(writer);
-
             //Cleans File first.
             bw.write("");
-
-
             // Write some content to the file
             bw.write("Players");
             for (Player player : hmPlayers.values()) {
-                bw.write(player.getIdentifier() + "," + player.getName() + "," + player.getSpecie().getIdentifier() + "," +
-                        player.getEnergy() + "," + player.getRank() + "," + player.getPosition());
+                bw.write(player.getIdentifier() + "," + player.getName() + "," + player.getSpecie().getIdentifier() + "," + player.getEnergy() + "," + player.getRank() + "," + player.getPosition());
                 bw.newLine();
-            }
-
+            }//--------------------------//
             bw.write("Food");
             for (Food food : gameFoods) {
-                if(food.getIdentifier() == 'c'){
-                    bw.write(food.getIdentifier() + "," + food.getPosition() + "," + ((Carne) food).getSpoilTime());
-
-                }
-                else if(food.getIdentifier() == 'b'){
-                    bw.write(food.getIdentifier() + "," + food.getPosition() + "," + ((Banana) food).getQuantidade());
-
-                }
-                else{
-                    bw.write(food.getIdentifier() + "," + food.getPosition());
-                }
+                if(food.getIdentifier() == 'c'){bw.write(food.getIdentifier() + "," + food.getPosition() + "," + ((Carne) food).getSpoilTime());}
+                else if(food.getIdentifier() == 'b'){bw.write(food.getIdentifier() + "," + food.getPosition() + "," + ((Banana) food).getQuantidade());}
+                else{bw.write(food.getIdentifier() + "," + food.getPosition());}
                 bw.newLine();
-            }
-
+            }//--------------------------//
             bw.write("Eaten Foods");
             for (Player player : hmPlayers.values()) {
                 for (Food eatenFood : player.getEatenFoods()) {
                     bw.write(player.getIdentifier() + "," + eatenFood.getIdentifier() + "," + eatenFood.getPosition());
                     bw.newLine();
                 }
-            }
-
+            }//--------------------------//
             bw.write("GameManager");
             bw.write(gameFinished + "," + jungleSize + "," + idPlayerPlaying + "," + playerPlaying);
-
-
             // Close the writer to save the changes
             bw.close();
             return true;
-        } catch (IOException e) {
-            return false;
-        }
+        } catch (IOException e) {return false;}
     }
 
     public boolean loadGame(File file){
         try {
             // Check if the file exists
-            if (!file.exists()) {
-                return false;
-            }
-
+            if (!file.exists()) {return false;}
             // Open the file for reading
             FileReader reader = new FileReader(file);
             BufferedReader br = new BufferedReader(reader);
-            String[] arrPlayer;
-            String[] arrEatenFoods;
-            String[] arrFood;
-            String[] arrGameManager;
+            String[] arrPlayer, arrEatenFoods, arrFood, arrGameManager;
             // Read the contents of the file line by line
             String line;
-
             //Players
             while ((line = br.readLine()) != null)
             {
-                if(line.equals("EatenFoods"))
-                {
-                    break;
-                }
-                if(!line.equals("Players"))
-                {
+                if(line.equals("EatenFoods")) {break;}
+                if(!line.equals("Players")) {
                     hmPlayers = new HashMap<>();
                     arrPlayer = line.split(",");
                     for (Specie alSpecy : alSpecies) {
-                        if(alSpecy.getIdentifier() == arrPlayer[2].charAt(0))
-                        {
+                        if(alSpecy.getIdentifier() == arrPlayer[2].charAt(0)) {
                             Player player = new Player(Integer.parseInt(arrPlayer[0]),arrPlayer[1],alSpecy,Integer.parseInt(arrPlayer[3]),Integer.parseInt(arrPlayer[4]),Integer.parseInt(arrPlayer[5]));
                             hmPlayers.put(player.getIdentifier(), player);
                         }
                     }
                 }
             }
-
-
             //Foods
             while ((line = br.readLine()) != null)
             {
-                if(line.equals("Eaten Foods")){
-                    break;
-                }
+                if(line.equals("Eaten Foods")){break;}
                 arrFood = line.split(",");
                 if(arrFood[0].charAt(0) == 'c'){
                     for (House house : alHouses) {
@@ -1087,7 +1049,6 @@ public class GameManager {
                             house.food = erva;
                         }
                     }
-
                 }else if(arrFood[0].charAt(0) == 'm'){
                     for (House house : alHouses) {
                         if(house.getPosition() == Integer.parseInt(arrFood[1])){
@@ -1102,18 +1063,13 @@ public class GameManager {
                     }
                 }
             }
-
             //EatenFoods
             while ((line = br.readLine()) != null)
             {
-                if(line.equals("GameManager"))
-                {
-                    break;
-                }
+                if(line.equals("GameManager")) {break;}
                 arrEatenFoods = line.split(",");
                 for (Food gameFood : gameFoods) {
-                    if(gameFood.getIdentifier() == arrEatenFoods[1].charAt(0) && gameFood.getPosition() == Integer.parseInt(arrEatenFoods[2]))
-                    {
+                    if(gameFood.getIdentifier() == arrEatenFoods[1].charAt(0) && gameFood.getPosition() == Integer.parseInt(arrEatenFoods[2])) {
                         hmPlayers.get(Integer.parseInt(arrEatenFoods[0])).eatenFoods.add(gameFood);
                     }
                 }
@@ -1128,23 +1084,15 @@ public class GameManager {
                 idPlayerPlaying = Integer.parseInt(arrGameManager[2]);
                 playerPlaying = Integer.parseInt(arrGameManager[3]);
             }
-
             alSpecies = createDefaultSpecies();
             alFoods = createDefaultFoods();
-            if(gameFoods.size() > 0){
-                createInitialJungle(jungleSize, getPlayersInfo(),getFoodsInfo());
-            }else{
-                createInitialJungle(jungleSize,getPlayersInfo());
-            }
-
+            if(gameFoods.size() > 0){createInitialJungle(jungleSize, getPlayersInfo(),getFoodsInfo());}
+            else{createInitialJungle(jungleSize,getPlayersInfo());}
             idOrderOfPlay();
-
             // Close the reader
             br.close();
             return true;
-        } catch (IOException e) {
-            return false;
-        }
+        } catch (IOException e) {return false;}
     }
 
     //o abreu gosta muito de hashmaps
