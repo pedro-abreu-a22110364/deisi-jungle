@@ -405,7 +405,7 @@ public class GameManager {
             return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
         }
 
-        if (hmPlayers.get(idPlayerPlaying).getSpecie().getMinSpeed() > nrSquares || hmPlayers.get(idPlayerPlaying).getSpecie().getMaxSpeed() < nrSquares) {
+        if ((hmPlayers.get(idPlayerPlaying).getSpecie().getMinSpeed() > nrSquares || hmPlayers.get(idPlayerPlaying).getSpecie().getMaxSpeed() < nrSquares) && !bypassValidations) {
             nrPlays++;
             return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
         }
