@@ -221,7 +221,6 @@ public class GameManager {
     public InitializationError createInitialJungle(int jungleSize,String[][] playersInfo, String[][] foodsInfo) {
         createInitialJungle(jungleSize, playersInfo);
 
-
         //Validate number of players
         if(playersInfo == null || playersInfo.length < minPlayers || playersInfo.length > maxPlayers || jungleSize < playersInfo.length * 2) {
             errorTemp = new InitializationError("Invalid number of players");
@@ -446,9 +445,9 @@ public class GameManager {
     }
 
     public String[][] getFoodsInfo() {
-        String[][] strFoodInfo = new String[alFoods.size()][2];
+        String[][] strFoodInfo = new String[gameFoods.size()][2];
         int count = 0;
-        for (Food food : alFoods) {
+        for (Food food : gameFoods) {
             if(food != null){
                 strFoodInfo[count][0] = String.valueOf(food.getIdentifier());
                 strFoodInfo[count][1] = String.valueOf(food.getPosition());
@@ -1109,8 +1108,11 @@ public class GameManager {
             }
             alSpecies = createDefaultSpecies();
             alFoods = createDefaultFoods();
-            if(gameFoods.size() > 0){createInitialJungle(jungleSize, getPlayersInfo(),getFoodsInfo());}
-            else{createInitialJungle(jungleSize,getPlayersInfo());}
+            if(gameFoods.size() > 0){
+                createInitialJungle(jungleSize, getPlayersInfo(),getFoodsInfo());
+            } else {
+                createInitialJungle(jungleSize,getPlayersInfo());
+            }
             idPlayerPlaying = idPlayerPlayingTemp;
             playerPlaying = playerPlayingTemp;
 
