@@ -52,6 +52,63 @@ public class GameManager {
         return alFoods;
     }
 
+    public ArrayList<Specie> createDefaultSpecies() {
+        ArrayList<Specie> alSpecies = new ArrayList<>(); //Creating the list to return it later
+
+        //Creating the objects
+        Elefante elefante = new Elefante('E', "Elefante","elephant.png", "Herbivoro",180, 4, 10, 1,6);
+        Leao leao = new Leao('L', "Leão","lion.png","Carnivoro",80, 2, 10, 4,6);
+        Tartaruga tartaruga = new Tartaruga('T', "Tartaruga","turtle.png", "Omnivoro",150,1,5,1,3);
+        Passaro passaro = new Passaro('P', "Pássaro","bird.png","Omnivoro",70,4,50,5,6);
+        Tarzan tarzan = new Tarzan('Z', "Tarzan","tarzan.png", "Omnivoro",70,2,20,1,6);
+
+        Mario mario = new Mario('M',"Mario","mario.png","Omnivoro",100,2,20,2,5);
+        Ghost ghost = new Ghost('G',"PacMan","pacman.png","Herbivoro",100,2,20,1,3);
+        Pikachu pikachu = new Pikachu('Y',"Pikachu","pikachu.png","Herbivoro",100,2,20,4,6);
+        Zelda zelda = new Zelda('X',"Zelda","zelda.png","Omnivoro",100,2,20,3,5);
+
+        //Adding objects to list
+        alSpecies.add(elefante);
+        alSpecies.add(leao);
+        alSpecies.add(tartaruga);
+        alSpecies.add(passaro);
+        alSpecies.add(tarzan);
+
+        alSpecies.add(mario);
+        alSpecies.add(ghost);
+        alSpecies.add(pikachu);
+        alSpecies.add(zelda);
+
+        //Returning the list back to "main"
+        return alSpecies;
+    }
+
+    public ArrayList<Food> createDefaultFoods() {
+        ArrayList<Food> alfood = new ArrayList<>(); //Creating the list to return it later
+
+        Erva erva = new Erva('e', "Erva", "grass.png", 20,20,20);
+        Banana banana = new Banana('b', "Bananas", "bananas.png", 40, 40,40, 3);
+        Carne carne = new Carne('c', "Carne", "meat.png", 50,0,50, 0);
+        Agua agua = new Agua('a', "Agua", "water.png", 15,20,20);
+
+        Random r = new Random();
+        int low = 10;
+        int high = 51;
+        int result = r.nextInt(high-low) + low;
+
+        CogumelosMagicos cogumelo = new CogumelosMagicos('m', "Cogumelos magicos", "mushroom.png", result, result, result);
+
+        //Adding objects to list
+        alfood.add(erva);
+        alfood.add(banana);
+        alfood.add(carne);
+        alfood.add(cogumelo);
+        alfood.add(agua);
+
+        //Returning the list back to "main"
+        return alfood;
+    }
+
     public String[][] getSpecies() {
         String[][] species = new String[alSpecies.size()][7];
         int count = 0;
@@ -186,20 +243,6 @@ public class GameManager {
                 return errorTemp;
             }
         }
-
-        /*if (errorTemp != null) {
-            if (Objects.equals(errorTemp.getMessage(), "Invalid number of players")) {
-                return errorTemp;
-            } else if (Objects.equals(errorTemp.getMessage(), "Incorrect id or name")) {
-                return errorTemp;
-            } else if (Objects.equals(errorTemp.getMessage(), "Repeated ids found")) {
-                return errorTemp;
-            } else if (Objects.equals(errorTemp.getMessage(), "Incorrect specie")) {
-                return errorTemp;
-            } else if (Objects.equals(errorTemp.getMessage(), "There is already a tarzan player")) {
-                return errorTemp;
-            }
-        }*/
 
         //Validate incorrect foods and incorrect positions for them
         for (String[] strings : foodsInfo) {
@@ -460,24 +503,27 @@ public class GameManager {
         }
 
         //Verifica se todos os players n tem energia
-        if(hmPlayers.get(idPlayerPlaying).getEnergy() - hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() < 0) {
-            if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
-                //Jogador do inicio
-                if(checkWinner()) {
-                    playerPlaying = 0;
+        if (nrSquares < 0) {
+            if(hmPlayers.get(idPlayerPlaying).getEnergy() - hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() * (-1 * nrSquares) < 0) {
+                if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                     idPlayerPlaying = orderOfPlay[0];
+                    playerPlaying = 0;
+                } else {
+                    playerPlaying++;
+                    idPlayerPlaying = orderOfPlay[playerPlaying];
                 }
-                checkWinner();
                 nrPlays++;
                 nrPlaysMushrooms++;
                 return new MovementResult(MovementResultCode.NO_ENERGY,null);
             }
-            //Próximo jogador
-            if(checkWinner()){
+        } else if (hmPlayers.get(idPlayerPlaying).getEnergy() - hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() * nrSquares < 0) {
+            if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
+                idPlayerPlaying = orderOfPlay[0];
+                playerPlaying = 0;
+            } else {
                 playerPlaying++;
                 idPlayerPlaying = orderOfPlay[playerPlaying];
             }
-            checkWinner();
             nrPlays++;
             nrPlaysMushrooms++;
             return new MovementResult(MovementResultCode.NO_ENERGY,null);
@@ -704,23 +750,63 @@ public class GameManager {
         return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
     }
 
+    public void moveCurrentPlayerFinal () {
+        hmPlayers.get(idPlayerPlaying).setPosition(jungleSize);
+    }
+
+    public void moveCurrentPlayerAdd (int nrSquares) {
+        hmPlayers.get(idPlayerPlaying).setPosition(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares);
+
+        if (nrSquares < 0) {
+            hmPlayers.get(idPlayerPlaying).removeEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() * ((-1) * nrSquares));
+        } else {
+            hmPlayers.get(idPlayerPlaying).removeEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() * nrSquares);
+        }
+
+        if (hmPlayers.get(idPlayerPlaying).getPosition() <= 0) {
+            hmPlayers.get(idPlayerPlaying).setPosition(1);
+        }
+    }
+
     public String[] getWinnerInfo() {
-        if (!gameFinished)
-        {
-            return null;
+
+        sortArrayByPosition();
+
+        if(hmPlayers.containsKey(winner)) {
+            return getPlayerInfo(winner);
         }
 
-        if(winner == 0)
-        {
-            return null;
-        }
-
-        if(hmPlayers.containsKey(winner))
-        {
-            return getPlayerInfo(hmPlayers.get(winner).getIdentifier());
+        if (orderByPosition[0] - orderByPosition[1] > jungleSize/2) {
+            return getPlayerInfo(orderByID[1]);
         }
 
         return null;
+    }
+
+    public boolean checkWinner()
+    {
+        if(!checkNoEnergy()) {
+            if(checkSamePosition()) {
+                winner = checkPlayerWithSmallestIDInSamePosition(checkSamePositionReturnPosition());
+            } else {
+                winner = checkPlayerWithBiggestPosition();
+            }
+            gameFinished = true;
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    public boolean checkNoEnergy(){
+        for (Player player : hmPlayers.values()) {
+            if(player.getEnergy() - player.getSpecie().getNeededEnergy() >= 0)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public ArrayList<String> getGameResults() {
@@ -747,121 +833,6 @@ public class GameManager {
         }
 
         return alGameResults;
-    }
-
-    public boolean checkWinner()
-    {
-        if(!checkNoEnergy()) {
-            if(checkSamePosition()) {
-                winner = checkPlayerWithSmallestIDInSamePosition(checkSamePositionReturnPosition());
-            } else {
-                winner = checkPlayerWithBiggestPosition();
-            }
-            gameFinished = true;
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
-
-    public JPanel getAuthorsPanel() {
-        JPanel jPanel = new JPanel();
-
-        jPanel.setBackground(Color.LIGHT_GRAY);
-
-        JLabel intro1 = new JLabel("Trabalho desenvolvido no âmbito");
-        JLabel intro2 = new JLabel("da cadeira de LP2 por:");
-        JLabel partition = new JLabel("---------------------------------------------------------------------------------");
-        JLabel student1 = new JLabel("Guilherme Simão, a22106142");
-        JLabel student2 = new JLabel("Pedro Abreu, a22110364");
-
-        jPanel.add(intro1);
-        jPanel.add(intro2);
-        jPanel.add(partition);
-        jPanel.add(student1);
-        jPanel.add(student2);
-
-        return jPanel;
-    }
-
-    public String whoIsTaborda() {
-        return "wrestling";
-    }
-
-    public ArrayList<Specie> createDefaultSpecies() {
-        ArrayList<Specie> alSpecies = new ArrayList<>(); //Creating the list to return it later
-
-        //Creating the objects
-        Elefante elefante = new Elefante('E', "Elefante","elephant.png", "Herbivoro",180, 4, 10, 1,6);
-        Leao leao = new Leao('L', "Leão","lion.png","Carnivoro",80, 2, 10, 4,6);
-        Tartaruga tartaruga = new Tartaruga('T', "Tartaruga","turtle.png", "Omnivoro",150,1,5,1,3);
-        Passaro passaro = new Passaro('P', "Pássaro","bird.png","Omnivoro",70,4,50,5,6);
-        Tarzan tarzan = new Tarzan('Z', "Tarzan","tarzan.png", "Omnivoro",70,2,20,1,6);
-
-        Mario mario = new Mario('M',"Mario","mario.png","Omnivoro",100,2,20,2,5);
-        Ghost ghost = new Ghost('G',"PacMan","pacman.png","Herbivoro",100,2,20,1,3);
-        Pikachu pikachu = new Pikachu('Y',"Pikachu","pikachu.png","Herbivoro",100,2,20,4,6);
-        Zelda zelda = new Zelda('X',"Zelda","zelda.png","Omnivoro",100,2,20,3,5);
-
-        //Adding objects to list
-        alSpecies.add(elefante);
-        alSpecies.add(leao);
-        alSpecies.add(tartaruga);
-        alSpecies.add(passaro);
-        alSpecies.add(tarzan);
-
-        alSpecies.add(mario);
-        alSpecies.add(ghost);
-        alSpecies.add(pikachu);
-        alSpecies.add(zelda);
-
-        //Returning the list back to "main"
-        return alSpecies;
-    }
-
-    public ArrayList<Food> createDefaultFoods() {
-        ArrayList<Food> alfood = new ArrayList<>(); //Creating the list to return it later
-
-        Erva erva = new Erva('e', "Erva", "grass.png", 20,20,20);
-        Banana banana = new Banana('b', "Bananas", "bananas.png", 40, 40,40, 3);
-        Carne carne = new Carne('c', "Carne", "meat.png", 50,0,50, 0);
-        Agua agua = new Agua('a', "Agua", "water.png", 15,20,20);
-
-        Random r = new Random();
-        int low = 10;
-        int high = 51;
-        int result = r.nextInt(high-low) + low;
-
-        CogumelosMagicos cogumelo = new CogumelosMagicos('m', "Cogumelos magicos", "mushroom.png", result, result, result);
-
-        //Adding objects to list
-        alfood.add(erva);
-        alfood.add(banana);
-        alfood.add(carne);
-        alfood.add(cogumelo);
-        alfood.add(agua);
-
-        //Returning the list back to "main"
-        return alfood;
-    }
-
-    public void moveCurrentPlayerFinal () {
-        hmPlayers.get(idPlayerPlaying).setPosition(jungleSize);
-    }
-
-    public void moveCurrentPlayerAdd (int nrSquares) {
-        hmPlayers.get(idPlayerPlaying).setPosition(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares);
-
-        if (nrSquares < 0) {
-            hmPlayers.get(idPlayerPlaying).removeEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() * ((-1) * nrSquares));
-        } else {
-            hmPlayers.get(idPlayerPlaying).removeEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() * nrSquares);
-        }
-
-        if (hmPlayers.get(idPlayerPlaying).getPosition() <= 0) {
-            hmPlayers.get(idPlayerPlaying).setPosition(1);
-        }
     }
 
     public int checkPlayerWithBiggestPosition()
@@ -891,16 +862,6 @@ public class GameManager {
             }
         }
         return playerID;
-    }
-
-    public boolean checkNoEnergy(){
-        for (Player player : hmPlayers.values()) {
-            if(player.getEnergy() - player.getSpecie().getNeededEnergy() >= 0)
-            {
-                return true;
-            }
-        }
-        return false;
     }
 
     public boolean checkSamePosition()
@@ -1009,7 +970,19 @@ public class GameManager {
             }
             lastOrdered--;
         }
+    }
 
+    public void sortArrayByPositionWithEqualID () {
+
+        for (int i = 0;i < orderByPosition.length -1;i++) {
+            if (orderByPosition[i] == orderByPosition[i + 1]) {
+                if(orderByID[i] < orderByID[i+1]) {
+                    int temp = orderByID[i];
+                    orderByID[i] = orderByID[i+1];
+                    orderByID[i+1] = temp;
+                }
+            }
+        }
     }
 
     public boolean saveGame(File file){
@@ -1157,18 +1130,27 @@ public class GameManager {
         } catch (IOException e) {return false;}
     }
 
-    //o abreu gosta muito de hashmaps
+    public JPanel getAuthorsPanel() {
+        JPanel jPanel = new JPanel();
 
-    public void sortArrayByPositionWithEqualID () {
+        jPanel.setBackground(Color.LIGHT_GRAY);
 
-        for (int i = 0;i < orderByPosition.length -1;i++) {
-            if (orderByPosition[i] == orderByPosition[i + 1]) {
-                if(orderByID[i] < orderByID[i+1]) {
-                    int temp = orderByID[i];
-                    orderByID[i] = orderByID[i+1];
-                    orderByID[i+1] = temp;
-                }
-            }
-        }
+        JLabel intro1 = new JLabel("Trabalho desenvolvido no âmbito");
+        JLabel intro2 = new JLabel("da cadeira de LP2 por:");
+        JLabel partition = new JLabel("---------------------------------------------------------------------------------");
+        JLabel student1 = new JLabel("Guilherme Simão, a22106142");
+        JLabel student2 = new JLabel("Pedro Abreu, a22110364");
+
+        jPanel.add(intro1);
+        jPanel.add(intro2);
+        jPanel.add(partition);
+        jPanel.add(student1);
+        jPanel.add(student2);
+
+        return jPanel;
+    }
+
+    public String whoIsTaborda() {
+        return "wrestling";
     }
 }
