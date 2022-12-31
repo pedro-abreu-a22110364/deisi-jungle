@@ -2,16 +2,12 @@ package pt.ulusofona.lp2.deisiJungle;
 
 public class Carne extends Food{
 
-    int spoilTime;
-
-    public Carne(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros, int spoilTime) {
+    public Carne(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros) {
         super(identifier, nome, foodImage, energyCarnivoros, energyHerbivoros, energyOmnivoros);
-        this.spoilTime = spoilTime;
     }
 
-    public Carne(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros, int spoilTime, int position) {
+    public Carne(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros, int position) {
         super(identifier, nome, foodImage, energyCarnivoros, energyHerbivoros, energyOmnivoros, position);
-        this.spoilTime = spoilTime;
     }
 
     @Override
@@ -47,14 +43,6 @@ public class Carne extends Food{
     @Override
     public int getPosition() {
         return position;
-    }
-
-    public int getSpoilTime() {
-        return spoilTime;
-    }
-
-    public void addSpoilTime() {
-        this.spoilTime++;
     }
 
     @Override

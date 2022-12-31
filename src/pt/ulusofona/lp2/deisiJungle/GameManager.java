@@ -291,7 +291,7 @@ public class GameManager {
                     }
                 }
             } else if (strings[0].equals("c")) {
-                Carne carne = new Carne('c', "Carne", "meat.png", 50, 0, 50, 12, Integer.parseInt(strings[1]));
+                Carne carne = new Carne('c', "Carne", "meat.png", 50, 0, 50, Integer.parseInt(strings[1]));
                 gameFoods.add(carne);
 
                 for (House alHouse : alHouses) {
@@ -1040,7 +1040,7 @@ public class GameManager {
                 if(arrFood[0].charAt(0) == 'c'){
                     for (House house : alHouses) {
                         if(house.getPosition() == Integer.parseInt(arrFood[1])){
-                            Carne carne = new Carne('c', "Carne", "meat.png", 50,0,50, 12, Integer.parseInt(arrFood[1]));
+                            Carne carne = new Carne('c', "Carne", "meat.png", 50,0,50, Integer.parseInt(arrFood[1]));
                             gameFoods.add(carne);
                             house.food = carne;
                         }
