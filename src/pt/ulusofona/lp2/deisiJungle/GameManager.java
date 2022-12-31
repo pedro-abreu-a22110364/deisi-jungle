@@ -37,6 +37,7 @@ public class GameManager {
 
     ArrayList<Food> gameFoods = new ArrayList<>();
     HashMap<Integer,Player> hmPlayers = new HashMap<>(); //HashMap with id player as key
+    HashMap<Integer,Player> hmPlayersTemp = new HashMap<>();
 
     InitializationError errorTemp;
 
@@ -187,11 +188,15 @@ public class GameManager {
                         nrOfTarzans ++;
                     }
 
-                    Player player = new Player(Integer.parseInt(playerInfo[0]), playerInfo[1], specie, specie.getInitalEnergy());
+                    Player player = new Player(Integer.parseInt(playerInfo[0]), playerInfo[1], specie, specie.getInitalEnergy(),0,1);
                     alPlayer.add(player);
                     hmPlayers.put(player.getIdentifier(),player);
                 }
             }
+        }
+
+        if (!hmPlayersTemp.isEmpty()) {
+            hmPlayers = hmPlayersTemp;
         }
 
         for (int i = 1; i <= jungleSize; i++) {
@@ -415,7 +420,6 @@ public class GameManager {
             strPlayerInfo[3] = String.valueOf(hmPlayers.get(playerId).getEnergy());
             strPlayerInfo[4] = hmPlayers.get(playerId).getSpecie().getMinSpeed() + ".." + hmPlayers.get(playerId).getSpecie().getMaxSpeed() ;
         }
-
         return strPlayerInfo;
     }
 
@@ -466,6 +470,7 @@ public class GameManager {
     }
 
     public MovementResult moveCurrentPlayer(int nrSquares,boolean bypassValidations) {
+
         if ((nrSquares < -6 || nrSquares > 6) && !bypassValidations) {
             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
                 playerPlaying = 0;
@@ -996,27 +1001,26 @@ public class GameManager {
             BufferedWriter bw = new BufferedWriter(writer);
             //Cleans File first.
             bw.write("");
-            // Write some content to the file
-            bw.write("Players");
+            bw.write("Players\n");
             for (Player player : hmPlayers.values()) {
                 bw.write(player.getIdentifier() + "," + player.getName() + "," + player.getSpecie().getIdentifier() + "," + player.getEnergy() + "," + player.getRank() + "," + player.getPosition());
                 bw.newLine();
             }//--------------------------//
-            bw.write("Food");
+            bw.write("Food\n");
             for (Food food : gameFoods) {
                 if(food.getIdentifier() == 'c'){bw.write(food.getIdentifier() + "," + food.getPosition() + "," + ((Carne) food).getSpoilTime());}
                 else if(food.getIdentifier() == 'b'){bw.write(food.getIdentifier() + "," + food.getPosition() + "," + ((Banana) food).getQuantidade());}
                 else{bw.write(food.getIdentifier() + "," + food.getPosition());}
                 bw.newLine();
             }//--------------------------//
-            bw.write("Eaten Foods");
+            bw.write("Eaten Foods\n");
             for (Player player : hmPlayers.values()) {
                 for (Food eatenFood : player.getEatenFoods()) {
                     bw.write(player.getIdentifier() + "," + eatenFood.getIdentifier() + "," + eatenFood.getPosition());
                     bw.newLine();
                 }
             }//--------------------------//
-            bw.write("GameManager");
+            bw.write("GameManager\n");
             bw.write(gameFinished + "," + jungleSize + "," + idPlayerPlaying + "," + playerPlaying);
             // Close the writer to save the changes
             bw.close();
@@ -1026,6 +1030,7 @@ public class GameManager {
 
     public boolean loadGame(File file){
         try {
+            hmPlayersTemp = new HashMap<>();
             // Check if the file exists
             if (!file.exists()) {return false;}
             // Open the file for reading
@@ -1037,14 +1042,13 @@ public class GameManager {
             //Players
             while ((line = br.readLine()) != null)
             {
-                if(line.equals("EatenFoods")) {break;}
+                if(line.equals("Food")) {break;}
                 if(!line.equals("Players")) {
-                    hmPlayers = new HashMap<>();
                     arrPlayer = line.split(",");
                     for (Specie alSpecy : alSpecies) {
                         if(alSpecy.getIdentifier() == arrPlayer[2].charAt(0)) {
                             Player player = new Player(Integer.parseInt(arrPlayer[0]),arrPlayer[1],alSpecy,Integer.parseInt(arrPlayer[3]),Integer.parseInt(arrPlayer[4]),Integer.parseInt(arrPlayer[5]));
-                            hmPlayers.put(player.getIdentifier(), player);
+                            hmPlayersTemp.put(player.getIdentifier(), player);
                         }
                     }
                 }

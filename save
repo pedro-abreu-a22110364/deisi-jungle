@@ -1,0 +1,17 @@
+Players
+1,joao,M,96,0,3
+2,pedro,Y,100,0,1
+Food
+e,30
+b,15,3
+c,18,12
+m,27
+a,16
+e,28
+b,29,3
+c,37,12
+m,25
+a,22
+Eaten Foods
+GameManager
+false,47,2,1
