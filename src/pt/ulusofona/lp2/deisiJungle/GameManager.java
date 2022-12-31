@@ -405,6 +405,11 @@ public class GameManager {
             return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
         }
 
+        if (hmPlayers.get(idPlayerPlaying).getSpecie().getMinSpeed() > nrSquares || hmPlayers.get(idPlayerPlaying).getSpecie().getMaxSpeed() < nrSquares) {
+            nrPlays++;
+            return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
+        }
+
         //Verifica se todos os players n tem energia
         if(hmPlayers.get(idPlayerPlaying).getEnergy() - hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() < 0) {
             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
