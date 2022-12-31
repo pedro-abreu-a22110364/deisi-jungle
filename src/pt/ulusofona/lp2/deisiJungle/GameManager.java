@@ -527,6 +527,7 @@ public class GameManager {
                                     hmPlayers.get(idPlayerPlaying).addEnergy(20);
                                     eatMoreThan200();
                                 }
+                                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                                 chacingTurnAndAddingNrPlays();
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                             }
@@ -538,6 +539,7 @@ public class GameManager {
                                     hmPlayers.get(idPlayerPlaying).addEnergy(15);
                                     eatMoreThan200();
                                 }
+                                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                                 chacingTurnAndAddingNrPlays();
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                             }
@@ -553,6 +555,7 @@ public class GameManager {
                                     ((Banana) house.getFood()).removeQuantidade();
                                     hmPlayers.get(idPlayerPlaying).comerBananas();
 
+                                    hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                                     chacingTurnAndAddingNrPlays();
                                     return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                                 }
@@ -563,12 +566,14 @@ public class GameManager {
                                 ((Banana) house.getFood()).removeQuantidade();
                                 hmPlayers.get(idPlayerPlaying).comerBananas();
 
+                                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                                 chacingTurnAndAddingNrPlays();
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                             }
                             case 'c' -> {
                                 if (nrPlays >= 12) {
                                     hmPlayers.get(idPlayerPlaying).halfEnergy();
+                                    hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                                     chacingTurnAndAddingNrPlays();
                                     return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                                 }
@@ -581,6 +586,7 @@ public class GameManager {
 
                                 eatMoreThan200();
 
+                                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                                 chacingTurnAndAddingNrPlays();
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                             }
@@ -589,10 +595,12 @@ public class GameManager {
                                     hmPlayers.get(idPlayerPlaying).percentageEnergy(house.getFood().getEnergyOmnivoros());
                                     eatMoreThan200();
 
+                                    hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                                     chacingTurnAndAddingNrPlays();
                                     return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                                 } else {
                                     hmPlayers.get(idPlayerPlaying).percentageEnergyNegative(house.getFood().getEnergyOmnivoros());
+                                    hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                                     chacingTurnAndAddingNrPlays();
                                     return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                                 }
@@ -621,6 +629,7 @@ public class GameManager {
                                 eatMoreThan200();
                             }
                             increaseDistance(nrSquares);
+                            hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                             chacingTurnAndAddingNrPlays();
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
@@ -633,6 +642,7 @@ public class GameManager {
                                 eatMoreThan200();
                             }
                             increaseDistance(nrSquares);
+                            hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                             chacingTurnAndAddingNrPlays();
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
@@ -650,6 +660,7 @@ public class GameManager {
                                 hmPlayers.get(idPlayerPlaying).comerBananas();
 
                                 increaseDistance(nrSquares);
+                                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                                 chacingTurnAndAddingNrPlays();
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                             }
@@ -661,6 +672,7 @@ public class GameManager {
                             hmPlayers.get(idPlayerPlaying).comerBananas();
 
                             increaseDistance(nrSquares);
+                            hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                             chacingTurnAndAddingNrPlays();
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                         }
@@ -668,6 +680,7 @@ public class GameManager {
                             if (nrPlays >= 12) {
                                 hmPlayers.get(idPlayerPlaying).halfEnergy();
                                 increaseDistance(nrSquares);
+                                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                                 chacingTurnAndAddingNrPlays();
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                             }
@@ -682,6 +695,7 @@ public class GameManager {
                             eatMoreThan200();
 
                             increaseDistance(nrSquares);
+                            hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                             chacingTurnAndAddingNrPlays();
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
@@ -691,11 +705,13 @@ public class GameManager {
                                 eatMoreThan200();
 
                                 increaseDistance(nrSquares);
+                                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                                 chacingTurnAndAddingNrPlays();
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                             } else {
                                 hmPlayers.get(idPlayerPlaying).percentageEnergyNegative(house.getFood().getEnergyOmnivoros());
                                 increaseDistance(nrSquares);
+                                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                                 chacingTurnAndAddingNrPlays();
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                             }

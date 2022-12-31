@@ -98,6 +98,10 @@ public class Player {
         return eatenFoods;
     }
 
+    public void addEatenFoods (Food food) {
+        eatenFoods.add(food);
+    }
+
     public int getNrBananas() {
         return nrBananas;
     }
