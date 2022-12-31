@@ -769,7 +769,7 @@ public class GameManager {
         return null;
     }
 
-    public boolean checkWinner()
+    /*public boolean checkWinner()
     {
         if(!checkNoEnergy()) {
             if(checkSamePosition()) {
@@ -783,9 +783,9 @@ public class GameManager {
         else {
             return true;
         }
-    }
+    }*/
 
-    public boolean checkNoEnergy(){
+    /*public boolean checkNoEnergy(){
         for (Player player : hmPlayers.values()) {
             if(player.getEnergy() - player.getSpecie().getNeededEnergy() >= 0)
             {
@@ -793,7 +793,7 @@ public class GameManager {
             }
         }
         return false;
-    }
+    }*/
 
     public ArrayList<String> getGameResults() {
         ArrayList<String> alGameResults = new ArrayList<>();
@@ -821,7 +821,7 @@ public class GameManager {
         return alGameResults;
     }
 
-    public int checkPlayerWithBiggestPosition()
+    /*public int checkPlayerWithBiggestPosition()
     {
         int position = 0;
         int playerID = 0;
@@ -834,9 +834,9 @@ public class GameManager {
         }
         hmPlayers.get(playerID).setRank(1);
         return playerID;
-    }
+    }*/
 
-    public int checkPlayerWithSmallestIDInSamePosition(int position)
+    /*public int checkPlayerWithSmallestIDInSamePosition(int position)
     {
         int playerID = Integer.MAX_VALUE;
         for (Player player : hmPlayers.values()) {
@@ -848,9 +848,9 @@ public class GameManager {
             }
         }
         return playerID;
-    }
+    }*/
 
-    public boolean checkSamePosition()
+    /*public boolean checkSamePosition()
     {
         int position;
         for (Player player : hmPlayers.values()) {
@@ -863,9 +863,9 @@ public class GameManager {
             }
         }
         return false;
-    }
+    }*/
 
-    public int checkSamePositionReturnPosition() //Retorna em que posição à mais que um player
+    /*public int checkSamePositionReturnPosition() //Retorna em que posição à mais que um player
     {
         int position;
         for (Player player : hmPlayers.values()) {
@@ -878,7 +878,7 @@ public class GameManager {
             }
         }
         return 0;
-    }
+    }*/
 
     //Bubble Sort
     public int[] idOrderOfPlay () {
