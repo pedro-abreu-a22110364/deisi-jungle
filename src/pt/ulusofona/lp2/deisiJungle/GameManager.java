@@ -485,20 +485,6 @@ public class GameManager {
             return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
         }
 
-        /*if (nrSquares > 0) {
-            if ((hmPlayers.get(idPlayerPlaying).getSpecie().getMinSpeed() > nrSquares || hmPlayers.get(idPlayerPlaying).getSpecie().getMaxSpeed() < nrSquares) && !bypassValidations) {
-                nrPlays++;
-                nrPlaysMushrooms++;
-                return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
-            }
-        } else if (nrSquares < 0) {
-            if ((hmPlayers.get(idPlayerPlaying).getSpecie().getMinSpeed() > nrSquares * (-1) || hmPlayers.get(idPlayerPlaying).getSpecie().getMaxSpeed() < nrSquares * (-1)) && !bypassValidations) {
-                nrPlays++;
-                nrPlaysMushrooms++;
-                return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
-            }
-        }*/
-
         //Verifica se o move é válido consoante o animal
         if (hmPlayers.get(idPlayerPlaying).getSpecie().getIdentifier() == 'L' && nrSquares != -6 && nrSquares != -5 && nrSquares != -4 && nrSquares != 0 && nrSquares != 4 && nrSquares != 5 && nrSquares != 6) {
             chacingTurnAndAddingNrPlays();
@@ -634,6 +620,7 @@ public class GameManager {
                                 hmPlayers.get(idPlayerPlaying).addEnergy(20);
                                 eatMoreThan200();
                             }
+                            increaseDistance(nrSquares);
                             chacingTurnAndAddingNrPlays();
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
@@ -645,11 +632,13 @@ public class GameManager {
                                 hmPlayers.get(idPlayerPlaying).addEnergy(15);
                                 eatMoreThan200();
                             }
+                            increaseDistance(nrSquares);
                             chacingTurnAndAddingNrPlays();
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
                         case 'b' -> {
                             if (((Banana) house.getFood()).getQuantidade() <= 0) {
+                                increaseDistance(nrSquares);
                                 chacingTurnAndAddingNrPlays();
                                 return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
                             }
@@ -660,6 +649,7 @@ public class GameManager {
                                 ((Banana) house.getFood()).removeQuantidade();
                                 hmPlayers.get(idPlayerPlaying).comerBananas();
 
+                                increaseDistance(nrSquares);
                                 chacingTurnAndAddingNrPlays();
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                             }
@@ -670,17 +660,20 @@ public class GameManager {
                             ((Banana) house.getFood()).removeQuantidade();
                             hmPlayers.get(idPlayerPlaying).comerBananas();
 
+                            increaseDistance(nrSquares);
                             chacingTurnAndAddingNrPlays();
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                         }
                         case 'c' -> {
                             if (nrPlays >= 12) {
                                 hmPlayers.get(idPlayerPlaying).halfEnergy();
+                                increaseDistance(nrSquares);
                                 chacingTurnAndAddingNrPlays();
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                             }
 
                             if (Objects.equals(hmPlayers.get(idPlayerPlaying).getSpecie().getSpecieType(), "Herbivoro")) {
+                                increaseDistance(nrSquares);
                                 chacingTurnAndAddingNrPlays();
                                 return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
                             }
@@ -688,6 +681,7 @@ public class GameManager {
 
                             eatMoreThan200();
 
+                            increaseDistance(nrSquares);
                             chacingTurnAndAddingNrPlays();
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
@@ -696,10 +690,12 @@ public class GameManager {
                                 hmPlayers.get(idPlayerPlaying).percentageEnergy(house.getFood().getEnergyOmnivoros());
                                 eatMoreThan200();
 
+                                increaseDistance(nrSquares);
                                 chacingTurnAndAddingNrPlays();
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                             } else {
                                 hmPlayers.get(idPlayerPlaying).percentageEnergyNegative(house.getFood().getEnergyOmnivoros());
+                                increaseDistance(nrSquares);
                                 chacingTurnAndAddingNrPlays();
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                             }
@@ -709,8 +705,9 @@ public class GameManager {
             }
         }
 
-        if(hmPlayers.get(idPlayerPlaying).getPosition() >= jungleSize){
+        if(hmPlayers.get(idPlayerPlaying).getPosition() >= jungleSize) {
             moveCurrentPlayerFinal();
+            increaseDistance(nrSquares);
             winner = idPlayerPlaying;
             gameFinished = true;
             nrPlays++;
@@ -718,6 +715,7 @@ public class GameManager {
             return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
         }
 
+        increaseDistance(nrSquares);
         chacingTurnAndAddingNrPlays();
         return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
     }
@@ -756,6 +754,14 @@ public class GameManager {
         }
         nrPlays++;
         nrPlaysMushrooms++;
+    }
+
+    public void increaseDistance (int nrSquares) {
+        if (nrSquares < 0) {
+            hmPlayers.get(idPlayerPlaying).increseDistance(nrSquares * (-1));
+        } else if (nrSquares > 0) {
+            hmPlayers.get(idPlayerPlaying).increseDistance(nrSquares);
+        }
     }
 
     public String[] getWinnerInfo() {
