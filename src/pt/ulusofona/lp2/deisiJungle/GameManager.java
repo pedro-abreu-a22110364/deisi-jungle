@@ -518,7 +518,6 @@ public class GameManager {
                                     playerPlaying++;
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
                                 }
-                                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                                 nrPlays++;
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                             }
