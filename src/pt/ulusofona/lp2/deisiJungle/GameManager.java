@@ -290,7 +290,7 @@ public class GameManager {
                         }
                         case 'c' -> {
                             strSquareInfo[0] = "meat.png";
-                            strSquareInfo[1] = "Carne : +- 50 energia : " + nrPlays + " jogadas";
+                            strSquareInfo[1] = "Carne : + 50 energia : " + nrPlays + " jogadas";
 
                             if (nrPlays >= 12) {
                                 strSquareInfo[0] = "meat.png";
@@ -776,7 +776,12 @@ public class GameManager {
 
     public void moveCurrentPlayerAdd (int nrSquares) {
         hmPlayers.get(idPlayerPlaying).setPosition(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares);
-        hmPlayers.get(idPlayerPlaying).removeEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() * nrSquares);
+
+        if (nrSquares < 0) {
+            hmPlayers.get(idPlayerPlaying).removeEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() * ((-1) * nrSquares));
+        } else {
+            hmPlayers.get(idPlayerPlaying).removeEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() * nrSquares);
+        }
 
         if (hmPlayers.get(idPlayerPlaying).getPosition() <= 0) {
             hmPlayers.get(idPlayerPlaying).setPosition(1);
