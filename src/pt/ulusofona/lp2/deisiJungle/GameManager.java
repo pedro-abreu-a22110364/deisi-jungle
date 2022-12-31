@@ -987,7 +987,7 @@ public class GameManager {
             }//--------------------------//
             bw.write("Food\n");
             for (Food food : gameFoods) {
-                if(food.getIdentifier() == 'c'){bw.write(food.getIdentifier() + "," + food.getPosition() + "," + nrPlays);}
+                if(food.getIdentifier() == 'c'){bw.write(food.getIdentifier() + "," + food.getPosition());}
                 else if(food.getIdentifier() == 'b'){bw.write(food.getIdentifier() + "," + food.getPosition() + "," + ((Banana) food).getQuantidade());}
                 else{bw.write(food.getIdentifier() + "," + food.getPosition());}
                 bw.newLine();
@@ -1000,7 +1000,7 @@ public class GameManager {
                 }
             }//--------------------------//
             bw.write("GameManager\n");
-            bw.write(gameFinished + "," + jungleSize + "," + idPlayerPlaying + "," + playerPlaying);
+            bw.write(gameFinished + "," + jungleSize + "," + idPlayerPlaying + "," + playerPlaying + "," + nrPlays);
             // Close the writer to save the changes
             bw.close();
             return true;
@@ -1105,6 +1105,7 @@ public class GameManager {
                 gameFinished = Boolean.parseBoolean(arrGameManager[0]);
                 idPlayerPlayingTemp = Integer.parseInt(arrGameManager[2]);
                 playerPlayingTemp = Integer.parseInt(arrGameManager[3]);
+                nrPlays = Integer.parseInt(arrGameManager[4]);
             }
             alSpecies = createDefaultSpecies();
             alFoods = createDefaultFoods();
