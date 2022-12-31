@@ -987,7 +987,7 @@ public class GameManager {
             }//--------------------------//
             bw.write("Food\n");
             for (Food food : gameFoods) {
-                if(food.getIdentifier() == 'c'){bw.write(food.getIdentifier() + "," + food.getPosition() + "," + ((Carne) food).getSpoilTime());}
+                if(food.getIdentifier() == 'c'){bw.write(food.getIdentifier() + "," + food.getPosition() + "," + nrPlays);}
                 else if(food.getIdentifier() == 'b'){bw.write(food.getIdentifier() + "," + food.getPosition() + "," + ((Banana) food).getQuantidade());}
                 else{bw.write(food.getIdentifier() + "," + food.getPosition());}
                 bw.newLine();
