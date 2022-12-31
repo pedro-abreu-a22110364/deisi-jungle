@@ -146,6 +146,7 @@ public class GameManager {
         this.jungleSize = jungleSize;
         int nrOfTarzans = 0;
 
+
         //Validate number of players
         if(playersInfo == null || playersInfo.length < minPlayers || playersInfo.length > maxPlayers || jungleSize < playersInfo.length * 2) {
             errorTemp = new InitializationError("Invalid number of players");
@@ -218,8 +219,7 @@ public class GameManager {
 
     public InitializationError createInitialJungle(int jungleSize,String[][] playersInfo, String[][] foodsInfo) {
         createInitialJungle(jungleSize, playersInfo);
-        gameFoods = new ArrayList<>();
-        alHouses = new ArrayList<>();
+
 
         //Validate number of players
         if(playersInfo == null || playersInfo.length < minPlayers || playersInfo.length > maxPlayers || jungleSize < playersInfo.length * 2) {
