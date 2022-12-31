@@ -538,7 +538,7 @@ public class GameManager {
                                 return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
                             }
 
-                            if (hmPlayers.get(idPlayerPlaying).countEatenBananas()) {
+                            if (hmPlayers.get(idPlayerPlaying).getNrBananas() >= 1) {
                                 hmPlayers.get(idPlayerPlaying).removeEnergy(40);
                                 if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                                     idPlayerPlaying = orderOfPlay[0];
@@ -547,6 +547,10 @@ public class GameManager {
                                     playerPlaying++;
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
                                 }
+
+                                ((Banana) house.getFood()).removeQuantidade();
+                                hmPlayers.get(idPlayerPlaying).comerBananas();
+
                                 nrPlays++;
                                 nrPlaysMushrooms++;
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
@@ -556,7 +560,10 @@ public class GameManager {
                             if (hmPlayers.get(idPlayerPlaying).getEnergy() > 200) {
                                 hmPlayers.get(idPlayerPlaying).setEnergy(200);
                             }
+
                             ((Banana) house.getFood()).removeQuantidade();
+                            hmPlayers.get(idPlayerPlaying).comerBananas();
+
                             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
                                 idPlayerPlaying = orderOfPlay[0];
                                 playerPlaying = 0;

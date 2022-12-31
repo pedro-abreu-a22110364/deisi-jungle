@@ -57,7 +57,7 @@ public class TestGameManager {
     }
 
     @Test
-    public void testMoveTarzanToMushroom () {
+    public void testMoveToTwoBananas () {
         String[][] players = new String[2][3];
 
         players[0][0] = "1";
@@ -67,20 +67,26 @@ public class TestGameManager {
         players[1][1] = "Gui";
         players[1][2] = "L";
 
-        String[][] foods = new String[1][2];
+        String[][] foods = new String[2][2];
 
-        foods[0][0] = "m";
+        foods[0][0] = "b";
         foods[0][1] = "5";
+        foods[1][0] = "b";
+        foods[1][1] = "7";
 
         GameManager game = new GameManager();
 
-        game.createInitialJungle(8,players,foods);
+        game.createInitialJungle(10,players,foods);
+
+        game.moveCurrentPlayer(4,false);
+
+        game.moveCurrentPlayer(0,false);
+
+        game.moveCurrentPlayer(2,false);
 
         ArrayList<Player> player = game.getAlPlayer();
 
-        ArrayList<Food> food = game.getAlFoods();
-
-        game.moveCurrentPlayer(4,false);
+        assertEquals(70-12+40-40,player.get(0).getEnergy());
     }
 
 }

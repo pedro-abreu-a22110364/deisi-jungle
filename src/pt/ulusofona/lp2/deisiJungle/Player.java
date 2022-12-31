@@ -10,6 +10,7 @@ public class Player {
     int rank; //Mudar de classe caso necessário
     int position = 1;
     int distance = 0;
+    int nrBananas = 0;
 
     ArrayList<Food> eatenFoods = new ArrayList<>();
 
@@ -97,8 +98,12 @@ public class Player {
         return eatenFoods;
     }
 
-    public void addEatenFoods(Food food) {
-        eatenFoods.add(food);
+    public int getNrBananas() {
+        return nrBananas;
+    }
+
+    public void comerBananas() {
+        nrBananas++;
     }
 
     public boolean countEatenBananas() {
