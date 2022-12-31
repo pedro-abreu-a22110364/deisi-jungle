@@ -392,17 +392,17 @@ public class GameManager {
                 playerPlaying = 0;
                 idPlayerPlaying = orderOfPlay[0];
                 nrPlays++;
-                return new MovementResult(MovementResultCode.INVALID_MOVEMENT,"nrSquares ultrapassa os limites");
+                return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
             }
             playerPlaying++;
             idPlayerPlaying = orderOfPlay[playerPlaying];
             nrPlays++;
-            return new MovementResult(MovementResultCode.INVALID_MOVEMENT,"nrSquares ultrapassa os limites");
+            return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
         }
         //Verifica se o jogo já acabou
         if(gameFinished) {
             nrPlays++;
-            return new MovementResult(MovementResultCode.INVALID_MOVEMENT,"jogo já acabou");
+            return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
         }
 
         //Verifica se todos os players n tem energia
@@ -415,7 +415,7 @@ public class GameManager {
                 }
                 checkWinner();
                 nrPlays++;
-                return new MovementResult(MovementResultCode.NO_ENERGY,"energia insuficiente");
+                return new MovementResult(MovementResultCode.NO_ENERGY,null);
             }
             //Próximo jogador
             if(checkWinner()){
@@ -424,7 +424,7 @@ public class GameManager {
             }
             checkWinner();
             nrPlays++;
-            return new MovementResult(MovementResultCode.NO_ENERGY,"energia insuficiente");
+            return new MovementResult(MovementResultCode.NO_ENERGY,null);
         }
 
         if (nrSquares == 0) {
@@ -436,7 +436,7 @@ public class GameManager {
                 idPlayerPlaying = orderOfPlay[0];
                 playerPlaying = 0;
                 nrPlays++;
-                return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
+                return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
             }
             hmPlayers.get(idPlayerPlaying).addEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getEnergyRecovery());
             if (hmPlayers.get(idPlayerPlaying).getEnergy() > 200) {
@@ -445,7 +445,7 @@ public class GameManager {
             playerPlaying++;
             idPlayerPlaying = orderOfPlay[playerPlaying];
             nrPlays++;
-            return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
+            return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
         }
 
         moveCurrentPlayerAdd(nrSquares);
@@ -559,7 +559,7 @@ public class GameManager {
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
                                 }
                                 nrPlays++;
-                                return new MovementResult(MovementResultCode.VALID_MOVEMENT,"Herbivoro ignorou carne");
+                                return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
                             }
                             hmPlayers.get(idPlayerPlaying).addEnergy(50);
                             if (hmPlayers.get(idPlayerPlaying).getEnergy() > 200) {
@@ -612,7 +612,7 @@ public class GameManager {
             winner = idPlayerPlaying;
             gameFinished = true;
             nrPlays++;
-            return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
+            return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
         }
 
         if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
@@ -623,7 +623,7 @@ public class GameManager {
             idPlayerPlaying = orderOfPlay[playerPlaying];
         }
         nrPlays++;
-        return new MovementResult(MovementResultCode.VALID_MOVEMENT,"efetuou movimento");
+        return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
     }
 
     public String[] getWinnerInfo() {
