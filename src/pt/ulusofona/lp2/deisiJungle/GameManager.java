@@ -1096,19 +1096,24 @@ public class GameManager {
                 }
             }
 
+            int idPlayerPlayingTemp = 0;
+            int playerPlayingTemp = 0;
             //Gamemanager
             while ((line = br.readLine()) != null)
             {
                 arrGameManager = line.split(",");
                 jungleSize = Integer.parseInt(arrGameManager[1]);
                 gameFinished = Boolean.parseBoolean(arrGameManager[0]);
-                idPlayerPlaying = Integer.parseInt(arrGameManager[2]);
-                playerPlaying = Integer.parseInt(arrGameManager[3]);
+                idPlayerPlayingTemp = Integer.parseInt(arrGameManager[2]);
+                playerPlayingTemp = Integer.parseInt(arrGameManager[3]);
             }
             alSpecies = createDefaultSpecies();
             alFoods = createDefaultFoods();
             if(gameFoods.size() > 0){createInitialJungle(jungleSize, getPlayersInfo(),getFoodsInfo());}
             else{createInitialJungle(jungleSize,getPlayersInfo());}
+            idPlayerPlaying = idPlayerPlayingTemp;
+            playerPlaying = playerPlayingTemp;
+
             //idOrderOfPlay();
             // Close the reader
             br.close();
