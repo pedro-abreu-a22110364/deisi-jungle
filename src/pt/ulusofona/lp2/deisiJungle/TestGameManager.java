@@ -9,12 +9,12 @@ import static org.junit.Assert.assertEquals;
 public class TestGameManager {
 
     @Test
-    public void testCreateInitialJungle () {
+    public void testCreateInitialJungleWrongSpecie () {
         String[][] players = new String[2][3];
 
         players[0][0] = "1";
         players[0][1] = "Pedro";
-        players[0][2] = "Z";
+        players[0][2] = "A";
         players[1][0] = "2";
         players[1][1] = "Gui";
         players[1][2] = "L";
@@ -26,7 +26,7 @@ public class TestGameManager {
 
         GameManager game = new GameManager();
 
-        assertEquals("Incorrect food found",game.createInitialJungle(8,players,foods).getMessage());
+        assertEquals("Incorrect specie",game.createInitialJungle(8,players,foods).getMessage());
     }
 
     @Test

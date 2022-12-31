@@ -47,10 +47,6 @@ public class GameManager {
         return alPlayer;
     }
 
-    public ArrayList<House> getAlHouses() {
-        return alHouses;
-    }
-
     public String[][] getSpecies() {
         String[][] species = new String[alSpecies.size()][7];
         int count = 0;
@@ -112,7 +108,7 @@ public class GameManager {
         //Validate incorrect species
         for (String[] strings : playersInfo) {
             if(strings[2] == null || !((strings[2].equals("E")) || (strings[2].equals("L")) || (strings[2].equals("T")) || (strings[2].equals("P")) || (strings[2].equals("Z")) || (strings[2].equals("M")) || (strings[2].equals("G")) || (strings[2].equals("Y")) || (strings[2].equals("X")))) {
-                errorTemp = new InitializationError("Incorrect specie found");
+                errorTemp = new InitializationError("Incorrect specie");
                 return errorTemp;
             }
         }
@@ -157,13 +153,15 @@ public class GameManager {
         createInitialJungle(jungleSize, playersInfo);
         if (errorTemp != null) {
             if (Objects.equals(errorTemp.getMessage(), "Invalid number of players")) {
-                return new InitializationError("Invalid number of players");
+                return errorTemp;
             } else if (Objects.equals(errorTemp.getMessage(), "Incorrect id or name")) {
-                return new InitializationError("Incorrect id or name");
+                return errorTemp;
             } else if (Objects.equals(errorTemp.getMessage(), "Repeated ids found")) {
-                return new InitializationError("Repeated ids found");
-            } else if (Objects.equals(errorTemp.getMessage(), "Incorrect specie found")) {
-                return new InitializationError("Incorrect specie");
+                return errorTemp;
+            } else if (Objects.equals(errorTemp.getMessage(), "Incorrect specie")) {
+                return errorTemp;
+            } else if (Objects.equals(errorTemp.getMessage(), "There is already a tarzan player")) {
+                return errorTemp;
             }
         }
 
@@ -292,7 +290,7 @@ public class GameManager {
                             strSquareInfo[0] = "meat.png";
                             strSquareInfo[1] = "Carne : + 50 energia : " + nrPlays + " jogadas";
 
-                            if (nrPlays >= 12) {
+                            if (nrPlays > 12) {
                                 strSquareInfo[0] = "meat.png";
                                 strSquareInfo[1] = "Carne toxica";
                             }
@@ -591,7 +589,7 @@ public class GameManager {
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
                                 }
                                 nrPlays++;
-                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
+                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                             }
                             hmPlayers.get(idPlayerPlaying).percentageEnergy(-1 * (house.getFood().getEnergyOmnivoros()));
                             if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
@@ -602,7 +600,7 @@ public class GameManager {
                                 idPlayerPlaying = orderOfPlay[playerPlaying];
                             }
                             nrPlays++;
-                            return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
+                            return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                         }
                     }
                 }

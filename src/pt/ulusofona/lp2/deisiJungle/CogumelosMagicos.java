@@ -47,6 +47,6 @@ public class CogumelosMagicos extends Food {
 
     @Override
     public String getFoodType() {
-        return "Cogumelos";
+        return "Cogumelo Magico";
     }
 }
