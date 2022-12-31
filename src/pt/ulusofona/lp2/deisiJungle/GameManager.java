@@ -13,7 +13,8 @@ public class GameManager {
     int minPlayers = 2;
     int maxPlayers = 4;
     int jungleSize;
-    int nrPlays = 1;
+    int nrPlays = 0;
+    int nrPlaysMushrooms = 1;
 
     //Variaveis com informação de players
     int winner = 0;
@@ -396,22 +397,26 @@ public class GameManager {
                 playerPlaying = 0;
                 idPlayerPlaying = orderOfPlay[0];
                 nrPlays++;
+                nrPlaysMushrooms++;
                 return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
             }
             playerPlaying++;
             idPlayerPlaying = orderOfPlay[playerPlaying];
             nrPlays++;
+            nrPlaysMushrooms++;
             return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
         }
 
         /*if (nrSquares > 0) {
             if ((hmPlayers.get(idPlayerPlaying).getSpecie().getMinSpeed() > nrSquares || hmPlayers.get(idPlayerPlaying).getSpecie().getMaxSpeed() < nrSquares) && !bypassValidations) {
                 nrPlays++;
+                nrPlaysMushrooms++;
                 return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
             }
         } else if (nrSquares < 0) {
             if ((hmPlayers.get(idPlayerPlaying).getSpecie().getMinSpeed() > nrSquares * (-1) || hmPlayers.get(idPlayerPlaying).getSpecie().getMaxSpeed() < nrSquares * (-1)) && !bypassValidations) {
                 nrPlays++;
+                nrPlaysMushrooms++;
                 return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
             }
         }*/
@@ -419,6 +424,7 @@ public class GameManager {
         //Verifica se o jogo já acabou
         if(gameFinished) {
             nrPlays++;
+            nrPlaysMushrooms++;
             return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
         }
 
@@ -432,6 +438,7 @@ public class GameManager {
                 }
                 checkWinner();
                 nrPlays++;
+                nrPlaysMushrooms++;
                 return new MovementResult(MovementResultCode.NO_ENERGY,null);
             }
             //Próximo jogador
@@ -441,6 +448,7 @@ public class GameManager {
             }
             checkWinner();
             nrPlays++;
+            nrPlaysMushrooms++;
             return new MovementResult(MovementResultCode.NO_ENERGY,null);
         }
 
@@ -453,6 +461,7 @@ public class GameManager {
                 idPlayerPlaying = orderOfPlay[0];
                 playerPlaying = 0;
                 nrPlays++;
+                nrPlaysMushrooms++;
                 return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
             }
             hmPlayers.get(idPlayerPlaying).addEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getEnergyRecovery());
@@ -462,6 +471,7 @@ public class GameManager {
             playerPlaying++;
             idPlayerPlaying = orderOfPlay[playerPlaying];
             nrPlays++;
+            nrPlaysMushrooms++;
             return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
         }
 
@@ -488,6 +498,7 @@ public class GameManager {
                                 idPlayerPlaying = orderOfPlay[playerPlaying];
                             }
                             nrPlays++;
+                            nrPlaysMushrooms++;
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
                         case 'a' -> {
@@ -510,6 +521,7 @@ public class GameManager {
                                 idPlayerPlaying = orderOfPlay[playerPlaying];
                             }
                             nrPlays++;
+                            nrPlaysMushrooms++;
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
                         case 'b' -> {
@@ -522,7 +534,7 @@ public class GameManager {
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
                                 }
                                 nrPlays++;
-                                //Not sure if its correct
+                                nrPlaysMushrooms++;
                                 return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
                             }
 
@@ -536,6 +548,7 @@ public class GameManager {
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
                                 }
                                 nrPlays++;
+                                nrPlaysMushrooms++;
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                             }
 
@@ -552,6 +565,7 @@ public class GameManager {
                                 idPlayerPlaying = orderOfPlay[playerPlaying];
                             }
                             nrPlays++;
+                            nrPlaysMushrooms++;
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                         }
                         case 'c' -> {
@@ -565,6 +579,7 @@ public class GameManager {
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
                                 }
                                 nrPlays++;
+                                nrPlaysMushrooms++;
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                             }
 
@@ -577,7 +592,7 @@ public class GameManager {
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
                                 }
                                 nrPlays++;
-                                //Not sure too
+                                nrPlaysMushrooms++;
                                 return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
                             }
                             hmPlayers.get(idPlayerPlaying).addEnergy(50);
@@ -592,10 +607,11 @@ public class GameManager {
                                 idPlayerPlaying = orderOfPlay[playerPlaying];
                             }
                             nrPlays++;
+                            nrPlaysMushrooms++;
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
                         case 'm' -> {
-                            if (nrPlays % 2 == 0) {
+                            if (nrPlaysMushrooms % 2 == 0) {
                                 hmPlayers.get(idPlayerPlaying).percentageEnergy(house.getFood().getEnergyOmnivoros());
                                 if (hmPlayers.get(idPlayerPlaying).getEnergy() > 200) {
                                     hmPlayers.get(idPlayerPlaying).setEnergy(200);
@@ -608,6 +624,7 @@ public class GameManager {
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
                                 }
                                 nrPlays++;
+                                nrPlaysMushrooms++;
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                             } else {
                                 hmPlayers.get(idPlayerPlaying).percentageEnergyNegative(house.getFood().getEnergyOmnivoros());
@@ -619,6 +636,7 @@ public class GameManager {
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
                                 }
                                 nrPlays++;
+                                nrPlaysMushrooms++;
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                             }
                         }
@@ -632,6 +650,7 @@ public class GameManager {
             winner = idPlayerPlaying;
             gameFinished = true;
             nrPlays++;
+            nrPlaysMushrooms++;
             return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
         }
 
@@ -643,6 +662,7 @@ public class GameManager {
             idPlayerPlaying = orderOfPlay[playerPlaying];
         }
         nrPlays++;
+        nrPlaysMushrooms++;
         return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
     }
 
