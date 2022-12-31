@@ -381,7 +381,7 @@ public class GameManager {
                         }
                         case 'm' -> {
                             strSquareInfo[0] = "mushroom.png";
-                            strSquareInfo[1] = "Cogumelo Magico: +- " + house.getFood().getEnergyOmnivoros() + "% energia";
+                            strSquareInfo[1] = "Cogumelo Magico : +- " + house.getFood().getEnergyOmnivoros() + "% energia";
                         }
                     }
                 }
