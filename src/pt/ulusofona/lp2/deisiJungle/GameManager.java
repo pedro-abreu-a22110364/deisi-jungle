@@ -979,7 +979,7 @@ public class GameManager {
             //Check if files does not exists and if not, creates it
             if (!file.exists()) {file.createNewFile();}
             // Open the file for writing
-            FileWriter writer = new FileWriter(file);
+            FileWriter writer = new FileWriter(file.getName());
             BufferedWriter bw = new BufferedWriter(writer);
             //Cleans File first.
             bw.write("");
