@@ -242,7 +242,7 @@ public class GameManager {
 
         for (Player player : hmPlayers.values()) {
             if(player.getPosition() == squareNr) {
-               numberPlayers++;
+                numberPlayers++;
             }
         }
         int[] arrayID = new int[numberPlayers];
@@ -330,11 +330,11 @@ public class GameManager {
         String[] strPlayerInfo = new String[5];
         if(hmPlayers.containsKey(playerId))
         {
-                strPlayerInfo[0] = String.valueOf(hmPlayers.get(playerId).getIdentifier());
-                strPlayerInfo[1] = hmPlayers.get(playerId).getName();
-                strPlayerInfo[2] = String.valueOf(hmPlayers.get(playerId).getSpecie().getIdentifier());
-                strPlayerInfo[3] = String.valueOf(hmPlayers.get(playerId).getEnergy());
-                strPlayerInfo[4] = hmPlayers.get(playerId).getSpecie().getMinSpeed() + ".." + hmPlayers.get(playerId).getSpecie().getMaxSpeed() ;
+            strPlayerInfo[0] = String.valueOf(hmPlayers.get(playerId).getIdentifier());
+            strPlayerInfo[1] = hmPlayers.get(playerId).getName();
+            strPlayerInfo[2] = String.valueOf(hmPlayers.get(playerId).getSpecie().getIdentifier());
+            strPlayerInfo[3] = String.valueOf(hmPlayers.get(playerId).getEnergy());
+            strPlayerInfo[4] = hmPlayers.get(playerId).getSpecie().getMinSpeed() + ".." + hmPlayers.get(playerId).getSpecie().getMaxSpeed() ;
         }
 
         return strPlayerInfo;
@@ -399,13 +399,8 @@ public class GameManager {
             nrPlays++;
             return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
         }
-        //Verifica se o jogo já acabou
-        if(gameFinished) {
-            nrPlays++;
-            return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
-        }
 
-        if (nrSquares > 0) {
+        /*if (nrSquares > 0) {
             if ((hmPlayers.get(idPlayerPlaying).getSpecie().getMinSpeed() > nrSquares || hmPlayers.get(idPlayerPlaying).getSpecie().getMaxSpeed() < nrSquares) && !bypassValidations) {
                 nrPlays++;
                 return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
@@ -415,6 +410,12 @@ public class GameManager {
                 nrPlays++;
                 return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
             }
+        }*/
+
+        //Verifica se o jogo já acabou
+        if(gameFinished) {
+            nrPlays++;
+            return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
         }
 
         //Verifica se todos os players n tem energia
@@ -482,7 +483,6 @@ public class GameManager {
                                 playerPlaying++;
                                 idPlayerPlaying = orderOfPlay[playerPlaying];
                             }
-                            hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                             nrPlays++;
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
@@ -505,7 +505,6 @@ public class GameManager {
                                 playerPlaying++;
                                 idPlayerPlaying = orderOfPlay[playerPlaying];
                             }
-                            hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                             nrPlays++;
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
@@ -531,7 +530,6 @@ public class GameManager {
                                     playerPlaying++;
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
                                 }
-                                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                                 nrPlays++;
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                             }
@@ -548,7 +546,6 @@ public class GameManager {
                                 playerPlaying++;
                                 idPlayerPlaying = orderOfPlay[playerPlaying];
                             }
-                            hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                             nrPlays++;
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                         }
@@ -562,7 +559,6 @@ public class GameManager {
                                     playerPlaying++;
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
                                 }
-                                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                                 nrPlays++;
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                             }
@@ -575,7 +571,6 @@ public class GameManager {
                                     playerPlaying++;
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
                                 }
-                                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                                 nrPlays++;
                                 return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
                             }
@@ -590,7 +585,6 @@ public class GameManager {
                                 playerPlaying++;
                                 idPlayerPlaying = orderOfPlay[playerPlaying];
                             }
-                            hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                             nrPlays++;
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
@@ -607,7 +601,6 @@ public class GameManager {
                                     playerPlaying++;
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
                                 }
-                                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                                 nrPlays++;
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                             } else {
@@ -619,7 +612,6 @@ public class GameManager {
                                     playerPlaying++;
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
                                 }
-                                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                                 nrPlays++;
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                             }
@@ -877,7 +869,7 @@ public class GameManager {
         return 0;
     }
 
-   //Bubble Sort
+    //Bubble Sort
     public int[] idOrderOfPlay () {
         int[] idOrderOfPlay = new int[hmPlayers.size()];
         int count = 0, lastOrdered = idOrderOfPlay.length;
