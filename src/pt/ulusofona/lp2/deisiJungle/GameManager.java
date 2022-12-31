@@ -62,10 +62,10 @@ public class GameManager {
         Passaro passaro = new Passaro('P', "Pássaro","bird.png","Omnivoro",70,4,50,5,6);
         Tarzan tarzan = new Tarzan('Z', "Tarzan","tarzan.png", "Omnivoro",70,2,20,1,6);
 
-        Mario mario = new Mario('M',"Mario","mario.png","Omnivoro",100,2,20,2,5);
-        Ghost ghost = new Ghost('G',"PacMan","pacman.png","Herbivoro",100,2,20,1,3);
-        Pikachu pikachu = new Pikachu('Y',"Pikachu","pikachu.png","Herbivoro",100,2,20,4,6);
-        Zelda zelda = new Zelda('X',"Zelda","zelda.png","Omnivoro",100,2,20,3,5);
+        Mario mario = new Mario('M',"Mario","mario.png","Omnivoro",100,2,20,1,6);
+        Ghost ghost = new Ghost('G',"PacMan","pacman.png","Herbivoro",100,2,20,1,6);
+        Pikachu pikachu = new Pikachu('Y',"Pikachu","pikachu.png","Herbivoro",100,2,20,1,6);
+        Zelda zelda = new Zelda('X',"Zelda","zelda.png","Omnivoro",100,2,20,1,6);
 
         //Adding objects to list
         alSpecies.add(elefante);
@@ -474,15 +474,12 @@ public class GameManager {
     public MovementResult moveCurrentPlayer(int nrSquares,boolean bypassValidations) {
 
         if ((nrSquares < -6 || nrSquares > 6) && !bypassValidations) {
-            if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]){
-                playerPlaying = 0;
-                idPlayerPlaying = orderOfPlay[0];
-                nrPlays++;
-                nrPlaysMushrooms++;
-                return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
-            }
-            playerPlaying++;
-            idPlayerPlaying = orderOfPlay[playerPlaying];
+            chacingTurnAndAddingNrPlays();
+            return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
+        }
+
+        //Verifica se o jogo já acabou
+        if(gameFinished) {
             nrPlays++;
             nrPlaysMushrooms++;
             return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
@@ -502,10 +499,17 @@ public class GameManager {
             }
         }*/
 
-        //Verifica se o jogo já acabou
-        if(gameFinished) {
-            nrPlays++;
-            nrPlaysMushrooms++;
+        //Verifica se o move é válido consoante o animal
+        if (hmPlayers.get(idPlayerPlaying).getSpecie().getIdentifier() == 'L' && nrSquares != -6 && nrSquares != -5 && nrSquares != -4 && nrSquares != 0 && nrSquares != 4 && nrSquares != 5 && nrSquares != 6) {
+            chacingTurnAndAddingNrPlays();
+            return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
+        }
+        if (hmPlayers.get(idPlayerPlaying).getSpecie().getIdentifier() == 'T' && nrSquares != -3 && nrSquares != -2 && nrSquares != -1 && nrSquares != 0 && nrSquares != 1 && nrSquares != 2 && nrSquares != 3) {
+            chacingTurnAndAddingNrPlays();
+            return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
+        }
+        if (hmPlayers.get(idPlayerPlaying).getSpecie().getIdentifier() == 'P' && nrSquares != -6 && nrSquares != -5 && nrSquares != 0 && nrSquares != 5 && nrSquares != 6) {
+            chacingTurnAndAddingNrPlays();
             return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
         }
 
