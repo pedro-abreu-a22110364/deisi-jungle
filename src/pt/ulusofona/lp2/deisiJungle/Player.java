@@ -93,6 +93,10 @@ public class Player {
         return eatenFoods;
     }
 
+    public void addEatenFoods(Food food) {
+        eatenFoods.add(food);
+    }
+
     public boolean countEatenBananas() {
         int count = 0;
         for (Food eatenFood : eatenFoods) {
