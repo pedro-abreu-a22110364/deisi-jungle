@@ -1088,7 +1088,7 @@ public class GameManager {
                 arrEatenFoods = line.split(",");
                 for (Food gameFood : gameFoods) {
                     if(gameFood.getIdentifier() == arrEatenFoods[1].charAt(0) && gameFood.getPosition() == Integer.parseInt(arrEatenFoods[2])) {
-                        hmPlayers.get(Integer.parseInt(arrEatenFoods[0])).eatenFoods.add(gameFood);
+                        hmPlayersTemp.get(Integer.parseInt(arrEatenFoods[0])).eatenFoods.add(gameFood);
                     }
                 }
             }
