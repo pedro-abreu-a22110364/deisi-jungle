@@ -590,17 +590,18 @@ public class GameManager {
                                 }
                                 nrPlays++;
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
-                            }
-                            hmPlayers.get(idPlayerPlaying).percentageEnergy(-1 * (house.getFood().getEnergyOmnivoros()));
-                            if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
-                                idPlayerPlaying = orderOfPlay[0];
-                                playerPlaying = 0;
                             } else {
-                                playerPlaying++;
-                                idPlayerPlaying = orderOfPlay[playerPlaying];
+                                hmPlayers.get(idPlayerPlaying).percentageEnergy(-1 * (house.getFood().getEnergyOmnivoros()));
+                                if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
+                                    idPlayerPlaying = orderOfPlay[0];
+                                    playerPlaying = 0;
+                                } else {
+                                    playerPlaying++;
+                                    idPlayerPlaying = orderOfPlay[playerPlaying];
+                                }
+                                nrPlays++;
+                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                             }
-                            nrPlays++;
-                            return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                         }
                     }
                 }
