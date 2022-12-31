@@ -34,7 +34,6 @@ public class GameManager {
     ArrayList<Specie> alSpecies = createDefaultSpecies();
     ArrayList<Food> alFoods = createDefaultFoods();
     ArrayList<House> alHouses = new ArrayList<>();
-
     ArrayList<Food> gameFoods = new ArrayList<>();
     HashMap<Integer,Player> hmPlayers = new HashMap<>(); //HashMap with id player as key
     HashMap<Integer,Player> hmPlayersTemp = new HashMap<>();
@@ -145,6 +144,8 @@ public class GameManager {
     public InitializationError createInitialJungle(int jungleSize, String[][] playersInfo) {
         this.jungleSize = jungleSize;
         int nrOfTarzans = 0;
+        gameFoods = new ArrayList<>();
+        alHouses = new ArrayList<>();
 
 
         //Validate number of players
