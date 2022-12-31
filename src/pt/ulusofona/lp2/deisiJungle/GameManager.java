@@ -218,6 +218,8 @@ public class GameManager {
 
     public InitializationError createInitialJungle(int jungleSize,String[][] playersInfo, String[][] foodsInfo) {
         createInitialJungle(jungleSize, playersInfo);
+        gameFoods = new ArrayList<>();
+        alHouses = new ArrayList<>();
 
         //Validate number of players
         if(playersInfo == null || playersInfo.length < minPlayers || playersInfo.length > maxPlayers || jungleSize < playersInfo.length * 2) {
@@ -1106,7 +1108,7 @@ public class GameManager {
             alFoods = createDefaultFoods();
             if(gameFoods.size() > 0){createInitialJungle(jungleSize, getPlayersInfo(),getFoodsInfo());}
             else{createInitialJungle(jungleSize,getPlayersInfo());}
-            idOrderOfPlay();
+            //idOrderOfPlay();
             // Close the reader
             br.close();
             return true;
