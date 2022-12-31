@@ -521,6 +521,9 @@ public class GameManager {
         }
 
         if (nrSquares == 0) {
+            hmPlayers.get(idPlayerPlaying).addEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getEnergyRecovery());
+            eatMoreThan200();
+
             for (House house : alHouses) {
                 if (hmPlayers.get(idPlayerPlaying).getPosition() == house.getPosition()) {
                     if (house.getFood() != null) {
@@ -607,21 +610,8 @@ public class GameManager {
                 }
             }
 
-            if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
-                hmPlayers.get(idPlayerPlaying).addEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getEnergyRecovery());
-                eatMoreThan200();
-                idPlayerPlaying = orderOfPlay[0];
-                playerPlaying = 0;
-                nrPlays++;
-                nrPlaysMushrooms++;
-                return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
-            }
-            hmPlayers.get(idPlayerPlaying).addEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getEnergyRecovery());
-            eatMoreThan200();
-            playerPlaying++;
-            idPlayerPlaying = orderOfPlay[playerPlaying];
-            nrPlays++;
-            nrPlaysMushrooms++;
+            chacingTurnAndAddingNrPlays();
+
             return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
         }
 
