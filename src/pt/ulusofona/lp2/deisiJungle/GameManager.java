@@ -405,9 +405,16 @@ public class GameManager {
             return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
         }
 
-        if ((hmPlayers.get(idPlayerPlaying).getSpecie().getMinSpeed() > nrSquares || hmPlayers.get(idPlayerPlaying).getSpecie().getMaxSpeed() < nrSquares) && !bypassValidations) {
-            nrPlays++;
-            return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
+        if (nrSquares > 0) {
+            if ((hmPlayers.get(idPlayerPlaying).getSpecie().getMinSpeed() > nrSquares || hmPlayers.get(idPlayerPlaying).getSpecie().getMaxSpeed() < nrSquares) && !bypassValidations) {
+                nrPlays++;
+                return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
+            }
+        } else if (nrSquares < 0) {
+            if ((hmPlayers.get(idPlayerPlaying).getSpecie().getMinSpeed() > nrSquares * (-1) || hmPlayers.get(idPlayerPlaying).getSpecie().getMaxSpeed() < nrSquares * (-1)) && !bypassValidations) {
+                nrPlays++;
+                return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
+            }
         }
 
         //Verifica se todos os players n tem energia
