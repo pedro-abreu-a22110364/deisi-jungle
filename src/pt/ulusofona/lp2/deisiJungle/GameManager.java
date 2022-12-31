@@ -519,7 +519,7 @@ public class GameManager {
                                 }
                                 nrPlays++;
                                 //Not sure if its correct
-                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
+                                return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
                             }
 
                             if (hmPlayers.get(idPlayerPlaying).countEatenBananas()) {
