@@ -518,6 +518,7 @@ public class GameManager {
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
                                 }
                                 nrPlays++;
+                                //Not sure if its correct
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
                             }
 
@@ -1037,7 +1038,7 @@ public class GameManager {
                     hmPlayers = new HashMap<>();
                     arrPlayer = line.split(",");
                     for (Specie alSpecy : alSpecies) {
-                        if(alSpecy.getIdentifier() == arrPlayer[2].charAt(1))
+                        if(alSpecy.getIdentifier() == arrPlayer[2].charAt(0))
                         {
                             Player player = new Player(Integer.parseInt(arrPlayer[0]),arrPlayer[1],alSpecy,Integer.parseInt(arrPlayer[3]),Integer.parseInt(arrPlayer[4]),Integer.parseInt(arrPlayer[5]));
                             hmPlayers.put(player.getIdentifier(), player);
@@ -1054,7 +1055,7 @@ public class GameManager {
                     break;
                 }
                 arrFood = line.split(",");
-                if(arrFood[0].charAt(1) == 'c'){
+                if(arrFood[0].charAt(0) == 'c'){
                     for (House house : alHouses) {
                         if(house.getPosition() == Integer.parseInt(arrFood[1])){
                             Carne carne = new Carne('c', "Carne", "meat.png", 50,0,50, Integer.parseInt(arrFood[2]), Integer.parseInt(arrFood[1]));
@@ -1062,7 +1063,7 @@ public class GameManager {
                             house.food = carne;
                         }
                     }
-                }else if(arrFood[0].charAt(1) == 'b'){
+                }else if(arrFood[0].charAt(0) == 'b'){
                     for (House house : alHouses) {
                         if(house.getPosition() == Integer.parseInt(arrFood[1])){
                             Banana banana = new Banana('b', "Cacho de Bananas", "bananas.png", 40, 40,40, Integer.parseInt(arrFood[2]), Integer.parseInt(arrFood[1]));
@@ -1070,7 +1071,7 @@ public class GameManager {
                             house.food = banana;
                         }
                     }
-                } else if (arrFood[0].charAt(1) == 'a') {
+                } else if (arrFood[0].charAt(0) == 'a') {
                     for (House house : alHouses) {
                         if(house.getPosition() == Integer.parseInt(arrFood[1])){
                             Agua agua = new Agua('a', "Agua", "water.png", 15,20,20, Integer.parseInt(arrFood[1]));
@@ -1078,7 +1079,7 @@ public class GameManager {
                             house.food = agua;
                         }
                     }
-                }else if(arrFood[0].charAt(1) == 'e'){
+                }else if(arrFood[0].charAt(0) == 'e'){
                     for (House house : alHouses) {
                         if(house.getPosition() == Integer.parseInt(arrFood[1])){
                             Erva erva = new Erva('e', "erva", "grass.png", 20,20,20,Integer.parseInt(arrFood[1]));
@@ -1087,7 +1088,7 @@ public class GameManager {
                         }
                     }
 
-                }else if(arrFood[0].charAt(1) == 'm'){
+                }else if(arrFood[0].charAt(0) == 'm'){
                     for (House house : alHouses) {
                         if(house.getPosition() == Integer.parseInt(arrFood[1])){
                             Random r = new Random();
@@ -1111,7 +1112,7 @@ public class GameManager {
                 }
                 arrEatenFoods = line.split(",");
                 for (Food gameFood : gameFoods) {
-                    if(gameFood.getIdentifier() == arrEatenFoods[1].charAt(1) && gameFood.getPosition() == Integer.parseInt(arrEatenFoods[2]))
+                    if(gameFood.getIdentifier() == arrEatenFoods[1].charAt(0) && gameFood.getPosition() == Integer.parseInt(arrEatenFoods[2]))
                     {
                         hmPlayers.get(Integer.parseInt(arrEatenFoods[0])).eatenFoods.add(gameFood);
                     }
