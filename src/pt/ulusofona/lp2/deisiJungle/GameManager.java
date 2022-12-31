@@ -516,17 +516,19 @@ public class GameManager {
                 nrPlaysMushrooms++;
                 return new MovementResult(MovementResultCode.NO_ENERGY,null);
             }
-        } else if (hmPlayers.get(idPlayerPlaying).getEnergy() - hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() * nrSquares < 0) {
-            if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
-                idPlayerPlaying = orderOfPlay[0];
-                playerPlaying = 0;
-            } else {
-                playerPlaying++;
-                idPlayerPlaying = orderOfPlay[playerPlaying];
+        } else if (nrSquares > 0) {
+            if (hmPlayers.get(idPlayerPlaying).getEnergy() - hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() * nrSquares < 0) {
+                if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
+                    idPlayerPlaying = orderOfPlay[0];
+                    playerPlaying = 0;
+                } else {
+                    playerPlaying++;
+                    idPlayerPlaying = orderOfPlay[playerPlaying];
+                }
+                nrPlays++;
+                nrPlaysMushrooms++;
+                return new MovementResult(MovementResultCode.NO_ENERGY,null);
             }
-            nrPlays++;
-            nrPlaysMushrooms++;
-            return new MovementResult(MovementResultCode.NO_ENERGY,null);
         }
 
         if (nrSquares == 0) {
@@ -776,8 +778,8 @@ public class GameManager {
             return getPlayerInfo(winner);
         }
 
-        if (orderByPosition[0] - orderByPosition[1] > jungleSize/2) {
-            return getPlayerInfo(orderByID[1]);
+        if (orderByPosition[1] - orderByPosition[0] >= jungleSize/2) {
+            return getPlayerInfo(orderByID[0]);
         }
 
         return null;

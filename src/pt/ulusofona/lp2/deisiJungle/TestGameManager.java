@@ -3,6 +3,7 @@ package pt.ulusofona.lp2.deisiJungle;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -93,6 +94,31 @@ public class TestGameManager {
         ArrayList<Player> player = game.getAlPlayer();
 
         assertEquals(70-12+40-40,player.get(0).getEnergy());
+    }
+
+    @Test
+    public void testGetWinnerInfo () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "Z";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "L";
+
+        String[][] foods = new String[1][2];
+
+        foods[0][0] = "e";
+        foods[0][1] = "5";
+
+        GameManager game = new GameManager();
+
+        game.createInitialJungle(7, players, foods);
+
+        game.moveCurrentPlayer(4,false);
+
+        System.out.println(Arrays.toString(game.getWinnerInfo()));
     }
 
 }
