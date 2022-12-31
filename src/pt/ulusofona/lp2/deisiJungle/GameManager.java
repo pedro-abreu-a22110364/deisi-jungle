@@ -33,14 +33,18 @@ public class GameManager {
     ArrayList<Specie> alSpecies = createDefaultSpecies();
     ArrayList<Food> alFoods = createDefaultFoods();
     ArrayList<House> alHouses = new ArrayList<>();
+
     ArrayList<Food> gameFoods = new ArrayList<>();
     HashMap<Integer,Player> hmPlayers = new HashMap<>(); //HashMap with id player as key
-    HashMap<Integer,Integer> hmKeyIdValuePos = new HashMap<>();
 
     InitializationError errorTemp;
 
     public GameManager(){
 
+    }
+
+    public ArrayList<Player> getAlPlayer() {
+        return alPlayer;
     }
 
     public ArrayList<House> getAlHouses() {
@@ -79,7 +83,7 @@ public class GameManager {
         return foods;
     }
 
-    public InitializationError createInitialJungle(int jungleSize, String[][] playersInfo){
+    public InitializationError createInitialJungle(int jungleSize, String[][] playersInfo) {
         this.jungleSize = jungleSize;
         int nrOfTarzans = 0;
 
@@ -117,7 +121,9 @@ public class GameManager {
             for (Specie  specie : alSpecies) {
                 if(playerInfo[2].charAt(0) == specie.getIdentifier()) {
 
-                    if(playerInfo[2].equals(String.valueOf('Z')) && nrOfTarzans == 1) {return new InitializationError("There is already a tarzan player");}
+                    if(playerInfo[2].equals(String.valueOf('Z')) && nrOfTarzans == 1) {
+                        return new InitializationError("There is already a tarzan player");
+                    }
 
                     if(playerInfo[2].equals(String.valueOf('Z')) && nrOfTarzans < 1) {
                         nrOfTarzans ++;
@@ -126,7 +132,6 @@ public class GameManager {
                     Player player = new Player(Integer.parseInt(playerInfo[0]), playerInfo[1], specie, specie.getInitalEnergy());
                     alPlayer.add(player);
                     hmPlayers.put(player.getIdentifier(),player);
-                    hmKeyIdValuePos.put(player.getIdentifier(),1);
                 }
             }
         }
@@ -141,15 +146,14 @@ public class GameManager {
             alHouses.add(house);
         }
 
-        orderByPosition = new int[hmKeyIdValuePos.size()];
-        orderByID = new int[hmKeyIdValuePos.size()];
+        orderByPosition = new int[alPlayer.size()];
+        orderByID = new int[alPlayer.size()];
         orderOfPlay = idOrderOfPlay();
 
         return null;
     }
 
-    public InitializationError createInitialJungle(int jungleSize,String[][] playersInfo, String[][] foodsInfo)
-    {
+    public InitializationError createInitialJungle(int jungleSize,String[][] playersInfo, String[][] foodsInfo) {
         createInitialJungle(jungleSize, playersInfo);
         if (errorTemp != null) {
             if (Objects.equals(errorTemp.getMessage(), "Invalid number of players")) {
@@ -768,18 +772,15 @@ public class GameManager {
 
     public void moveCurrentPlayerFinal () {
         hmPlayers.get(idPlayerPlaying).setPosition(jungleSize);
-        hmKeyIdValuePos.put(idPlayerPlaying,jungleSize);
     }
 
     public void moveCurrentPlayerAdd (int nrSquares) {
         hmPlayers.get(idPlayerPlaying).setPosition(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares);
-        hmPlayers.get(idPlayerPlaying).removeEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy());
+        hmPlayers.get(idPlayerPlaying).removeEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() * nrSquares);
 
         if (hmPlayers.get(idPlayerPlaying).getPosition() <= 0) {
             hmPlayers.get(idPlayerPlaying).setPosition(1);
         }
-
-        hmKeyIdValuePos.put(idPlayerPlaying,hmPlayers.get(idPlayerPlaying).getPosition());
     }
 
     public int checkPlayerWithBiggestPosition()
@@ -902,15 +903,9 @@ public class GameManager {
         int count = 0, lastOrdered = orderByPosition.length;
         boolean allInOrder = false;
 
-        for (Integer value : hmKeyIdValuePos.values()) {
-            orderByPosition[count] = value;
-            count++;
-        }
-
-        count = 0;
-
-        for (Integer integer : hmKeyIdValuePos.keySet()) {
-            orderByID[count] = integer;
+        for (Player player : alPlayer) {
+            orderByPosition[count] = player.getPosition();
+            orderByID[count] = player.getIdentifier();
             count++;
         }
 
