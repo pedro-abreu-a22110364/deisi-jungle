@@ -163,7 +163,7 @@ public class GameManager {
             } else if (Objects.equals(errorTemp.getMessage(), "Repeated ids found")) {
                 return new InitializationError("Repeated ids found");
             } else if (Objects.equals(errorTemp.getMessage(), "Incorrect specie found")) {
-                return new InitializationError("Incorrect specie found");
+                return new InitializationError("Incorrect specie");
             }
         }
 
@@ -561,7 +561,7 @@ public class GameManager {
                                     idPlayerPlaying = orderOfPlay[playerPlaying];
                                 }
                                 nrPlays++;
-                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
+                                return new MovementResult(MovementResultCode.VALID_MOVEMENT,"Herbivoro ignorou carne");
                             }
                             hmPlayers.get(idPlayerPlaying).addEnergy(50);
                             if (hmPlayers.get(idPlayerPlaying).getEnergy() > 200) {
