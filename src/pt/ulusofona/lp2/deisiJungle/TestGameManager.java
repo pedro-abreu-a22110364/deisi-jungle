@@ -118,7 +118,40 @@ public class TestGameManager {
 
         game.moveCurrentPlayer(4,false);
 
+        assertEquals("2",game.getWinnerInfo()[0]);
+    }
+
+    @Test
+    public void testGetWinnerInfo3Players () {
+        String[][] players = new String[3][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "Z";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "L";
+        players[2][0] = "3";
+        players[2][1] = "Ricardo";
+        players[2][2] = "T";
+
+        String[][] foods = new String[2][2];
+
+        foods[0][0] = "e";
+        foods[0][1] = "5";
+        foods[1][0] = "b";
+        foods[1][1] = "8";
+
+        GameManager game = new GameManager();
+
+        game.createInitialJungle(11, players, foods);
+        //jungleSize / 2 = 5.5
+
+        game.moveCurrentPlayer(7,true);
+
         System.out.println(Arrays.toString(game.getWinnerInfo()));
+
+        assertEquals("3",game.getWinnerInfo()[0]);
     }
 
 }

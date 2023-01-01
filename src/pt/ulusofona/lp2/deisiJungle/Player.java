@@ -119,19 +119,4 @@ public class Player {
         }
         return count >= 1;
     }
-
-    @Override
-    public String toString() {
-        return "Player{" +
-                "identifier=" + identifier +
-                ", name='" + name + '\'' +
-                ", specie=" + specie +
-                ", energy=" + energy +
-                ", rank=" + rank +
-                ", position=" + position +
-                ", distance=" + distance +
-                ", nrBananas=" + nrBananas +
-                ", eatenFoods=" + eatenFoods +
-                '}';
-    }
 }

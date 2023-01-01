@@ -788,8 +788,22 @@ public class GameManager {
             return getPlayerInfo(winner);
         }
 
-        if (orderByPosition[1] - orderByPosition[0] >= jungleSize/2) {
-            return getPlayerInfo(orderByID[0]);
+        if (alPlayer.size() == 2) {
+            if (orderByPosition[1] - orderByPosition[0] >= jungleSize/2) {
+                return getPlayerInfo(orderByID[0]);
+            }
+        }
+
+        if (alPlayer.size() == 3) {
+            if (orderByPosition[2] - orderByPosition[1] >= jungleSize/2) {
+                return getPlayerInfo(orderByID[1]);
+            }
+        }
+
+        if (alPlayer.size() == 4) {
+            if (orderByPosition[3] - orderByPosition[2] >= jungleSize/2) {
+                return getPlayerInfo(orderByID[2]);
+            }
         }
 
         return null;
