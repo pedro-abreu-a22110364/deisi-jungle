@@ -57,9 +57,9 @@ public class GameManager {
 
         //Creating the objects
         Elefante elefante = new Elefante('E', "Elefante","elephant.png", "Herbivoro",180, 4, 10, 1,6);
-        Leao leao = new Leao('L', "Leão","lion.png","Carnivoro",80, 2, 10, 4,6);
+        Leao leao = new Leao('L', "Leao","lion.png","Carnivoro",80, 2, 10, 4,6);
         Tartaruga tartaruga = new Tartaruga('T', "Tartaruga","turtle.png", "Omnivoro",150,1,5,1,3);
-        Passaro passaro = new Passaro('P', "Pássaro","bird.png","Omnivoro",70,4,50,5,6);
+        Passaro passaro = new Passaro('P', "Passaro","bird.png","Omnivoro",70,4,50,5,6);
         Tarzan tarzan = new Tarzan('Z', "Tarzan","tarzan.png", "Omnivoro",70,2,20,1,6);
 
         Mario mario = new Mario('M',"Mario","mario.png","Omnivoro",100,2,20,1,6);
@@ -841,6 +841,13 @@ public class GameManager {
         getRanking();
 
         if(hmPlayers.size() == 4) {
+            if (orderByPosition[3] - orderByPosition[2] >= jungleSize/2) {
+                alGameResults.add("#1 " + hmPlayers.get(orderByID[2]).getName() + ", " + hmPlayers.get(orderByID[2]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[2]).getPosition() + ", " + hmPlayers.get(orderByID[2]).getDistance() + ", " + hmPlayers.get(orderByID[2]).getEatenFoods().size());
+                alGameResults.add("#2 " + hmPlayers.get(orderByID[3]).getName() + ", " + hmPlayers.get(orderByID[3]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[3]).getPosition() + ", " + hmPlayers.get(orderByID[3]).getDistance() + ", " + hmPlayers.get(orderByID[3]).getEatenFoods().size());
+                alGameResults.add("#" + hmPlayers.get(orderByID[1]).getRank() + " " + hmPlayers.get(orderByID[1]).getName() + ", " + hmPlayers.get(orderByID[1]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[1]).getPosition() + ", " + hmPlayers.get(orderByID[1]).getDistance() + ", " + hmPlayers.get(orderByID[1]).getEatenFoods().size());
+                alGameResults.add("#" + hmPlayers.get(orderByID[0]).getRank() + " " + hmPlayers.get(orderByID[0]).getName() + ", " + hmPlayers.get(orderByID[0]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[0]).getPosition() + ", " + hmPlayers.get(orderByID[0]).getDistance() + ", " + hmPlayers.get(orderByID[0]).getEatenFoods().size());
+                return alGameResults;
+            }
             alGameResults.add("#" + hmPlayers.get(orderByID[3]).getRank() + " " + hmPlayers.get(orderByID[3]).getName() + ", " + hmPlayers.get(orderByID[3]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[3]).getPosition() + ", " + hmPlayers.get(orderByID[3]).getDistance() + ", " + hmPlayers.get(orderByID[3]).getEatenFoods().size());
             alGameResults.add("#" + hmPlayers.get(orderByID[2]).getRank() + " " + hmPlayers.get(orderByID[2]).getName() + ", " + hmPlayers.get(orderByID[2]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[2]).getPosition() + ", " + hmPlayers.get(orderByID[2]).getDistance() + ", " + hmPlayers.get(orderByID[2]).getEatenFoods().size());
             alGameResults.add("#" + hmPlayers.get(orderByID[1]).getRank() + " " + hmPlayers.get(orderByID[1]).getName() + ", " + hmPlayers.get(orderByID[1]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[1]).getPosition() + ", " + hmPlayers.get(orderByID[1]).getDistance() + ", " + hmPlayers.get(orderByID[1]).getEatenFoods().size());
@@ -848,12 +855,23 @@ public class GameManager {
         }
 
         if(hmPlayers.size() == 3) {
+            if (orderByPosition[2] - orderByPosition[1] >= jungleSize/2) {
+                alGameResults.add("#1 " + hmPlayers.get(orderByID[1]).getName() + ", " + hmPlayers.get(orderByID[1]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[1]).getPosition() + ", " + hmPlayers.get(orderByID[1]).getDistance() + ", " + hmPlayers.get(orderByID[1]).getEatenFoods().size());
+                alGameResults.add("#2 " + hmPlayers.get(orderByID[2]).getName() + ", " + hmPlayers.get(orderByID[2]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[2]).getPosition() + ", " + hmPlayers.get(orderByID[2]).getDistance() + ", " + hmPlayers.get(orderByID[2]).getEatenFoods().size());
+                alGameResults.add("#" + hmPlayers.get(orderByID[0]).getRank() + " " + hmPlayers.get(orderByID[0]).getName() + ", " + hmPlayers.get(orderByID[0]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[0]).getPosition() + ", " + hmPlayers.get(orderByID[0]).getDistance() + ", " + hmPlayers.get(orderByID[0]).getEatenFoods().size());
+                return alGameResults;
+            }
             alGameResults.add("#" + hmPlayers.get(orderByID[2]).getRank() + " " + hmPlayers.get(orderByID[2]).getName() + ", " + hmPlayers.get(orderByID[2]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[2]).getPosition() + ", " + hmPlayers.get(orderByID[2]).getDistance() + ", " + hmPlayers.get(orderByID[2]).getEatenFoods().size());
             alGameResults.add("#" + hmPlayers.get(orderByID[1]).getRank() + " " + hmPlayers.get(orderByID[1]).getName() + ", " + hmPlayers.get(orderByID[1]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[1]).getPosition() + ", " + hmPlayers.get(orderByID[1]).getDistance() + ", " + hmPlayers.get(orderByID[1]).getEatenFoods().size());
             alGameResults.add("#" + hmPlayers.get(orderByID[0]).getRank() + " " + hmPlayers.get(orderByID[0]).getName() + ", " + hmPlayers.get(orderByID[0]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[0]).getPosition() + ", " + hmPlayers.get(orderByID[0]).getDistance() + ", " + hmPlayers.get(orderByID[0]).getEatenFoods().size());
         }
 
         if(hmPlayers.size() == 2) {
+            if (orderByPosition[1] - orderByPosition[0] >= jungleSize/2) {
+                alGameResults.add("#1 " + hmPlayers.get(orderByID[0]).getName() + ", " + hmPlayers.get(orderByID[0]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[0]).getPosition() + ", " + hmPlayers.get(orderByID[0]).getDistance() + ", " + hmPlayers.get(orderByID[0]).getEatenFoods().size());
+                alGameResults.add("#2 " + hmPlayers.get(orderByID[1]).getName() + ", " + hmPlayers.get(orderByID[1]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[1]).getPosition() + ", " + hmPlayers.get(orderByID[1]).getDistance() + ", " + hmPlayers.get(orderByID[1]).getEatenFoods().size());
+                return alGameResults;
+            }
             alGameResults.add("#" + hmPlayers.get(orderByID[1]).getRank() + " " + hmPlayers.get(orderByID[1]).getName() + ", " + hmPlayers.get(orderByID[1]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[1]).getPosition() + ", " + hmPlayers.get(orderByID[1]).getDistance() + ", " + hmPlayers.get(orderByID[1]).getEatenFoods().size());
             alGameResults.add("#" + hmPlayers.get(orderByID[0]).getRank() + " " + hmPlayers.get(orderByID[0]).getName() + ", " + hmPlayers.get(orderByID[0]).getSpecie().getName() + ", " + hmPlayers.get(orderByID[0]).getPosition() + ", " + hmPlayers.get(orderByID[0]).getDistance() + ", " + hmPlayers.get(orderByID[0]).getEatenFoods().size());
         }
