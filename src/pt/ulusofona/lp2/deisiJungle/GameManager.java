@@ -1,3 +1,13 @@
+//Fazer UML - pagina 2 e 14
+//Acabar testes - pagina 2 e 13
+//Novas species (criatividade) e definir as já criadas - pagina 4
+//Novos alimentos (criatividade) e mudar img dos existentes - pagina 4
+//Criatividade (getAuthorsPanel()) e README-md - pagina 11,15 e 27
+//Bonus - pagina 11 e 12
+//Video - pagina 14
+//Code quality (CheckStyle) - pagina 15
+//Substituir HashMap - pagina 19
+
 package pt.ulusofona.lp2.deisiJungle;
 
 import javax.swing.*;
