@@ -247,61 +247,66 @@ public class GameManager {
             }
         }
 
+        foodCreatingAndPlacing(foodsInfo);
+
+        return null;
+    }
+
+    public void foodCreatingAndPlacing (String[][] foodsInfo) {
+
         for (String[] strings : foodsInfo) {
-
-            if (strings[0].equals("e")) {
-                Erva erva = new Erva('e', "Erva", "grass.png", -20, 20, 20, Integer.parseInt(strings[1]));
-                gameFoods.add(erva);
-
-                for (House alHouse : alHouses) {
-                    if (alHouse.getPosition() == Integer.parseInt(strings[1])) {
-                        alHouse.colocarComida(erva);
+            switch (strings[0]) {
+                case "e" -> {
+                    Erva erva = new Erva('e', "Erva", "grass.png", -20, 20, 20, Integer.parseInt(strings[1]));
+                    gameFoods.add(erva);
+                    for (House alHouse : alHouses) {
+                        if (alHouse.getPosition() == Integer.parseInt(strings[1])) {
+                            alHouse.colocarComida(erva);
+                        }
                     }
                 }
-            } else if (strings[0].equals("a")) {
-                Agua agua = new Agua('a', "Agua", "water.png", 15, 15, 20, Integer.parseInt(strings[1]));
-                gameFoods.add(agua);
-
-                for (House alHouse : alHouses) {
-                    if (alHouse.getPosition() == Integer.parseInt(strings[1])) {
-                        alHouse.colocarComida(agua);
+                case "a" -> {
+                    Agua agua = new Agua('a', "Agua", "water.png", 15, 15, 20, Integer.parseInt(strings[1]));
+                    gameFoods.add(agua);
+                    for (House alHouse : alHouses) {
+                        if (alHouse.getPosition() == Integer.parseInt(strings[1])) {
+                            alHouse.colocarComida(agua);
+                        }
                     }
                 }
-            } else if (strings[0].equals("b")) {
-                Banana banana = new Banana('b', "Banana", "bananas.png", 40, 40, 40, 3, Integer.parseInt(strings[1]));
-                gameFoods.add(banana);
-
-                for (House alHouse : alHouses) {
-                    if (alHouse.getPosition() == Integer.parseInt(strings[1])) {
-                        alHouse.colocarComida(banana);
+                case "b" -> {
+                    Banana banana = new Banana('b', "Banana", "bananas.png", 40, 40, 40, 3, Integer.parseInt(strings[1]));
+                    gameFoods.add(banana);
+                    for (House alHouse : alHouses) {
+                        if (alHouse.getPosition() == Integer.parseInt(strings[1])) {
+                            alHouse.colocarComida(banana);
+                        }
                     }
                 }
-            } else if (strings[0].equals("c")) {
-                Carne carne = new Carne('c', "Carne", "meat.png", 50, 0, 50, Integer.parseInt(strings[1]));
-                gameFoods.add(carne);
-
-                for (House alHouse : alHouses) {
-                    if (alHouse.getPosition() == Integer.parseInt(strings[1])) {
-                        alHouse.colocarComida(carne);
+                case "c" -> {
+                    Carne carne = new Carne('c', "Carne", "meat.png", 50, 0, 50, Integer.parseInt(strings[1]));
+                    gameFoods.add(carne);
+                    for (House alHouse : alHouses) {
+                        if (alHouse.getPosition() == Integer.parseInt(strings[1])) {
+                            alHouse.colocarComida(carne);
+                        }
                     }
                 }
-            } else if (strings[0].equals("m")) {
-                Random r = new Random();
-                int low = 10;
-                int high = 51;
-                int result = r.nextInt(high - low) + low;
-
-                CogumelosMagicos cogumelosMagicos = new CogumelosMagicos('m', "Cogumelos Magicos", "mushroom.png", result, result, result, Integer.parseInt(strings[1]));
-                gameFoods.add(cogumelosMagicos);
-
-                for (House alHouse : alHouses) {
-                    if (alHouse.getPosition() == Integer.parseInt(strings[1])) {
-                        alHouse.colocarComida(cogumelosMagicos);
+                case "m" -> {
+                    Random r = new Random();
+                    int low = 10;
+                    int high = 51;
+                    int result = r.nextInt(high - low) + low;
+                    CogumelosMagicos cogumelosMagicos = new CogumelosMagicos('m', "Cogumelos Magicos", "mushroom.png", result, result, result, Integer.parseInt(strings[1]));
+                    gameFoods.add(cogumelosMagicos);
+                    for (House alHouse : alHouses) {
+                        if (alHouse.getPosition() == Integer.parseInt(strings[1])) {
+                            alHouse.colocarComida(cogumelosMagicos);
+                        }
                     }
                 }
             }
         }
-        return null;
     }
 
     public int[] getPlayerIds(int squareNr) {
