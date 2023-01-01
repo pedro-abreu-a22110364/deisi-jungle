@@ -153,7 +153,7 @@ public class TestGameManager {
     }
 
     @Test
-    public void testGetWinnerInfoCombinedWithGetGameResults () {
+    public void testGetWinnerInfoCombinedWithGetGameResultsFinishedInDistance () {
         String[][] players = new String[3][3];
 
         players[0][0] = "1";
@@ -176,7 +176,7 @@ public class TestGameManager {
         GameManager game = new GameManager();
 
         game.createInitialJungle(13, players, foods);
-        //jungleSize / 2 = 5.5
+        //jungleSize / 2 = 6.5
 
         game.moveCurrentPlayer(7,true);
 
@@ -189,6 +189,45 @@ public class TestGameManager {
         assertEquals("Ricardo",game.getWinnerInfo()[1]);
 
         assertEquals("#1 Ricardo, Tartaruga, 4, 3, 0",game.getGameResults().get(0));
+    }
+
+    @Test
+    public void testGetWinnerInfoCombinedWithGetGameResultsFinishedInFlag () {
+        String[][] players = new String[3][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "Z";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "L";
+        players[2][0] = "3";
+        players[2][1] = "Ricardo";
+        players[2][2] = "T";
+
+        String[][] foods = new String[2][2];
+
+        foods[0][0] = "e";
+        foods[0][1] = "5";
+        foods[1][0] = "b";
+        foods[1][1] = "8";
+
+        GameManager game = new GameManager();
+
+        game.createInitialJungle(12, players, foods);
+        //jungleSize / 2 = 6
+
+        game.moveCurrentPlayer(7,true);
+
+        game.moveCurrentPlayer(1,true);
+
+        game.moveCurrentPlayer(2,true);
+
+        game.moveCurrentPlayer(4,true);
+
+        assertEquals("Pedro",game.getWinnerInfo()[1]);
+
+        assertEquals("#1 Pedro, Tarzan, 12, 11, 1",game.getGameResults().get(0));
     }
 
 }
