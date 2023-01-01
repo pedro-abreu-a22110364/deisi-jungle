@@ -44,10 +44,12 @@ public class Passaro extends Specie{
     public int getMaxSpeed() {
         return maxSpeed;
     }
+
     @Override
     public String getSpecieType() {
         return specieType;
     }
+
     @Override
     public String getSpecieClass() {
         return "passaro";

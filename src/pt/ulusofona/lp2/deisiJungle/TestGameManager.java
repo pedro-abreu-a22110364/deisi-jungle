@@ -3,7 +3,6 @@ package pt.ulusofona.lp2.deisiJungle;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;

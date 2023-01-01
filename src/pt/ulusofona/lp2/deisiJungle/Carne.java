@@ -2,10 +2,6 @@ package pt.ulusofona.lp2.deisiJungle;
 
 public class Carne extends Food{
 
-    public Carne(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros) {
-        super(identifier, nome, foodImage, energyCarnivoros, energyHerbivoros, energyOmnivoros);
-    }
-
     public Carne(char identifier, String nome, String foodImage, int energyCarnivoros, int energyHerbivoros, int energyOmnivoros, int position) {
         super(identifier, nome, foodImage, energyCarnivoros, energyHerbivoros, energyOmnivoros, position);
     }
@@ -49,5 +45,4 @@ public class Carne extends Food{
     public String getFoodType() {
         return "Carne";
     }
-
 }

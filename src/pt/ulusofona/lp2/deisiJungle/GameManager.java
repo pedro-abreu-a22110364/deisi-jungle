@@ -48,10 +48,6 @@ public class GameManager {
         return alPlayer;
     }
 
-    public ArrayList<Food> getAlFoods() {
-        return alFoods;
-    }
-
     public ArrayList<Specie> createDefaultSpecies() {
         ArrayList<Specie> alSpecies = new ArrayList<>(); //Creating the list to return it later
 
@@ -809,32 +805,6 @@ public class GameManager {
         return null;
     }
 
-    /*public boolean checkWinner()
-    {
-        if(!checkNoEnergy()) {
-            if(checkSamePosition()) {
-                winner = checkPlayerWithSmallestIDInSamePosition(checkSamePositionReturnPosition());
-            } else {
-                winner = checkPlayerWithBiggestPosition();
-            }
-            gameFinished = true;
-            return false;
-        }
-        else {
-            return true;
-        }
-    }*/
-
-    /*public boolean checkNoEnergy(){
-        for (Player player : hmPlayers.values()) {
-            if(player.getEnergy() - player.getSpecie().getNeededEnergy() >= 0)
-            {
-                return true;
-            }
-        }
-        return false;
-    }*/
-
     public ArrayList<String> getGameResults() {
         ArrayList<String> alGameResults = new ArrayList<>();
 
@@ -887,65 +857,6 @@ public class GameManager {
 
         return alGameResults;
     }
-
-    /*public int checkPlayerWithBiggestPosition()
-    {
-        int position = 0;
-        int playerID = 0;
-        for (Player player : hmPlayers.values()) {
-            if(player.getPosition() > position)
-            {
-                playerID = player.getIdentifier();
-                position = player.getPosition();
-            }
-        }
-        hmPlayers.get(playerID).setRank(1);
-        return playerID;
-    }*/
-
-    /*public int checkPlayerWithSmallestIDInSamePosition(int position)
-    {
-        int playerID = Integer.MAX_VALUE;
-        for (Player player : hmPlayers.values()) {
-            if(player.getPosition() == position)
-            {
-                if(player.getIdentifier() < playerID){
-                    playerID = player.getIdentifier();
-                }
-            }
-        }
-        return playerID;
-    }*/
-
-    /*public boolean checkSamePosition()
-    {
-        int position;
-        for (Player player : hmPlayers.values()) {
-            position = player.getPosition();
-            for (Player value : hmPlayers.values()) {
-                if(value.getPosition() == position && player.getIdentifier() != value.getIdentifier())
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }*/
-
-    /*public int checkSamePositionReturnPosition() //Retorna em que posição à mais que um player
-    {
-        int position;
-        for (Player player : hmPlayers.values()) {
-            position = player.getPosition();
-            for (Player value : hmPlayers.values()) {
-                if(position == value.getPosition() && player.getIdentifier() != value.getIdentifier())
-                {
-                    return position;
-                }
-            }
-        }
-        return 0;
-    }*/
 
     //Bubble Sort
     public int[] idOrderOfPlay () {

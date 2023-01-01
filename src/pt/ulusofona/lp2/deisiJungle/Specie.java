@@ -1,18 +1,5 @@
 package pt.ulusofona.lp2.deisiJungle;
 
-/*
-        Specie elefante = new Specie('E', "Elefante","elephant.png");
-        Specie leao = new Specie('L', "Leão","lion.png");
-        Specie tartaruga = new Specie('T', "Tartaruga","turtle.png");
-        Specie passaro = new Specie('P', "Pássaro","bird.png");
-        Specie tarzan = new Specie('Z', "Tarzan","tarzan.png");
-
-        Specie mario = new Specie('M',"Mario","mario.png");
-        Specie ghost = new Specie('G',"PacMan","pacman.png");
-        Specie pikachu = new Specie('Y',"Pikachu","pikachu.png");
-        Specie zelda = new Specie('X',"Zelda","zelda.png");
-
- */
 public abstract class Specie {
     char identifier;
     String nome;

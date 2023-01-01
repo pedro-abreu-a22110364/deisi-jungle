@@ -55,6 +55,4 @@ public class Elefante extends Specie{
     public String getSpecieClass() {
         return "elefante";
     }
-
-
 }
