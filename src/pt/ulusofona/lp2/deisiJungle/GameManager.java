@@ -36,6 +36,10 @@ public class GameManager {
     //Variaveis com informação sobre o jogo
     boolean gameFinished = false;
     int[] orderOfPlay;
+
+    int idPlayerPlayingTemp = 0;
+    int playerPlayingTemp = 0;
+
     int[] orderByPosition;
     int[] orderByID;
 
@@ -1011,13 +1015,10 @@ public class GameManager {
             // Read the contents of the file line by line
             String line;
             //Players
-            while ((line = br.readLine()) != null)
-            {
+            while ((line = br.readLine()) != null) {
                 if(line.equals("Food")) {break;}
-                if(!line.equals("Players")) {
-                    arrPlayer = line.split(",");
-                    for (Specie alSpecy : alSpecies) {
-                        if(alSpecy.getIdentifier() == arrPlayer[2].charAt(0)) {
+                if(!line.equals("Players")) {arrPlayer = line.split(",");
+                    for (Specie alSpecy : alSpecies) {if(alSpecy.getIdentifier() == arrPlayer[2].charAt(0)) {
                             Player player = new Player(Integer.parseInt(arrPlayer[0]),arrPlayer[1],alSpecy,Integer.parseInt(arrPlayer[3]),Integer.parseInt(arrPlayer[4]),Integer.parseInt(arrPlayer[5]));
                             hmPlayersTemp.put(player.getIdentifier(), player);
                         }
@@ -1029,69 +1030,54 @@ public class GameManager {
             {
                 if(line.equals("Eaten Foods")){break;}
                 arrFood = line.split(",");
-                if(arrFood[0].charAt(0) == 'c'){
-                    for (House house : alHouses) {
-                        if(house.getPosition() == Integer.parseInt(arrFood[1])){
-                            Carne carne = new Carne('c', "Carne", "meat.png", 50,0,50, Integer.parseInt(arrFood[1]));
-                            gameFoods.add(carne);
-                            house.food = carne;
-                        }
-                    }
-                }else if(arrFood[0].charAt(0) == 'b'){
-                    for (House house : alHouses) {
-                        if(house.getPosition() == Integer.parseInt(arrFood[1])){
-                            Banana banana = new Banana('b', "Cacho de Bananas", "bananas.png", 40, 40,40, Integer.parseInt(arrFood[2]), Integer.parseInt(arrFood[1]));
-                            gameFoods.add(banana);
-                            house.food = banana;
-                        }
-                    }
-                } else if (arrFood[0].charAt(0) == 'a') {
-                    for (House house : alHouses) {
-                        if(house.getPosition() == Integer.parseInt(arrFood[1])){
-                            Agua agua = new Agua('a', "Agua", "water.png", 15,20,20, Integer.parseInt(arrFood[1]));
-                            gameFoods.add(agua);
-                            house.food = agua;
-                        }
-                    }
-                }else if(arrFood[0].charAt(0) == 'e'){
-                    for (House house : alHouses) {
-                        if(house.getPosition() == Integer.parseInt(arrFood[1])){
-                            Erva erva = new Erva('e', "erva", "grass.png", 20,20,20,Integer.parseInt(arrFood[1]));
-                            gameFoods.add(erva);
-                            house.food = erva;
-                        }
-                    }
-                }else if(arrFood[0].charAt(0) == 'm'){
-                    for (House house : alHouses) {
-                        if(house.getPosition() == Integer.parseInt(arrFood[1])){
-                            Random r = new Random();
-                            int low = 10;
-                            int high = 51;
-                            int result = r.nextInt(high-low) + low;
-                            CogumelosMagicos cogumelo = new CogumelosMagicos('m', "Cogumelos magicos", "mushroom.png", result, result,result,Integer.parseInt(arrFood[1]));
-                            gameFoods.add(cogumelo);
-                            house.food = cogumelo;
-                        }
-                    }
+                switch (arrFood[0].charAt(0)) {
+                    case 'c': for (House house : alHouses) {if (house.getPosition() == Integer.parseInt(arrFood[1])) {
+                                Carne carne = new Carne('c', "Carne", "meat.png", 50, 0, 50, Integer.parseInt(arrFood[1]));
+                                gameFoods.add(carne);
+                                house.food = carne;
+                            }
+                        }break;
+                    case 'b': for (House house : alHouses) {if (house.getPosition() == Integer.parseInt(arrFood[1])) {
+                                Banana banana = new Banana('b', "Cacho de Bananas", "bananas.png", 40, 40, 40, Integer.parseInt(arrFood[2]), Integer.parseInt(arrFood[1]));
+                                gameFoods.add(banana);
+                                house.food = banana;
+                            }
+                        }break;
+                    case 'a': for (House house : alHouses) {if (house.getPosition() == Integer.parseInt(arrFood[1])) {
+                                Agua agua = new Agua('a', "Agua", "water.png", 15, 20, 20, Integer.parseInt(arrFood[1]));
+                                gameFoods.add(agua);
+                                house.food = agua;
+                            }
+                        }break;
+                    case 'e': for (House house : alHouses) { if (house.getPosition() == Integer.parseInt(arrFood[1])) {
+                                Erva erva = new Erva('e', "erva", "grass.png", 20, 20, 20, Integer.parseInt(arrFood[1]));
+                                gameFoods.add(erva);
+                                house.food = erva;
+                            }
+                        }break;
+                    case 'm': for (House house : alHouses) { if (house.getPosition() == Integer.parseInt(arrFood[1])) {
+                                Random r = new Random();
+                                int low = 10, high = 51;
+                                int result = r.nextInt(high - low) + low;
+                                CogumelosMagicos cogumelo = new CogumelosMagicos('m', "Cogumelos magicos", "mushroom.png", result, result, result, Integer.parseInt(arrFood[1]));
+                                gameFoods.add(cogumelo);
+                                house.food = cogumelo;
+                            }
+                        }break;
                 }
             }
             //EatenFoods
-            while ((line = br.readLine()) != null)
-            {
+            while ((line = br.readLine()) != null) {
                 if(line.equals("GameManager")) {break;}
                 arrEatenFoods = line.split(",");
-                for (Food gameFood : gameFoods) {
-                    if(gameFood.getIdentifier() == arrEatenFoods[1].charAt(0) && gameFood.getPosition() == Integer.parseInt(arrEatenFoods[2])) {
+                for (Food gameFood : gameFoods) {if(gameFood.getIdentifier() == arrEatenFoods[1].charAt(0) && gameFood.getPosition() == Integer.parseInt(arrEatenFoods[2])) {
                         hmPlayersTemp.get(Integer.parseInt(arrEatenFoods[0])).eatenFoods.add(gameFood);
                     }
                 }
             }
 
-            int idPlayerPlayingTemp = 0;
-            int playerPlayingTemp = 0;
             //Gamemanager
-            while ((line = br.readLine()) != null)
-            {
+            while ((line = br.readLine()) != null) {
                 arrGameManager = line.split(",");
                 jungleSize = Integer.parseInt(arrGameManager[1]);
                 gameFinished = Boolean.parseBoolean(arrGameManager[0]);
@@ -1099,18 +1085,9 @@ public class GameManager {
                 playerPlayingTemp = Integer.parseInt(arrGameManager[3]);
                 nrPlays = Integer.parseInt(arrGameManager[4]);
             }
-            alSpecies = createDefaultSpecies();
-            alFoods = createDefaultFoods();
-            if(gameFoods.size() > 0){
-                createInitialJungle(jungleSize, getPlayersInfo(),getFoodsInfo());
-            } else {
-                createInitialJungle(jungleSize,getPlayersInfo());
-            }
-            idPlayerPlaying = idPlayerPlayingTemp;
-            playerPlaying = playerPlayingTemp;
 
-            //idOrderOfPlay();
-            // Close the reader
+            startGame();
+
             br.close();
             return true;
         } catch (IOException e) {return false;}
@@ -1138,5 +1115,14 @@ public class GameManager {
 
     public String whoIsTaborda() {
         return "wrestling";
+    }
+
+    public void startGame(){
+        alSpecies = createDefaultSpecies();
+        alFoods = createDefaultFoods();
+        if(gameFoods.size() > 0){createInitialJungle(jungleSize, getPlayersInfo(),getFoodsInfo());}
+        else {createInitialJungle(jungleSize,getPlayersInfo());}
+        idPlayerPlaying = idPlayerPlayingTemp;
+        playerPlaying = playerPlayingTemp;
     }
 }
