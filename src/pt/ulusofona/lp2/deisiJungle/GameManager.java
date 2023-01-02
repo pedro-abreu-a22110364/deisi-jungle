@@ -1,10 +1,9 @@
 //Fazer UML - pagina 2 e 14
-//Acabar testes - pagina 2 e 13
+//Acabar testes - pagina 13
 //Novas species (criatividade) e definir as já criadas - pagina 4
 //Novos alimentos (criatividade) e mudar img dos existentes - pagina 4
 //Criatividade (getAuthorsPanel()) e README.md - pagina 11,15 e 27
 //Video - pagina 14
-//Code quality (CheckStyle) - pagina 15
 //Substituir HashMap - pagina 19
 
 package pt.ulusofona.lp2.deisiJungle;
@@ -340,14 +339,14 @@ public class GameManager {
             return new int[0];
         }
 
-        for (Player player : hmPlayers.values()) {
+        for (Player player : alPlayer) {
             if(player.getPosition() == squareNr) {
                 numberPlayers++;
             }
         }
         int[] arrayID = new int[numberPlayers];
 
-        for (Player player : hmPlayers.values()) {
+        for (Player player : alPlayer) {
             if(player.getPosition() == squareNr) {
                 arrayID[count] = player.getIdentifier();
                 count++;
@@ -412,7 +411,7 @@ public class GameManager {
         //string with player identifiers
         strSquareInfo[2] = playersInSquare;
 
-        for (Player player : hmPlayers.values()) {
+        for (Player player : alPlayer) {
             if(player.getPosition() == squareNr)
             {
                 playersInSquare += player.getIdentifier() + ",";
@@ -428,25 +427,33 @@ public class GameManager {
 
     public String[] getPlayerInfo(int playerId) {
         String[] strPlayerInfo = new String[5];
-        if(hmPlayers.containsKey(playerId))
-        {
-            strPlayerInfo[0] = String.valueOf(hmPlayers.get(playerId).getIdentifier());
-            strPlayerInfo[1] = hmPlayers.get(playerId).getName();
-            strPlayerInfo[2] = String.valueOf(hmPlayers.get(playerId).getSpecie().getIdentifier());
-            strPlayerInfo[3] = String.valueOf(hmPlayers.get(playerId).getEnergy());
-            strPlayerInfo[4] = hmPlayers.get(playerId).getSpecie().getMinSpeed() + ".." + hmPlayers.get(playerId).getSpecie().getMaxSpeed() ;
+        for (Player player : alPlayer) {
+            if (player.getIdentifier() == playerId) {
+                strPlayerInfo[0] = String.valueOf(player.getIdentifier());
+                strPlayerInfo[1] = player.getName();
+                strPlayerInfo[2] = String.valueOf(player.getSpecie().getIdentifier());
+                strPlayerInfo[3] = String.valueOf(player.getEnergy());
+                strPlayerInfo[4] = player.getSpecie().getMinSpeed() + ".." + player.getSpecie().getMaxSpeed() ;
+            }
         }
         return strPlayerInfo;
     }
 
     public String[] getCurrentPlayerInfo() {
-        return getPlayerInfo(hmPlayers.get(idPlayerPlaying).getIdentifier());
+        int playerTemp = 0;
+        for (Player player : alPlayer) {
+            if (player.getIdentifier() == idPlayerPlaying) {
+                playerTemp = idPlayerPlaying;
+                break;
+            }
+        }
+        return getPlayerInfo(playerTemp);
     }
 
     public String[][] getPlayersInfo() {
-        String[][] strPlayerInfo = new String[hmPlayers.size()][4];
+        String[][] strPlayerInfo = new String[alPlayer.size()][4];
         int count = 0;
-        for (Player player : hmPlayers.values()) {
+        for (Player player : alPlayer) {
             if(player != null){
                 strPlayerInfo[count][0] = String.valueOf(player.getIdentifier());
                 strPlayerInfo[count][1] = player.getName();
@@ -479,8 +486,16 @@ public class GameManager {
             nrPositions = nrPositions * (-1);
         }
 
-        strPlayerEnergyInfo[0] = hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() * nrPositions + "";
-        strPlayerEnergyInfo[1] = hmPlayers.get(idPlayerPlaying).getSpecie().getEnergyRecovery() + "";
+        Player playerTemp = null;
+        for (Player player : alPlayer) {
+            if (player.getIdentifier() == idPlayerPlaying) {
+                playerTemp = player;
+                break;
+            }
+        }
+
+        strPlayerEnergyInfo[0] = playerTemp.getSpecie().getNeededEnergy() * nrPositions + "";
+        strPlayerEnergyInfo[1] = playerTemp.getSpecie().getEnergyRecovery() + "";
 
         return strPlayerEnergyInfo;
     }
@@ -706,8 +721,10 @@ public class GameManager {
 
         sortArrayByPosition();
 
-        if(hmPlayers.containsKey(winner)) {
-            return getPlayerInfo(winner);
+        for (Player player : alPlayer) {
+            if (player.getIdentifier() == winner) {
+                return getPlayerInfo(winner);
+            }
         }
 
         if (alPlayer.size() == 2) {
@@ -786,12 +803,12 @@ public class GameManager {
 
     //Bubble Sort
     public int[] idOrderOfPlay () {
-        int[] idOrderOfPlay = new int[hmPlayers.size()];
+        int[] idOrderOfPlay = new int[alPlayer.size()];
         int count = 0, lastOrdered = idOrderOfPlay.length;
         boolean allInOrder = false;
 
-        for (Integer integer : hmPlayers.keySet()) {
-            idOrderOfPlay[count] = integer;
+        for (Player player : alPlayer) {
+            idOrderOfPlay[count] = player.getIdentifier();
             count++;
         }
 
@@ -817,7 +834,7 @@ public class GameManager {
     public void getRanking() {
 
         sortArrayByPosition();
-        int count = 0,rank = hmPlayers.size();
+        int count = 0,rank = alPlayer.size();
 
         while (count != maxNumOfBSRepetions) {
             sortArrayByPositionWithEqualID();
@@ -825,10 +842,13 @@ public class GameManager {
         }
 
         for (int i : orderByID) {
-            hmPlayers.get(i).setRank(rank);
-            rank--;
+            for (Player player : alPlayer) {
+                if (player.getIdentifier() == i) {
+                    player.setRank(rank);
+                    rank--;
+                }
+            }
         }
-
     }
 
     public void sortArrayByPosition () {
