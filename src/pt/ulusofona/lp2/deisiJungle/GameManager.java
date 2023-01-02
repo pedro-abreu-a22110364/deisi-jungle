@@ -488,11 +488,7 @@ public class GameManager {
     public MovementResult moveCurrentPlayer(int nrSquares,boolean bypassValidations) {
 
         int temp = invalidMove(nrSquares,bypassValidations);
-        switch (temp) {
-            case 1, 2, 3, 4, 5 -> {
-                return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);
-            }
-        }
+        switch (temp) { case 1, 2, 3, 4, 5 -> {return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);}}
 
         //Verifica se todos os players n tem energia
         if (nrSquares < 0) {
@@ -516,16 +512,9 @@ public class GameManager {
                     if (house.getFood() != null) {
                         temp = switchCase(house);
                         switch (temp) {
-                            case 1, 8, 6, 2 -> {
-                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
-                            }
-                            case 3, 7 -> {
-                                return new MovementResult(MovementResultCode.VALID_MOVEMENT, null);
-                            }
-                            case 4, 10, 9, 5 -> {
-                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
-                            }
-                        }
+                            case 1, 8, 6, 2 -> {return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());}
+                            case 3, 7 -> {return new MovementResult(MovementResultCode.VALID_MOVEMENT, null);}
+                            case 4, 10, 9, 5 -> {return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());}}
                     }
                 }
             }
@@ -542,26 +531,17 @@ public class GameManager {
                 if (house.getFood() != null) {
                     temp = switchCase(house);
                     switch (temp) {
-                        case 1, 8, 6, 2 -> {
-                            return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
-                        }
-                        case 3, 7 -> {
-                            return new MovementResult(MovementResultCode.VALID_MOVEMENT, null);
-                        }
-                        case 4, 10, 9, 5 -> {
-                            return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
-                        }
-                    }
+                        case 1, 8, 6, 2 -> {return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());}
+                        case 3, 7 -> {return new MovementResult(MovementResultCode.VALID_MOVEMENT, null);}
+                        case 4, 10, 9, 5 -> {return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());}}
                 }
             }
         }
 
         if(hmPlayers.get(idPlayerPlaying).getPosition() >= jungleSize) {
             moveCurrentPlayerFinal();
-            winner = idPlayerPlaying;
-            gameFinished = true;
-            nrPlays++;
-            nrPlaysMushrooms++;
+            winner = idPlayerPlaying;gameFinished = true;
+            nrPlays++;nrPlaysMushrooms++;
             return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
         }
 
@@ -648,20 +628,14 @@ public class GameManager {
             case 'e' -> {
                 caseErva();
                 hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
-                chacingTurnAndAddingNrPlays();
-                return 1;
-            }
-            case 'a' -> {
+                chacingTurnAndAddingNrPlays();return 1;
+            } case 'a' -> {
                 caseAgua();
                 hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
-                chacingTurnAndAddingNrPlays();
-                return 2;
-            }
-            case 'b' -> {
+                chacingTurnAndAddingNrPlays();return 2;
+            } case 'b' -> {
                 if (((Banana) house.getFood()).getQuantidade() <= 0) {
-                    chacingTurnAndAddingNrPlays();
-                    return 3;
-                }
+                    chacingTurnAndAddingNrPlays();return 3;}
 
                 if (hmPlayers.get(idPlayerPlaying).getNrBananas() >= 1) {
 
@@ -670,9 +644,7 @@ public class GameManager {
                     hmPlayers.get(idPlayerPlaying).comerBananas();
                     hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
 
-                    chacingTurnAndAddingNrPlays();
-                    return 4;
-                }
+                    chacingTurnAndAddingNrPlays();return 4;}
 
                 hmPlayers.get(idPlayerPlaying).addEnergy(40);
                 ((Banana) house.getFood()).removeQuantidade();
@@ -680,40 +652,31 @@ public class GameManager {
                 hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
 
                 eatMoreThan200();
-                chacingTurnAndAddingNrPlays();
-                return 5;
-            }
-            case 'c' -> {
+                chacingTurnAndAddingNrPlays();return 5;
+            } case 'c' -> {
                 if (nrPlays >= 12) {
                     hmPlayers.get(idPlayerPlaying).halfEnergy();
                     hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
-                    chacingTurnAndAddingNrPlays();
-                    return 6;
-                }
+                    chacingTurnAndAddingNrPlays();return 6;}
 
                 if (Objects.equals(hmPlayers.get(idPlayerPlaying).getSpecie().getSpecieType(), "Herbivoro")) {
-                    chacingTurnAndAddingNrPlays();
-                    return 7;
-                }
+                    chacingTurnAndAddingNrPlays();return 7;}
+
                 hmPlayers.get(idPlayerPlaying).addEnergy(50);
                 hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
 
                 eatMoreThan200();
-                chacingTurnAndAddingNrPlays();
-                return 8;
-            }
-            case 'm' -> {
+                chacingTurnAndAddingNrPlays();return 8;
+            } case 'm' -> {
                 if (nrPlaysMushrooms % 2 == 0) {
                     hmPlayers.get(idPlayerPlaying).percentageEnergy(house.getFood().getEnergyOmnivoros());
                     hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
                     eatMoreThan200();
-                    chacingTurnAndAddingNrPlays();
-                    return 9;
+                    chacingTurnAndAddingNrPlays();return 9;
                 } else {
                     hmPlayers.get(idPlayerPlaying).percentageEnergyNegative(house.getFood().getEnergyOmnivoros());
                     hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
-                    chacingTurnAndAddingNrPlays();
-                    return 10;
+                    chacingTurnAndAddingNrPlays();return 10;
                 }
             }
         }
