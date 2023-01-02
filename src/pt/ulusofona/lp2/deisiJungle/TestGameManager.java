@@ -38,13 +38,25 @@ public class TestGameManager {
 
         game.createInitialJungle(8, players, foods);
 
+        System.out.println(Arrays.toString(game.getSquareInfo(1)));
+
         System.out.println(Arrays.toString(game.getCurrentPlayerInfo()));
 
         game.moveCurrentPlayer(2,false);
 
         System.out.println(Arrays.toString(game.getCurrentPlayerInfo()));
 
+        game.moveCurrentPlayer(3,true);
+
+        System.out.println(Arrays.toString(game.getCurrentPlayerInfo()));
+
         game.moveCurrentPlayer(3,false);
+
+        System.out.println(Arrays.toString(game.getCurrentPlayerInfo()));
+
+        game.moveCurrentPlayer(-3,false);
+
+        System.out.println(Arrays.toString(game.getSquareInfo(1)));
     }
 
     @Test

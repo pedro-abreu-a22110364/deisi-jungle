@@ -581,15 +581,15 @@ public class GameManager {
         }
 
         //Verifica se o move é válido consoante o animal
-        if (playerMoving.getSpecie().getIdentifier() == 'L' && nrSquares != -6 && nrSquares != -5 && nrSquares != -4 && nrSquares != 0 && nrSquares != 4 && nrSquares != 5 && nrSquares != 6) {
+        if (playerMoving.getSpecie().getIdentifier() == 'L' && nrSquares != -6 && nrSquares != -5 && nrSquares != -4 && nrSquares != 0 && nrSquares != 4 && nrSquares != 5 && nrSquares != 6 && !bypassValidations) {
             chacingTurnAndAddingNrPlays();
             return 3;
         }
-        if (playerMoving.getSpecie().getIdentifier() == 'T' && nrSquares != -3 && nrSquares != -2 && nrSquares != -1 && nrSquares != 0 && nrSquares != 1 && nrSquares != 2 && nrSquares != 3) {
+        if (playerMoving.getSpecie().getIdentifier() == 'T' && nrSquares != -3 && nrSquares != -2 && nrSquares != -1 && nrSquares != 0 && nrSquares != 1 && nrSquares != 2 && nrSquares != 3 && !bypassValidations) {
             chacingTurnAndAddingNrPlays();
             return 4;
         }
-        if (playerMoving.getSpecie().getIdentifier() == 'P' && nrSquares != -6 && nrSquares != -5 && nrSquares != 0 && nrSquares != 5 && nrSquares != 6) {
+        if (playerMoving.getSpecie().getIdentifier() == 'P' && nrSquares != -6 && nrSquares != -5 && nrSquares != 0 && nrSquares != 5 && nrSquares != 6 && !bypassValidations) {
             chacingTurnAndAddingNrPlays();
             return 5;
         }
