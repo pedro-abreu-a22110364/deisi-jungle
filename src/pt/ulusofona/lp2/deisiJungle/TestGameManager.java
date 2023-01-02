@@ -552,6 +552,31 @@ public class TestGameManager {
     }
 
     @Test
+    public void testGetSquareInvalidPos () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "G";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "X";
+
+        String[][] foods = new String[2][2];
+
+        foods[0][0] = "e";
+        foods[0][1] = "3";
+        foods[1][0] = "a";
+        foods[1][1] = "4";
+
+        GameManager game = new GameManager();
+
+        game.createInitialJungle(15, players, foods);
+
+        assertNull(game.getSquareInfo(-1));
+    }
+
+    @Test
     public void testGetSquareInfoToolTips () {
         String[][] players = new String[2][3];
 
@@ -707,6 +732,106 @@ public class TestGameManager {
     }
 
     @Test
+    public void testMoveCurrentPlayerNoEnergy () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "T";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "T";
+
+        String[][] foods = new String[2][2];
+
+        foods[0][0] = "b";
+        foods[0][1] = "3";
+        foods[1][0] = "c";
+        foods[1][1] = "4";
+
+        GameManager game = new GameManager();
+
+        game.createInitialJungle(11,players,foods);
+
+        ArrayList<Player> player = game.getAlPlayer();
+
+        player.get(0).removeEnergy(150);
+        player.get(1).removeEnergy(149);
+
+        game.moveCurrentPlayer(2,false);
+
+        game.moveCurrentPlayer(-2,false);
+
+        assertEquals(0,player.get(0).getEnergy());
+        assertEquals(1,player.get(1).getEnergy());
+    }
+
+    @Test
+    public void testMoveCurrentPlayerPassaroAndTartarugaIllegal () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "T";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "P";
+
+        String[][] foods = new String[2][2];
+
+        foods[0][0] = "b";
+        foods[0][1] = "3";
+        foods[1][0] = "c";
+        foods[1][1] = "4";
+
+        GameManager game = new GameManager();
+
+        game.createInitialJungle(11, players, foods);
+
+        ArrayList<Player> player = game.getAlPlayer();
+
+        game.moveCurrentPlayer(4,false);
+
+        game.moveCurrentPlayer(4,false);
+
+        assertEquals(150,player.get(0).getEnergy());
+        assertEquals(70,player.get(1).getEnergy());
+
+        game.moveCurrentPlayer(-8,false);
+
+        assertEquals(150,player.get(0).getEnergy());
+    }
+
+    @Test
+    public void testMoveCurrentPlayerBackwards () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "T";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "P";
+
+        String[][] foods = new String[2][2];
+
+        foods[0][0] = "b";
+        foods[0][1] = "3";
+        foods[1][0] = "c";
+        foods[1][1] = "4";
+
+        GameManager game = new GameManager();
+
+        game.createInitialJungle(11, players, foods);
+
+        ArrayList<Player> player = game.getAlPlayer();
+
+        game.moveCurrentPlayer(-4,false);
+
+        assertEquals(1,player.get(0).getPosition());
+    }
+
+    @Test
     public void testSaveAndLoad () {
         String[][] players = new String[2][3];
 
@@ -851,5 +976,32 @@ public class TestGameManager {
         int energyTemp2 = (int) ((energyTemp + 20) + ((energyTemp + 20) * (energy1 * 0.01)));
 
         assertEquals(energyTemp2,player.get(1).getEnergy());
+    }
+
+    @Test
+    public void testGetCurrentPlayerEnergyInfo () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "T";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "T";
+
+        String[][] foods = new String[1][2];
+
+        foods[0][0] = "m";
+        foods[0][1] = "4";
+
+        GameManager game = new GameManager();
+
+        game.createInitialJungle(11, players, foods);
+
+        String[] strings1 = game.getCurrentPlayerEnergyInfo(3);
+        String[] strings2 = game.getCurrentPlayerEnergyInfo(-3);
+
+        assertEquals("3",strings1[0]);
+        assertEquals("5",strings2[1]);
     }
 }
