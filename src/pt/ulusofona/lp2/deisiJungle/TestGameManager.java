@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -12,51 +11,26 @@ import static org.junit.Assert.assertNull;
 public class TestGameManager {
 
     @Test
-    public void testCreateInitialJungleNormal1 () {
-        String[][] players = new String[3][3];
+    public void testCreateInitialJungleDoubleTarzan () {
+        String[][] players = new String[2][3];
 
-        players[0][0] = "3";
+        players[0][0] = "2";
         players[0][1] = "Pedro";
         players[0][2] = "Z";
         players[1][0] = "1";
         players[1][1] = "Gui";
-        players[1][2] = "L";
-        players[2][0] = "2";
-        players[2][1] = "Ricardo";
-        players[2][2] = "P";
+        players[1][2] = "Z";
 
-        String[][] foods = new String[3][2];
+        String[][] foods = new String[1][2];
 
         foods[0][0] = "e";
         foods[0][1] = "5";
-        foods[1][0] = "a";
-        foods[1][1] = "4";
-        foods[2][0] = "m";
-        foods[2][1] = "6";
 
         GameManager game = new GameManager();
 
         game.createInitialJungle(8, players, foods);
 
-        System.out.println(Arrays.toString(game.getSquareInfo(1)));
-
-        System.out.println(Arrays.toString(game.getCurrentPlayerInfo()));
-
-        game.moveCurrentPlayer(2,false);
-
-        System.out.println(Arrays.toString(game.getCurrentPlayerInfo()));
-
-        game.moveCurrentPlayer(3,true);
-
-        System.out.println(Arrays.toString(game.getCurrentPlayerInfo()));
-
-        game.moveCurrentPlayer(3,false);
-
-        System.out.println(Arrays.toString(game.getCurrentPlayerInfo()));
-
-        game.moveCurrentPlayer(-3,false);
-
-        System.out.println(Arrays.toString(game.getSquareInfo(1)));
+        assertEquals("There is already a tarzan player",game.createInitialJungle(8, players, foods).getMessage());
     }
 
     @Test
@@ -211,6 +185,39 @@ public class TestGameManager {
     }
 
     @Test
+    public void testMoveLionInvalid () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "2";
+        players[0][1] = "Pedro";
+        players[0][2] = "L";
+        players[1][0] = "1";
+        players[1][1] = "Gui";
+        players[1][2] = "Z";
+
+        String[][] foods = new String[1][2];
+
+        foods[0][0] = "e";
+        foods[0][1] = "5";
+
+        GameManager game = new GameManager();
+
+        game.createInitialJungle(8, players, foods);
+
+        ArrayList<Player> player = game.getAlPlayer();
+
+        game.moveCurrentPlayer(2,false);
+
+        game.moveCurrentPlayer(2,false);
+
+        assertEquals(3,game.invalidMove(3,false));
+
+        game.moveCurrentPlayerAdd(-10);
+
+        assertEquals(1,player.get(1).getPosition());
+    }
+
+    @Test
     public void testMoveTarzanToGrass () {
         String[][] players = new String[2][3];
 
@@ -326,6 +333,10 @@ public class TestGameManager {
         game.moveCurrentPlayer(4,false);
 
         assertEquals("2",game.getWinnerInfo()[0]);
+
+        game.moveCurrentPlayer(6,true);
+
+        assertEquals(2,game.invalidMove(1,false));
     }
 
     @Test

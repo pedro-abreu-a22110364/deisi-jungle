@@ -4,7 +4,6 @@
 //Novos alimentos (criatividade) e mudar img dos existentes - pagina 4
 //Criatividade (getAuthorsPanel()) e README.md - pagina 11,15 e 27
 //Video - pagina 14
-//Substituir HashMap - pagina 19
 
 package pt.ulusofona.lp2.deisiJungle;
 
@@ -226,13 +225,13 @@ public class GameManager {
 
     public InitializationError createInitialJungle(int jungleSize,String[][] playersInfo, String[][] foodsInfo) {
         cleaningArrays();
-        createInitialJungle(jungleSize, playersInfo);
+        InitializationError erro = createInitialJungle(jungleSize, playersInfo);
 
-        /*if (createInitialJungle(jungleSize,playersInfo) != null) {
+        if (erro != null) {
             if (Objects.equals(createInitialJungle(jungleSize, playersInfo).getMessage(), "There is already a tarzan player")) {
                 return new InitializationError("There is already a tarzan player");
             }
-        }*/
+        }
 
         //Validate number of players
         if(playersInfo == null || playersInfo.length < minPlayers || playersInfo.length > maxPlayers || jungleSize < playersInfo.length * 2) {
@@ -453,7 +452,6 @@ public class GameManager {
         for (Player player : alPlayer) {
             if (player.getIdentifier() == idPlayerPlaying) {
                 playerTemp = idPlayerPlaying;
-                break;
             }
         }
         return getPlayerInfo(playerTemp);
@@ -499,7 +497,6 @@ public class GameManager {
         for (Player player : alPlayer) {
             if (player.getIdentifier() == idPlayerPlaying) {
                 playerTemp = player;
-                break;
             }
         }
 
