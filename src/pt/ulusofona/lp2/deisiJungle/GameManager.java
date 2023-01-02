@@ -1,7 +1,5 @@
 //Fazer UML - pagina 2 e 14
 //Acabar testes - pagina 13
-//Novas species (criatividade) e definir as já criadas - pagina 4
-//Novos alimentos (criatividade) e mudar img dos existentes - pagina 4
 //Criatividade (getAuthorsPanel()) e README.md - pagina 11,15 e 27
 //Video - pagina 14
 
@@ -68,10 +66,10 @@ public class GameManager {
         Passaro passaro = new Passaro('P', "Passaro","bird.png","Omnivoro",70,4,50,5,6);
         Tarzan tarzan = new Tarzan('Z', "Tarzan","tarzan.png", "Omnivoro",70,2,20,1,6);
 
-        Mario mario = new Mario('M',"Mario","mario.png","Omnivoro",100,2,20,1,6);
-        Ghost ghost = new Ghost('G',"PacMan","pacman.png","Herbivoro",100,2,20,1,6);
-        Pikachu pikachu = new Pikachu('Y',"Pikachu","pikachu.png","Herbivoro",100,2,20,1,6);
-        Zelda zelda = new Zelda('X',"Zelda","zelda.png","Omnivoro",100,2,20,1,6);
+        Mario mario = new Mario('M',"Mario","mario.png","Omnivoro",180,5,5,2,5);
+        Ghost ghost = new Ghost('G',"PacMan","pacman.png","Omnivoro",120,1,10,1,3);
+        Pikachu pikachu = new Pikachu('Y',"Pikachu","pikachu.png","Omnivoro",90,2,20,5,6);
+        Zelda zelda = new Zelda('X',"Zelda","zelda.png","Omnivoro",120,3,15,3,5);
 
         //Adding objects to list
         alSpecies.add(elefante);
