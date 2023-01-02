@@ -149,11 +149,7 @@ public class GameManager {
     }
 
     public InitializationError createInitialJungle(int jungleSize, String[][] playersInfo) {
-        if (alPlayerTemp.isEmpty()) {
-            alPlayer.clear();
-            alHouses.clear();
-            gameFoods.clear();
-        }
+        cleaningArrays();
 
         this.jungleSize = jungleSize;
         int nrOfTarzans = 0;
@@ -229,11 +225,7 @@ public class GameManager {
     }
 
     public InitializationError createInitialJungle(int jungleSize,String[][] playersInfo, String[][] foodsInfo) {
-        if (alPlayerTemp.isEmpty()) {
-            alPlayer.clear();
-            alHouses.clear();
-            gameFoods.clear();
-        }
+        cleaningArrays();
         createInitialJungle(jungleSize, playersInfo);
 
         /*if (createInitialJungle(jungleSize,playersInfo) != null) {
@@ -337,6 +329,14 @@ public class GameManager {
                     }
                 }
             }
+        }
+    }
+
+    public void cleaningArrays() {
+        if (alPlayerTemp.isEmpty()) {
+            alPlayer.clear();
+            alHouses.clear();
+            gameFoods.clear();
         }
     }
 
@@ -984,11 +984,7 @@ public class GameManager {
                         for (Player player : alPlayerTemp) {
                             if (player.getIdentifier() == Integer.parseInt(arrEatenFoods[0])) {
                                 player.addEatenFoods(gameFood);
-                            }
-                        }
-                    }
-                }
-            }
+                            }}}}}
 
             //Gamemanager
             while ((line = br.readLine()) != null) { arrGameManager = line.split(",");
