@@ -577,7 +577,7 @@ public class TestGameManager {
 
         game.moveCurrentPlayer(7,true);
 
-        assertEquals("#1 Gui, Leao, 1, 0, 0",game.getGameResults().get(0));
+        assertEquals("#1 Gui, Leao, 2, 1, 0",game.getGameResults().get(0));
     }
 
     @Test
@@ -607,7 +607,7 @@ public class TestGameManager {
 
         game.moveCurrentPlayer(7,true);
 
-        assertEquals("#1 Gui, Leao, 1, 0, 0",game.getGameResults().get(0));
+        assertEquals("#1 Gui, Leao, 2, 1, 0",game.getGameResults().get(0));
     }
 
     @Test
