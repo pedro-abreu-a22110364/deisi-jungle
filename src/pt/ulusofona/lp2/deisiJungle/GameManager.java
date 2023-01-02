@@ -55,6 +55,10 @@ public class GameManager {
         return alPlayer;
     }
 
+    public ArrayList<Food> getGameFoods() {
+        return gameFoods;
+    }
+
     public ArrayList<Specie> createDefaultSpecies() {
         ArrayList<Specie> alSpecies = new ArrayList<>(); //Creating the list to return it later
 

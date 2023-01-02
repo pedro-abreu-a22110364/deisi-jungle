@@ -760,4 +760,96 @@ public class TestGameManager {
 
         assertEquals(3,player.get(0).getPosition());
     }
+
+    @Test
+    public void testCogumelosMagicosImpar () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "Z";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "Y";
+
+        String[][] foods = new String[1][2];
+
+        foods[0][0] = "m";
+        foods[0][1] = "4";
+
+        GameManager game = new GameManager();
+
+        game.createInitialJungle(11,players,foods);
+
+        ArrayList<Food> food = game.getGameFoods();
+
+        ArrayList<Player> player = game.getAlPlayer();
+
+        int energy1 = food.get(0).getEnergyOmnivoros();
+        int energy2 = food.get(0).getEnergyCarnivoros();
+        int energy3 = food.get(0).getEnergyHerbivoros();
+
+        assertEquals(energy1,energy2);
+        assertEquals(energy1,energy3);
+        assertEquals(energy2,energy3);
+
+        assertEquals("Cogumelo Magico : +- " + energy1 + "% energia",game.getSquareInfo(4)[1]);
+
+        game.moveCurrentPlayer(3,true);
+
+        int energyTemp = (int) ((70 - 6) - (64 * (energy1 * 0.01))) + 1;
+
+        assertEquals(energyTemp,player.get(0).getEnergy());
+
+        game.moveCurrentPlayer(0,true);
+
+        game.moveCurrentPlayer(0,true);
+
+        int energyTemp2 = (int) ((energyTemp + 20) - ((energyTemp + 20) * (energy1 * 0.01))) + 1;
+
+        assertEquals(energyTemp2,player.get(0).getEnergy());
+    }
+
+    @Test
+    public void testCogumelosMagicosPar () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "T";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "Z";
+
+        String[][] foods = new String[1][2];
+
+        foods[0][0] = "m";
+        foods[0][1] = "4";
+
+        GameManager game = new GameManager();
+
+        game.createInitialJungle(11,players,foods);
+
+        ArrayList<Food> food = game.getGameFoods();
+
+        ArrayList<Player> player = game.getAlPlayer();
+
+        int energy1 = food.get(0).getEnergyOmnivoros();
+
+        game.moveCurrentPlayer(0,true);
+
+        game.moveCurrentPlayer(3,true);
+
+        int energyTemp = (int) ((70 - 6) + (64 * (energy1 * 0.01)));
+
+        assertEquals(energyTemp,player.get(1).getEnergy());
+
+        game.moveCurrentPlayer(0,true);
+
+        game.moveCurrentPlayer(0,true);
+
+        int energyTemp2 = (int) ((energyTemp + 20) + ((energyTemp + 20) * (energy1 * 0.01)));
+
+        assertEquals(energyTemp2,player.get(1).getEnergy());
+    }
 }
