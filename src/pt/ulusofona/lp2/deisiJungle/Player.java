@@ -14,6 +14,10 @@ public class Player {
 
     ArrayList<Food> eatenFoods = new ArrayList<>();
 
+    public Player() {
+
+    }
+
     public Player(int identifier, String name, Specie specie, int energy, int rank, int position) {
         this.identifier = identifier;
         this.name = name;
