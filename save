@@ -1,0 +1,19 @@
+Players
+1,Pedro,M,120,3,2
+2,Guilherme,Y,84,1,29
+3,Ricardo,X,72,2,4
+Food
+e,14
+b,43,3
+c,17
+a,40
+m,27
+e,25
+b,22,3
+c,35
+a,34
+m,21
+Eaten Foods
+2,c,17
+GameManager
+false,47,3,2,14
