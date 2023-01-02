@@ -533,91 +533,16 @@ public class GameManager {
             for (House house : alHouses) {
                 if (hmPlayers.get(idPlayerPlaying).getPosition() == house.getPosition()) {
                     if (house.getFood() != null) {
-                        switch (house.getFood().getIdentifier()) {
-                            case 'e' -> {
-                                if (Objects.equals(hmPlayers.get(idPlayerPlaying).getSpecie().getSpecieType(), "Carnivoro")) {
-                                    hmPlayers.get(idPlayerPlaying).removeEnergy(20);
-                                } else {
-                                    hmPlayers.get(idPlayerPlaying).addEnergy(20);
-                                    eatMoreThan200();
-                                }
-                                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
-                                chacingTurnAndAddingNrPlays();
+                        int temp = switchCase(house);
+                        switch (temp) {
+                            case 1, 8, 6, 2 -> {
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                             }
-                            case 'a' -> {
-                                if (Objects.equals(hmPlayers.get(idPlayerPlaying).getSpecie().getSpecieType(), "Omnivoro")) {
-                                    hmPlayers.get(idPlayerPlaying).percentageEnergy(20);
-                                    eatMoreThan200();
-                                } else {
-                                    hmPlayers.get(idPlayerPlaying).addEnergy(15);
-                                    eatMoreThan200();
-                                }
-                                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
-                                chacingTurnAndAddingNrPlays();
-                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
+                            case 3, 7 -> {
+                                return new MovementResult(MovementResultCode.VALID_MOVEMENT, null);
                             }
-                            case 'b' -> {
-                                if (((Banana) house.getFood()).getQuantidade() <= 0) {
-                                    chacingTurnAndAddingNrPlays();
-                                    return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
-                                }
-
-                                if (hmPlayers.get(idPlayerPlaying).getNrBananas() >= 1) {
-                                    hmPlayers.get(idPlayerPlaying).removeEnergy(40);
-
-                                    ((Banana) house.getFood()).removeQuantidade();
-                                    hmPlayers.get(idPlayerPlaying).comerBananas();
-
-                                    hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
-                                    chacingTurnAndAddingNrPlays();
-                                    return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
-                                }
-
-                                hmPlayers.get(idPlayerPlaying).addEnergy(40);
-                                eatMoreThan200();
-
-                                ((Banana) house.getFood()).removeQuantidade();
-                                hmPlayers.get(idPlayerPlaying).comerBananas();
-
-                                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
-                                chacingTurnAndAddingNrPlays();
+                            case 4, 10, 9, 5 -> {
                                 return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
-                            }
-                            case 'c' -> {
-                                if (nrPlays >= 12) {
-                                    hmPlayers.get(idPlayerPlaying).halfEnergy();
-                                    hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
-                                    chacingTurnAndAddingNrPlays();
-                                    return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
-                                }
-
-                                if (Objects.equals(hmPlayers.get(idPlayerPlaying).getSpecie().getSpecieType(), "Herbivoro")) {
-                                    chacingTurnAndAddingNrPlays();
-                                    return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
-                                }
-                                hmPlayers.get(idPlayerPlaying).addEnergy(50);
-
-                                eatMoreThan200();
-
-                                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
-                                chacingTurnAndAddingNrPlays();
-                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
-                            }
-                            case 'm' -> {
-                                if (nrPlaysMushrooms % 2 == 0) {
-                                    hmPlayers.get(idPlayerPlaying).percentageEnergy(house.getFood().getEnergyOmnivoros());
-                                    eatMoreThan200();
-
-                                    hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
-                                    chacingTurnAndAddingNrPlays();
-                                    return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
-                                } else {
-                                    hmPlayers.get(idPlayerPlaying).percentageEnergyNegative(house.getFood().getEnergyOmnivoros());
-                                    hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
-                                    chacingTurnAndAddingNrPlays();
-                                    return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
-                                }
                             }
                         }
                     }
@@ -634,101 +559,16 @@ public class GameManager {
         for (House house : alHouses) {
             if (hmPlayers.get(idPlayerPlaying).getPosition() == house.getPosition()) {
                 if (house.getFood() != null) {
-                    switch (house.getFood().getIdentifier()) {
-                        case 'e' -> {
-                            if (Objects.equals(hmPlayers.get(idPlayerPlaying).getSpecie().getSpecieType(), "Carnivoro")) {
-                                hmPlayers.get(idPlayerPlaying).removeEnergy(20);
-                            } else {
-                                hmPlayers.get(idPlayerPlaying).addEnergy(20);
-                                eatMoreThan200();
-                            }
-                            increaseDistance(nrSquares);
-                            hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
-                            chacingTurnAndAddingNrPlays();
+                    int temp = switchCase(house);
+                    switch (temp) {
+                        case 1, 8, 6, 2 -> {
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
                         }
-                        case 'a' -> {
-                            if (Objects.equals(hmPlayers.get(idPlayerPlaying).getSpecie().getSpecieType(), "Omnivoro")) {
-                                hmPlayers.get(idPlayerPlaying).percentageEnergy(20);
-                                eatMoreThan200();
-                            } else {
-                                hmPlayers.get(idPlayerPlaying).addEnergy(15);
-                                eatMoreThan200();
-                            }
-                            increaseDistance(nrSquares);
-                            hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
-                            chacingTurnAndAddingNrPlays();
-                            return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
+                        case 3, 7 -> {
+                            return new MovementResult(MovementResultCode.VALID_MOVEMENT, null);
                         }
-                        case 'b' -> {
-                            if (((Banana) house.getFood()).getQuantidade() <= 0) {
-                                increaseDistance(nrSquares);
-                                chacingTurnAndAddingNrPlays();
-                                return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
-                            }
-
-                            if (hmPlayers.get(idPlayerPlaying).getNrBananas() >= 1) {
-                                hmPlayers.get(idPlayerPlaying).removeEnergy(40);
-
-                                ((Banana) house.getFood()).removeQuantidade();
-                                hmPlayers.get(idPlayerPlaying).comerBananas();
-
-                                increaseDistance(nrSquares);
-                                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
-                                chacingTurnAndAddingNrPlays();
-                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
-                            }
-
-                            hmPlayers.get(idPlayerPlaying).addEnergy(40);
-                            eatMoreThan200();
-
-                            ((Banana) house.getFood()).removeQuantidade();
-                            hmPlayers.get(idPlayerPlaying).comerBananas();
-
-                            increaseDistance(nrSquares);
-                            hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
-                            chacingTurnAndAddingNrPlays();
+                        case 4, 10, 9, 5 -> {
                             return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
-                        }
-                        case 'c' -> {
-                            if (nrPlays >= 12) {
-                                hmPlayers.get(idPlayerPlaying).halfEnergy();
-                                increaseDistance(nrSquares);
-                                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
-                                chacingTurnAndAddingNrPlays();
-                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
-                            }
-
-                            if (Objects.equals(hmPlayers.get(idPlayerPlaying).getSpecie().getSpecieType(), "Herbivoro")) {
-                                increaseDistance(nrSquares);
-                                chacingTurnAndAddingNrPlays();
-                                return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
-                            }
-                            hmPlayers.get(idPlayerPlaying).addEnergy(50);
-
-                            eatMoreThan200();
-
-                            increaseDistance(nrSquares);
-                            hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
-                            chacingTurnAndAddingNrPlays();
-                            return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());
-                        }
-                        case 'm' -> {
-                            if (nrPlaysMushrooms % 2 == 0) {
-                                hmPlayers.get(idPlayerPlaying).percentageEnergy(house.getFood().getEnergyOmnivoros());
-                                eatMoreThan200();
-
-                                increaseDistance(nrSquares);
-                                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
-                                chacingTurnAndAddingNrPlays();
-                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
-                            } else {
-                                hmPlayers.get(idPlayerPlaying).percentageEnergyNegative(house.getFood().getEnergyOmnivoros());
-                                increaseDistance(nrSquares);
-                                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
-                                chacingTurnAndAddingNrPlays();
-                                return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getFoodType());
-                            }
                         }
                     }
                 }
@@ -792,6 +632,97 @@ public class GameManager {
         } else if (nrSquares > 0) {
             hmPlayers.get(idPlayerPlaying).increseDistance(nrSquares);
         }
+    }
+
+    public int switchCase (House house) {
+        switch (house.getFood().getIdentifier()) {
+            case 'e' -> {
+                if (Objects.equals(hmPlayers.get(idPlayerPlaying).getSpecie().getSpecieType(), "Carnivoro")) {
+                    hmPlayers.get(idPlayerPlaying).removeEnergy(20);
+                } else {
+                    hmPlayers.get(idPlayerPlaying).addEnergy(20);
+                    eatMoreThan200();
+                }
+                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
+                chacingTurnAndAddingNrPlays();
+                return 1;
+            }
+            case 'a' -> {
+                if (Objects.equals(hmPlayers.get(idPlayerPlaying).getSpecie().getSpecieType(), "Omnivoro")) {
+                    hmPlayers.get(idPlayerPlaying).percentageEnergy(20);
+                    eatMoreThan200();
+                } else {
+                    hmPlayers.get(idPlayerPlaying).addEnergy(15);
+                    eatMoreThan200();
+                }
+                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
+                chacingTurnAndAddingNrPlays();
+                return 2;
+            }
+            case 'b' -> {
+                if (((Banana) house.getFood()).getQuantidade() <= 0) {
+                    chacingTurnAndAddingNrPlays();
+                    return 3;
+                }
+
+                if (hmPlayers.get(idPlayerPlaying).getNrBananas() >= 1) {
+                    hmPlayers.get(idPlayerPlaying).removeEnergy(40);
+
+                    ((Banana) house.getFood()).removeQuantidade();
+                    hmPlayers.get(idPlayerPlaying).comerBananas();
+
+                    hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
+                    chacingTurnAndAddingNrPlays();
+                    return 4;
+                }
+
+                hmPlayers.get(idPlayerPlaying).addEnergy(40);
+                eatMoreThan200();
+
+                ((Banana) house.getFood()).removeQuantidade();
+                hmPlayers.get(idPlayerPlaying).comerBananas();
+
+                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
+                chacingTurnAndAddingNrPlays();
+                return 5;
+            }
+            case 'c' -> {
+                if (nrPlays >= 12) {
+                    hmPlayers.get(idPlayerPlaying).halfEnergy();
+                    hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
+                    chacingTurnAndAddingNrPlays();
+                    return 6;
+                }
+
+                if (Objects.equals(hmPlayers.get(idPlayerPlaying).getSpecie().getSpecieType(), "Herbivoro")) {
+                    chacingTurnAndAddingNrPlays();
+                    return 7;
+                }
+                hmPlayers.get(idPlayerPlaying).addEnergy(50);
+
+                eatMoreThan200();
+
+                hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
+                chacingTurnAndAddingNrPlays();
+                return 8;
+            }
+            case 'm' -> {
+                if (nrPlaysMushrooms % 2 == 0) {
+                    hmPlayers.get(idPlayerPlaying).percentageEnergy(house.getFood().getEnergyOmnivoros());
+                    eatMoreThan200();
+
+                    hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
+                    chacingTurnAndAddingNrPlays();
+                    return 9;
+                } else {
+                    hmPlayers.get(idPlayerPlaying).percentageEnergyNegative(house.getFood().getEnergyOmnivoros());
+                    hmPlayers.get(idPlayerPlaying).addEatenFoods(house.getFood());
+                    chacingTurnAndAddingNrPlays();
+                    return 10;
+                }
+            }
+        }
+        return 0;
     }
 
     public String[] getWinnerInfo() {

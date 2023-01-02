@@ -1,0 +1,13 @@
+Players
+1,Pedro,M,116,0,3
+2,Gui,Y,100,0,1
+Food
+e,3
+a,4
+b,5,3
+c,6
+m,7
+Eaten Foods
+1,e,3
+GameManager
+false,11,2,1,1
