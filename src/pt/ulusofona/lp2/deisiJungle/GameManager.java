@@ -1026,31 +1026,26 @@ public class GameManager {
                     case 'c': for (House house : alHouses) {if (house.getPosition() == Integer.parseInt(arrFood[1])) {
                                 Carne carne = new Carne('c', "Carne", "meat.png", 50, 0, 50, Integer.parseInt(arrFood[1]));
                                 gameFoods.add(carne);
-                                house.food = carne;
-                            }}break;
+                                house.food = carne; }}break;
                     case 'b': for (House house : alHouses) {if (house.getPosition() == Integer.parseInt(arrFood[1])) {
                                 Banana banana = new Banana('b', "Cacho de Bananas", "bananas.png", 40, 40, 40, Integer.parseInt(arrFood[2]), Integer.parseInt(arrFood[1]));
                                 gameFoods.add(banana);
-                                house.food = banana;
-                            }}break;
+                                house.food = banana; }}break;
                     case 'a': for (House house : alHouses) {if (house.getPosition() == Integer.parseInt(arrFood[1])) {
                                 Agua agua = new Agua('a', "Agua", "water.png", 15, 20, 20, Integer.parseInt(arrFood[1]));
                                 gameFoods.add(agua);
-                                house.food = agua;
-                            }}break;
+                                house.food = agua; }}break;
                     case 'e': for (House house : alHouses) { if (house.getPosition() == Integer.parseInt(arrFood[1])) {
                                 Erva erva = new Erva('e', "erva", "grass.png", 20, 20, 20, Integer.parseInt(arrFood[1]));
                                 gameFoods.add(erva);
-                                house.food = erva;
-                            }}break;
+                                house.food = erva; }}break;
                     case 'm': for (House house : alHouses) { if (house.getPosition() == Integer.parseInt(arrFood[1])) {
                                 Random r = new Random();
                                 int low = 10, high = 51;
                                 int result = r.nextInt(high - low) + low;
                                 CogumelosMagicos cogumelo = new CogumelosMagicos('m', "Cogumelos magicos", "mushroom.png", result, result, result, Integer.parseInt(arrFood[1]));
                                 gameFoods.add(cogumelo);
-                                house.food = cogumelo;
-                            }}break;
+                                house.food = cogumelo; }}break;
                 }
             }
             //EatenFoods
