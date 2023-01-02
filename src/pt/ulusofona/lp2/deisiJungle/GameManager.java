@@ -33,7 +33,6 @@ public class GameManager {
 
     //Variaveis com informação sobre o jogo
     boolean gameFinished = false;
-    int[] orderOfPlay;
 
     int idPlayerPlayingTemp = 0;
     int playerPlayingTemp = 0;
@@ -150,6 +149,12 @@ public class GameManager {
     }
 
     public InitializationError createInitialJungle(int jungleSize, String[][] playersInfo) {
+        if (alPlayerTemp.isEmpty()) {
+            alPlayer.clear();
+            alHouses.clear();
+            gameFoods.clear();
+        }
+
         this.jungleSize = jungleSize;
         int nrOfTarzans = 0;
         gameFoods = new ArrayList<>();
@@ -217,12 +222,18 @@ public class GameManager {
         alPlayer.sort(Comparator.comparing(Player::getIdentifier));
         orderByPosition = new int[alPlayer.size()];
         orderByID = new int[alPlayer.size()];
-        orderOfPlay = idOrderOfPlay();
+
+        idPlayerPlaying = alPlayer.get(0).getIdentifier();
 
         return null;
     }
 
     public InitializationError createInitialJungle(int jungleSize,String[][] playersInfo, String[][] foodsInfo) {
+        if (alPlayerTemp.isEmpty()) {
+            alPlayer.clear();
+            alHouses.clear();
+            gameFoods.clear();
+        }
         createInitialJungle(jungleSize, playersInfo);
 
         /*if (createInitialJungle(jungleSize,playersInfo) != null) {
@@ -622,12 +633,12 @@ public class GameManager {
     }
 
     public void chacingTurnAndAddingNrPlays() {
-        if(idPlayerPlaying == orderOfPlay[orderOfPlay.length - 1]) {
-            idPlayerPlaying = orderOfPlay[0];
+        if(idPlayerPlaying == alPlayer.get(alPlayer.size() - 1).getIdentifier()) {
             playerPlaying = 0;
+            idPlayerPlaying = alPlayer.get(0).getIdentifier();
         } else {
             playerPlaying++;
-            idPlayerPlaying = orderOfPlay[playerPlaying];
+            idPlayerPlaying = alPlayer.get(playerPlaying).getIdentifier();
         }
         nrPlays++;
         nrPlaysMushrooms++;
@@ -818,36 +829,6 @@ public class GameManager {
         }
 
         return alGameResults;
-    }
-
-    //Bubble Sort
-    public int[] idOrderOfPlay () {
-        int[] idOrderOfPlay = new int[alPlayer.size()];
-        int count = 0, lastOrdered = idOrderOfPlay.length;
-        boolean allInOrder = false;
-
-        for (Player player : alPlayer) {
-            idOrderOfPlay[count] = player.getIdentifier();
-            count++;
-        }
-
-        while(!allInOrder) {
-            allInOrder = true;
-
-            for (int i = 0;i < lastOrdered -1;i++) {
-                if (idOrderOfPlay[i] > idOrderOfPlay[i+1]) {
-                    allInOrder = false;
-
-                    int temp = idOrderOfPlay[i];
-                    idOrderOfPlay[i] = idOrderOfPlay[i+1];
-                    idOrderOfPlay[i] = temp;
-                }
-            }
-            lastOrdered--;
-        }
-        playerPlaying = 0;
-        idPlayerPlaying = idOrderOfPlay[0];
-        return idOrderOfPlay;
     }
 
     public void getRanking() {
