@@ -2,6 +2,7 @@ package pt.ulusofona.lp2.deisiJungle;
 
 import org.junit.Test;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
@@ -703,5 +704,60 @@ public class TestGameManager {
         game.moveCurrentPlayer(-1,true);
 
         assertEquals(99,player.get(1).getEnergy());
+    }
+
+    @Test
+    public void testSaveAndLoad () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "M";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "Y";
+
+        String[][] foods = new String[5][2];
+
+        foods[0][0] = "e";
+        foods[0][1] = "3";
+        foods[1][0] = "a";
+        foods[1][1] = "4";
+        foods[2][0] = "b";
+        foods[2][1] = "5";
+        foods[3][0] = "c";
+        foods[3][1] = "6";
+        foods[4][0] = "m";
+        foods[4][1] = "7";
+
+        GameManager game = new GameManager();
+
+        game.createInitialJungle(11,players,foods);
+
+        game.moveCurrentPlayer(2,true);
+
+        File ficheiro = new File("save.txt");
+
+        game.saveGame(ficheiro);
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "T";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "T";
+
+        foods[0][0] = "b";
+        foods[0][1] = "3";
+        foods[1][0] = "c";
+        foods[1][1] = "4";
+
+        game.createInitialJungle(17,players,foods);
+
+        game.loadGame(ficheiro);
+
+        ArrayList<Player> player = game.getAlPlayer();
+
+        assertEquals(3,player.get(0).getPosition());
     }
 }
