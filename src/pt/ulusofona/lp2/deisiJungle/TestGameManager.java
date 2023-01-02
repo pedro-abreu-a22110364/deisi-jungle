@@ -10,7 +10,7 @@ import static org.junit.Assert.assertNull;
 public class TestGameManager {
 
     @Test
-    public void testCreateInitialJungleWrongSpecie () {
+    public void testCreateInitialJungleNormal () {
         String[][] players = new String[3][3];
 
         players[0][0] = "1";
@@ -23,6 +23,28 @@ public class TestGameManager {
         players[2][1] = "Ricardo";
         players[2][2] = "P";
 
+        String[][] foods = new String[3][2];
+
+        foods[0][0] = "e";
+        foods[0][1] = "5";
+        foods[1][0] = "a";
+        foods[1][1] = "4";
+        foods[2][0] = "m";
+        foods[2][1] = "6";
+
+        GameManager game = new GameManager();
+
+        assertNull(game.createInitialJungle(8, players, foods));
+    }
+
+    @Test
+    public void testCreateInitialJungleMinPlayers () {
+        String[][] players = new String[1][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "Z";
+
         String[][] foods = new String[1][2];
 
         foods[0][0] = "e";
@@ -30,9 +52,112 @@ public class TestGameManager {
 
         GameManager game = new GameManager();
 
-        assertNull(game.createInitialJungle(8, players, foods));
+        assertEquals("Invalid number of players",game.createInitialJungle(8, players, foods).getMessage());
+    }
 
-        assertNull(game.createInitialJungle(8, players));
+    @Test
+    public void testCreateInitialJungleIncorrectFormatID () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "h";
+        players[0][1] = "Pedro";
+        players[0][2] = "Z";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "G";
+
+        String[][] foods = new String[1][2];
+
+        foods[0][0] = "e";
+        foods[0][1] = "5";
+
+        GameManager game = new GameManager();
+
+        assertEquals("Incorrect id or name",game.createInitialJungle(8, players, foods).getMessage());
+    }
+
+    @Test
+    public void testCreateInitialJungleRepeatedIDs () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "Z";
+        players[1][0] = "1";
+        players[1][1] = "Gui";
+        players[1][2] = "L";
+
+        String[][] foods = new String[1][2];
+
+        foods[0][0] = "a";
+        foods[0][1] = "4";
+
+        GameManager game = new GameManager();
+
+        assertEquals("Repeated ids found",game.createInitialJungle(8, players, foods).getMessage());
+    }
+
+    @Test
+    public void testCreateInitialJungleIncorrectSpecie () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "Z";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "O";
+
+        String[][] foods = new String[1][2];
+
+        foods[0][0] = "a";
+        foods[0][1] = "3";
+
+        GameManager game = new GameManager();
+
+        assertEquals("Incorrect specie",game.createInitialJungle(8, players, foods).getMessage());
+    }
+
+    @Test
+    public void testCreateInitialJungleIncorrectFood () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "Z";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "T";
+
+        String[][] foods = new String[1][2];
+
+        foods[0][0] = "o";
+        foods[0][1] = "3";
+
+        GameManager game = new GameManager();
+
+        assertEquals("Incorrect food found",game.createInitialJungle(8, players, foods).getMessage());
+    }
+
+    @Test
+    public void testCreateInitialJungleIllegalFoodPosition () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "Z";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "T";
+
+        String[][] foods = new String[1][2];
+
+        foods[0][0] = "a";
+        foods[0][1] = "10";
+
+        GameManager game = new GameManager();
+
+        assertEquals("Ilegal position for food",game.createInitialJungle(8, players, foods).getMessage());
     }
 
     @Test
@@ -344,5 +469,136 @@ public class TestGameManager {
         assertEquals("Agua",foodsType[3][1]);
 
         assertEquals("Cogumelos magicos",foodsType[4][1]);
+    }
+
+    @Test
+    public void testGetPlayerIds () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "G";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "X";
+
+        String[][] foods = new String[1][2];
+
+        foods[0][0] = "c";
+        foods[0][1] = "5";
+
+        GameManager game = new GameManager();
+
+        game.createInitialJungle(12, players, foods);
+
+        game.moveCurrentPlayer(2,true);
+
+        game.moveCurrentPlayer(1,true);
+
+        int[] ids = game.getPlayerIds(3);
+
+        assertEquals(1,ids[0]);
+
+        game.moveCurrentPlayer(3,true);
+
+        game.moveCurrentPlayer(1,true);
+
+        ids = game.getPlayerIds(3);
+
+        assertEquals(2,ids[0]);
+    }
+
+    @Test
+    public void testGetPlayerIdsOutsideMapAndEmptyPlace () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "G";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "X";
+
+        String[][] foods = new String[1][2];
+
+        foods[0][0] = "c";
+        foods[0][1] = "5";
+
+        GameManager game = new GameManager();
+
+        game.createInitialJungle(12, players, foods);
+
+        game.moveCurrentPlayer(2,true);
+
+        game.moveCurrentPlayer(1,true);
+
+        int[] ids = game.getPlayerIds(15);
+
+        game.moveCurrentPlayer(1,true);
+
+        ids = game.getPlayerIds(3);
+
+        game.moveCurrentPlayer(1,true);
+
+        ids = game.getPlayerIds(3);
+
+        assertEquals(2,ids[0]);
+    }
+
+    @Test
+    public void testGetSquareInfoToolTips () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "G";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "X";
+
+        String[][] foods = new String[5][2];
+
+        foods[0][0] = "e";
+        foods[0][1] = "3";
+        foods[1][0] = "a";
+        foods[1][1] = "4";
+        foods[2][0] = "b";
+        foods[2][1] = "5";
+        foods[3][0] = "c";
+        foods[3][1] = "6";
+        foods[4][0] = "c";
+        foods[4][1] = "9";
+
+        GameManager game = new GameManager();
+
+        game.createInitialJungle(15, players, foods);
+
+        assertEquals("Vazio",game.getSquareInfo(1)[1]);
+
+        assertEquals("Meta",game.getSquareInfo(15)[1]);
+
+        assertEquals("Erva : +- 20 energia",game.getSquareInfo(3)[1]);
+
+        assertEquals("Agua : + 15U|20% energia",game.getSquareInfo(4)[1]);
+
+        assertEquals("Bananas : 3 : + 40 energia",game.getSquareInfo(5)[1]);
+
+        assertEquals("Carne : + 50 energia : 0 jogadas",game.getSquareInfo(6)[1]);
+
+        game.moveCurrentPlayer(0,true);
+        game.moveCurrentPlayer(0,true);
+        game.moveCurrentPlayer(0,true);
+        game.moveCurrentPlayer(0,true);
+        game.moveCurrentPlayer(0,true);
+        game.moveCurrentPlayer(0,true);
+        game.moveCurrentPlayer(0,true);
+        game.moveCurrentPlayer(0,true);
+        game.moveCurrentPlayer(0,true);
+        game.moveCurrentPlayer(0,true);
+        game.moveCurrentPlayer(0,true);
+        game.moveCurrentPlayer(0,true);
+        game.moveCurrentPlayer(0,true);
+
+        assertEquals("Carne toxica",game.getSquareInfo(9)[1]);
     }
 }

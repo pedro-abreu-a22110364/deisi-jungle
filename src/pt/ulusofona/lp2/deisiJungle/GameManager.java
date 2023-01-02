@@ -220,6 +220,12 @@ public class GameManager {
     public InitializationError createInitialJungle(int jungleSize,String[][] playersInfo, String[][] foodsInfo) {
         createInitialJungle(jungleSize, playersInfo);
 
+        /*if (createInitialJungle(jungleSize,playersInfo) != null) {
+            if (Objects.equals(createInitialJungle(jungleSize, playersInfo).getMessage(), "There is already a tarzan player")) {
+                return new InitializationError("There is already a tarzan player");
+            }
+        }*/
+
         //Validate number of players
         if(playersInfo == null || playersInfo.length < minPlayers || playersInfo.length > maxPlayers || jungleSize < playersInfo.length * 2) {
             return new InitializationError("Invalid number of players");
