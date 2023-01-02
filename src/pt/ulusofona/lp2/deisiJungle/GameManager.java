@@ -577,7 +577,6 @@ public class GameManager {
 
         if(hmPlayers.get(idPlayerPlaying).getPosition() >= jungleSize) {
             moveCurrentPlayerFinal();
-            increaseDistance(nrSquares);
             winner = idPlayerPlaying;
             gameFinished = true;
             nrPlays++;
@@ -585,7 +584,6 @@ public class GameManager {
             return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
         }
 
-        increaseDistance(nrSquares);
         chacingTurnAndAddingNrPlays();
         return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
     }
@@ -596,6 +594,7 @@ public class GameManager {
 
     public void moveCurrentPlayerAdd (int nrSquares) {
         hmPlayers.get(idPlayerPlaying).setPosition(hmPlayers.get(idPlayerPlaying).getPosition() + nrSquares);
+        increaseDistance(nrSquares);
 
         if (nrSquares < 0) {
             hmPlayers.get(idPlayerPlaying).removeEnergy(hmPlayers.get(idPlayerPlaying).getSpecie().getNeededEnergy() * ((-1) * nrSquares));
