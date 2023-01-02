@@ -11,10 +11,7 @@ package pt.ulusofona.lp2.deisiJungle;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 public class GameManager {
 
@@ -28,6 +25,8 @@ public class GameManager {
     int winner = 0;
     int idPlayerPlaying;
     int playerPlaying;
+
+    Player playerMoving = new Player();
 
     //Variavel para contar quantidade de vezes que o bubble sort tem de ser feito
     int maxNumOfBSRepetions = 3;
@@ -215,6 +214,7 @@ public class GameManager {
             alHouses.add(house);
         }
 
+        alPlayer.sort(Comparator.comparing(Player::getIdentifier));
         orderByPosition = new int[alPlayer.size()];
         orderByID = new int[alPlayer.size()];
         orderOfPlay = idOrderOfPlay();
@@ -499,14 +499,13 @@ public class GameManager {
     }
 
     public MovementResult moveCurrentPlayer(int nrSquares,boolean bypassValidations) {
-        Player playerMoving = new Player();
         for (Player player : alPlayer) {
             if (player.getIdentifier() == idPlayerPlaying) {
                 playerMoving = player;
             }
         }
 
-        int temp = invalidMove(nrSquares,bypassValidations,playerMoving);
+        int temp = invalidMove(nrSquares,bypassValidations);
         switch (temp) { case 1, 2, 3, 4, 5 -> {return new MovementResult(MovementResultCode.INVALID_MOVEMENT,null);}}
 
         //Verifica se todos os players n tem energia
@@ -524,12 +523,12 @@ public class GameManager {
 
         if (nrSquares == 0) {
             playerMoving.addEnergy(playerMoving.getSpecie().getEnergyRecovery());
-            eatMoreThan200(playerMoving);
+            eatMoreThan200();
 
             for (House house : alHouses) {
                 if (playerMoving.getPosition() == house.getPosition()) {
                     if (house.getFood() != null) {
-                        temp = switchCase(house,playerMoving);
+                        temp = switchCase(house);
                         switch (temp) {
                             case 1, 8, 6, 2 -> {return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());}
                             case 3, 7 -> {return new MovementResult(MovementResultCode.VALID_MOVEMENT, null);}
@@ -543,12 +542,12 @@ public class GameManager {
             return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
         }
 
-        moveCurrentPlayerAdd(nrSquares,playerMoving);
+        moveCurrentPlayerAdd(nrSquares);
 
         for (House house : alHouses) {
             if (playerMoving.getPosition() == house.getPosition()) {
                 if (house.getFood() != null) {
-                    temp = switchCase(house,playerMoving);
+                    temp = switchCase(house);
                     switch (temp) {
                         case 1, 8, 6, 2 -> {return new MovementResult(MovementResultCode.CAUGHT_FOOD,"Apanhou " + house.getFood().getNome());}
                         case 3, 7 -> {return new MovementResult(MovementResultCode.VALID_MOVEMENT, null);}
@@ -558,7 +557,7 @@ public class GameManager {
         }
 
         if(playerMoving.getPosition() >= jungleSize) {
-            moveCurrentPlayerFinal(playerMoving);
+            moveCurrentPlayerFinal();
             winner = idPlayerPlaying;gameFinished = true;
             nrPlays++;nrPlaysMushrooms++;
             return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
@@ -568,7 +567,7 @@ public class GameManager {
         return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
     }
 
-    public int invalidMove (int nrSquares, boolean bypassValidations,Player playerMoving) {
+    public int invalidMove (int nrSquares, boolean bypassValidations) {
         if ((nrSquares < -6 || nrSquares > 6) && !bypassValidations) {
             chacingTurnAndAddingNrPlays();
             return 1;
@@ -597,13 +596,13 @@ public class GameManager {
         return 0;
     }
 
-    public void moveCurrentPlayerFinal (Player playerMoving) {
+    public void moveCurrentPlayerFinal () {
         playerMoving.setPosition(jungleSize);
     }
 
-    public void moveCurrentPlayerAdd (int nrSquares,Player playerMoving) {
+    public void moveCurrentPlayerAdd (int nrSquares) {
         playerMoving.setPosition(playerMoving.getPosition() + nrSquares);
-        increaseDistance(nrSquares,playerMoving);
+        increaseDistance(nrSquares);
 
         if (nrSquares < 0) {
             playerMoving.removeEnergy(playerMoving.getSpecie().getNeededEnergy() * ((-1) * nrSquares));
@@ -616,7 +615,7 @@ public class GameManager {
         }
     }
 
-    public void eatMoreThan200(Player playerMoving) {
+    public void eatMoreThan200() {
         if (playerMoving.getEnergy() > 200) {
             playerMoving.setEnergy(200);
         }
@@ -634,7 +633,7 @@ public class GameManager {
         nrPlaysMushrooms++;
     }
 
-    public void increaseDistance (int nrSquares,Player playerMoving) {
+    public void increaseDistance (int nrSquares) {
         if (nrSquares < 0) {
             playerMoving.increseDistance(nrSquares * (-1));
         } else if (nrSquares > 0) {
@@ -642,14 +641,14 @@ public class GameManager {
         }
     }
 
-    public int switchCase (House house,Player playerMoving) {
+    public int switchCase (House house) {
         switch (house.getFood().getIdentifier()) {
             case 'e' -> {
-                caseErva(playerMoving);
+                caseErva();
                 playerMoving.addEatenFoods(house.getFood());
                 chacingTurnAndAddingNrPlays();return 1;
             } case 'a' -> {
-                caseAgua(playerMoving);
+                caseAgua();
                 playerMoving.addEatenFoods(house.getFood());
                 chacingTurnAndAddingNrPlays();return 2;
             } case 'b' -> {
@@ -670,7 +669,7 @@ public class GameManager {
                 playerMoving.comerBananas();
                 playerMoving.addEatenFoods(house.getFood());
 
-                eatMoreThan200(playerMoving);
+                eatMoreThan200();
                 chacingTurnAndAddingNrPlays();return 5;
             } case 'c' -> {
                 if (nrPlays >= 12) {
@@ -684,13 +683,13 @@ public class GameManager {
                 playerMoving.addEnergy(50);
                 playerMoving.addEatenFoods(house.getFood());
 
-                eatMoreThan200(playerMoving);
+                eatMoreThan200();
                 chacingTurnAndAddingNrPlays();return 8;
             } case 'm' -> {
                 if (nrPlaysMushrooms % 2 == 0) {
                     playerMoving.percentageEnergy(house.getFood().getEnergyOmnivoros());
                     playerMoving.addEatenFoods(house.getFood());
-                    eatMoreThan200(playerMoving);
+                    eatMoreThan200();
                     chacingTurnAndAddingNrPlays();return 9;
                 } else {
                     playerMoving.percentageEnergyNegative(house.getFood().getEnergyOmnivoros());
@@ -702,22 +701,22 @@ public class GameManager {
         return 0;
     }
 
-    public void caseErva (Player playerMoving) {
+    public void caseErva () {
         if (Objects.equals(playerMoving.getSpecie().getSpecieType(), "Carnivoro")) {
             playerMoving.removeEnergy(20);
         } else {
             playerMoving.addEnergy(20);
-            eatMoreThan200(playerMoving);
+            eatMoreThan200();
         }
     }
 
-    public void caseAgua (Player playerMoving) {
+    public void caseAgua () {
         if (Objects.equals(playerMoving.getSpecie().getSpecieType(), "Omnivoro")) {
             playerMoving.percentageEnergy(20);
-            eatMoreThan200(playerMoving);
+            eatMoreThan200();
         } else {
             playerMoving.addEnergy(15);
-            eatMoreThan200(playerMoving);
+            eatMoreThan200();
         }
     }
 
