@@ -19,6 +19,7 @@ public class Zelda extends Specie{
     public String getSpecieImage() {
         return specieImage;
     }
+
     @Override
     public int getInitalEnergy() {
         return initalEnergy;

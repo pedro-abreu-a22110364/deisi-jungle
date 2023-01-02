@@ -2,8 +2,7 @@
 //Acabar testes - pagina 2 e 13
 //Novas species (criatividade) e definir as já criadas - pagina 4
 //Novos alimentos (criatividade) e mudar img dos existentes - pagina 4
-//Criatividade (getAuthorsPanel()) e README-md - pagina 11,15 e 27
-//Bonus - pagina 11 e 12
+//Criatividade (getAuthorsPanel()) e README.md - pagina 11,15 e 27
 //Video - pagina 14
 //Code quality (CheckStyle) - pagina 15
 //Substituir HashMap - pagina 19
@@ -106,8 +105,8 @@ public class GameManager {
         alfood.add(erva);
         alfood.add(banana);
         alfood.add(carne);
-        alfood.add(cogumelo);
         alfood.add(agua);
+        alfood.add(cogumelo);
 
         //Returning the list back to "main"
         return alfood;

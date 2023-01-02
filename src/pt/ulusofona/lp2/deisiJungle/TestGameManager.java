@@ -229,4 +229,120 @@ public class TestGameManager {
         assertEquals("#1 Pedro, Tarzan, 12, 11, 1",game.getGameResults().get(0));
     }
 
+    @Test
+    public void testEnergyAfterTwoBananas () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "Z";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "L";
+
+        String[][] foods = new String[2][2];
+
+        foods[0][0] = "b";
+        foods[0][1] = "5";
+        foods[1][0] = "b";
+        foods[1][1] = "8";
+
+        GameManager game = new GameManager();
+
+        game.createInitialJungle(12, players, foods);
+
+        game.moveCurrentPlayer(4,true);
+
+        game.moveCurrentPlayer(1,true);
+
+        game.moveCurrentPlayer(3,true);
+
+        game.moveCurrentPlayer(1,true);
+
+        String[] strings = game.getCurrentPlayerInfo();
+
+        assertEquals("56",strings[3]);
+    }
+
+    @Test
+    public void testGetSpecies () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "M";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "Y";
+
+        String[][] foods = new String[1][2];
+
+        foods[0][0] = "c";
+        foods[0][1] = "5";
+
+        GameManager game = new GameManager();
+
+        game.createInitialJungle(12, players, foods);
+
+        game.moveCurrentPlayer(2,true);
+
+        game.moveCurrentPlayer(4,true);
+
+        String[][] species = game.getSpecies();
+
+        assertEquals("Elefante",species[0][1]);
+
+        assertEquals("Leao",species[1][1]);
+
+        assertEquals("Tartaruga",species[2][1]);
+
+        assertEquals("Passaro",species[3][1]);
+
+        assertEquals("Tarzan",species[4][1]);
+
+        assertEquals("Mario",species[5][1]);
+
+        assertEquals("PacMan",species[6][1]);
+
+        assertEquals("Pikachu",species[7][1]);
+
+        assertEquals("Zelda",species[8][1]);
+    }
+
+    @Test
+    public void testGetFoods () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "G";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "X";
+
+        String[][] foods = new String[1][2];
+
+        foods[0][0] = "c";
+        foods[0][1] = "5";
+
+        GameManager game = new GameManager();
+
+        game.createInitialJungle(12, players, foods);
+
+        game.moveCurrentPlayer(2,true);
+
+        game.moveCurrentPlayer(4,true);
+
+        String[][] foodsType = game.getFoodTypes();
+
+        assertEquals("Erva",foodsType[0][1]);
+
+        assertEquals("Bananas",foodsType[1][1]);
+
+        assertEquals("Carne",foodsType[2][1]);
+
+        assertEquals("Agua",foodsType[3][1]);
+
+        assertEquals("Cogumelos magicos",foodsType[4][1]);
+    }
 }
