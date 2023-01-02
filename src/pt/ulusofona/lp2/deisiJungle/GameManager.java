@@ -1,7 +1,3 @@
-//Fazer UML - pagina 2 e 14
-//Criatividade (getAuthorsPanel()) e README.md - pagina 11,15 e 27
-//Video - pagina 14
-
 package pt.ulusofona.lp2.deisiJungle;
 
 import javax.swing.*;
