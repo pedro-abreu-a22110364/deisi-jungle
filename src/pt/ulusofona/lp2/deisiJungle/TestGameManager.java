@@ -278,7 +278,7 @@ public class TestGameManager {
 
     @Test
     public void testGetWinnerInfoCombinedWithGetGameResultsFinishedInDistance () {
-        String[][] players = new String[3][3];
+        String[][] players = new String[4][3];
 
         players[0][0] = "1";
         players[0][1] = "Pedro";
@@ -289,6 +289,9 @@ public class TestGameManager {
         players[2][0] = "3";
         players[2][1] = "Ricardo";
         players[2][2] = "T";
+        players[3][0] = "4";
+        players[3][1] = "Tomas";
+        players[3][2] = "Y";
 
         String[][] foods = new String[2][2];
 
@@ -307,6 +310,8 @@ public class TestGameManager {
         game.moveCurrentPlayer(2,true);
 
         game.moveCurrentPlayer(3,true);
+
+        game.moveCurrentPlayer(0,true);
 
         game.moveCurrentPlayer(4,true);
 
@@ -600,5 +605,103 @@ public class TestGameManager {
         game.moveCurrentPlayer(0,true);
 
         assertEquals("Carne toxica",game.getSquareInfo(9)[1]);
+    }
+
+    @Test
+    public void testMoveCurrentPlayerCompleteGrassAndWater () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "T";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "T";
+
+        String[][] foods = new String[2][2];
+
+        foods[0][0] = "e";
+        foods[0][1] = "3";
+        foods[1][0] = "a";
+        foods[1][1] = "4";
+
+        GameManager game = new GameManager();
+
+        game.createInitialJungle(11,players,foods);
+
+        ArrayList<Player> player = game.getAlPlayer();
+        //1 - 150, 2 - 150
+
+        game.moveCurrentPlayer(2,true);
+
+        assertEquals(150 - 2 + 20,player.get(0).getEnergy());
+
+        game.moveCurrentPlayer(3,true);
+
+        assertEquals(176,player.get(1).getEnergy());
+        //1 - 168, 2 - 176
+
+        game.moveCurrentPlayer(0,true);
+
+        assertEquals(168 + 5 + 20,player.get(0).getEnergy());
+
+        game.moveCurrentPlayer(0,true);
+
+        assertEquals(200,player.get(1).getEnergy());
+    }
+
+    @Test
+    public void testMoveCurrentPlayerCompleteBananasAndMeat () {
+        String[][] players = new String[2][3];
+
+        players[0][0] = "1";
+        players[0][1] = "Pedro";
+        players[0][2] = "T";
+        players[1][0] = "2";
+        players[1][1] = "Gui";
+        players[1][2] = "T";
+
+        String[][] foods = new String[2][2];
+
+        foods[0][0] = "b";
+        foods[0][1] = "3";
+        foods[1][0] = "c";
+        foods[1][1] = "4";
+
+        GameManager game = new GameManager();
+
+        game.createInitialJungle(11,players,foods);
+
+        ArrayList<Player> player = game.getAlPlayer();
+        //1 - 150, 2 - 150
+
+        game.moveCurrentPlayer(2,true);
+
+        assertEquals(150 - 2 + 40,player.get(0).getEnergy());
+
+        game.moveCurrentPlayer(3,true);
+
+        assertEquals(150 - 3 + 50,player.get(1).getEnergy());
+        //1 - 188, 2 - 197
+
+        game.moveCurrentPlayer(0,true);
+
+        assertEquals(188 + 5 - 40,player.get(0).getEnergy());
+
+        game.moveCurrentPlayer(1,true);
+
+        game.moveCurrentPlayer(0,true);
+        game.moveCurrentPlayer(0,true);
+        game.moveCurrentPlayer(0,true);
+        game.moveCurrentPlayer(0,true);
+        game.moveCurrentPlayer(0,true);
+        game.moveCurrentPlayer(0,true);
+        game.moveCurrentPlayer(0,true);
+        game.moveCurrentPlayer(0,true);
+        game.moveCurrentPlayer(0,true);
+
+        game.moveCurrentPlayer(-1,true);
+
+        assertEquals(99,player.get(1).getEnergy());
     }
 }
