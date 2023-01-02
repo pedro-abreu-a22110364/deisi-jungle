@@ -1,5 +1,4 @@
 //Fazer UML - pagina 2 e 14
-//Acabar testes - pagina 13
 //Criatividade (getAuthorsPanel()) e README.md - pagina 11,15 e 27
 //Video - pagina 14
 
@@ -1006,7 +1005,7 @@ public class GameManager {
     public JPanel getAuthorsPanel() {
         JPanel jPanel = new JPanel();
 
-        jPanel.setBackground(Color.LIGHT_GRAY);
+        jPanel.setBackground(Color.YELLOW);
 
         JLabel intro1 = new JLabel("Trabalho desenvolvido no âmbito");
         JLabel intro2 = new JLabel("da cadeira de LP2 por:");
