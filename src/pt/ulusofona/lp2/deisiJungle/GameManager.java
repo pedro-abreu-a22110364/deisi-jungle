@@ -905,7 +905,7 @@ public class GameManager {
             //Cleans File first.
             bw.write("");
             bw.write("Players\n");
-            for (Player player : hmPlayers.values()) {
+            for (Player player : alPlayer) {
                 bw.write(player.getIdentifier() + "," + player.getName() + "," + player.getSpecie().getIdentifier() + "," + player.getEnergy() + "," + player.getRank() + "," + player.getPosition());
                 bw.newLine();
             }//--------------------------//
@@ -917,7 +917,7 @@ public class GameManager {
                 bw.newLine();
             }//--------------------------//
             bw.write("Eaten Foods\n");
-            for (Player player : hmPlayers.values()) {
+            for (Player player : alPlayer) {
                 for (Food eatenFood : player.getEatenFoods()) {
                     bw.write(player.getIdentifier() + "," + eatenFood.getIdentifier() + "," + eatenFood.getPosition());
                     bw.newLine();
