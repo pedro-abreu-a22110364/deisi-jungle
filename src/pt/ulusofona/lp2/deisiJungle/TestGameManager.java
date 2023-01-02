@@ -797,7 +797,7 @@ public class TestGameManager {
 
         game.moveCurrentPlayer(3,true);
 
-        int energyTemp = (int) ((70 - 6) - (64 * (energy1 * 0.01))) + 1;
+        int energyTemp = (int) (64 - (64 * (energy1 * 0.01))) +1;
 
         assertEquals(energyTemp,player.get(0).getEnergy());
 
@@ -805,7 +805,7 @@ public class TestGameManager {
 
         game.moveCurrentPlayer(0,true);
 
-        int energyTemp2 = (int) ((energyTemp + 20) - ((energyTemp + 20) * (energy1 * 0.01))) + 1;
+        int energyTemp2 = (int) ((energyTemp + 20) - ((energyTemp + 20) * (energy1 * 0.01))) +1;
 
         assertEquals(energyTemp2,player.get(0).getEnergy());
     }
