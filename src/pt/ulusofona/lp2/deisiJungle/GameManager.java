@@ -976,6 +976,15 @@ public class GameManager {
         } catch (IOException e) {return false;}
     }
 
+    public void startGame(){
+        alSpecies = createDefaultSpecies();
+        alFoods = createDefaultFoods();
+        if(gameFoods.size() > 0){createInitialJungle(jungleSize, getPlayersInfo(),getFoodsInfo());}
+        else {createInitialJungle(jungleSize,getPlayersInfo());}
+        idPlayerPlaying = idPlayerPlayingTemp;
+        playerPlaying = playerPlayingTemp;
+    }
+
     public JPanel getAuthorsPanel() {
         JPanel jPanel = new JPanel();
 
@@ -998,14 +1007,5 @@ public class GameManager {
 
     public String whoIsTaborda() {
         return "wrestling";
-    }
-
-    public void startGame(){
-        alSpecies = createDefaultSpecies();
-        alFoods = createDefaultFoods();
-        if(gameFoods.size() > 0){createInitialJungle(jungleSize, getPlayersInfo(),getFoodsInfo());}
-        else {createInitialJungle(jungleSize,getPlayersInfo());}
-        idPlayerPlaying = idPlayerPlayingTemp;
-        playerPlaying = playerPlayingTemp;
     }
 }
