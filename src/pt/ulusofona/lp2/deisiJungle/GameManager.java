@@ -1004,8 +1004,7 @@ public class GameManager {
     }
 
     public boolean loadGame(File file){
-        try {
-            hmPlayersTemp = new HashMap<>();
+        try {hmPlayersTemp = new HashMap<>();
             // Check if the file exists
             if (!file.exists()) {return false;}
             // Open the file for reading
@@ -1016,45 +1015,34 @@ public class GameManager {
             String line;
             //Players
             while ((line = br.readLine()) != null) {
-                if(line.equals("Food")) {break;}
-                if(!line.equals("Players")) {arrPlayer = line.split(",");
-                    for (Specie alSpecy : alSpecies) {if(alSpecy.getIdentifier() == arrPlayer[2].charAt(0)) {
+                if(line.equals("Food")) {break;} if(!line.equals("Players")) {arrPlayer = line.split(",");for (Specie alSpecy : alSpecies) {if(alSpecy.getIdentifier() == arrPlayer[2].charAt(0)) {
                             Player player = new Player(Integer.parseInt(arrPlayer[0]),arrPlayer[1],alSpecy,Integer.parseInt(arrPlayer[3]),Integer.parseInt(arrPlayer[4]),Integer.parseInt(arrPlayer[5]));
-                            hmPlayersTemp.put(player.getIdentifier(), player);
-                        }
-                    }
-                }
+                            hmPlayersTemp.put(player.getIdentifier(), player);}}}
             }
             //Foods
-            while ((line = br.readLine()) != null)
-            {
-                if(line.equals("Eaten Foods")){break;}
+            while ((line = br.readLine()) != null) {if(line.equals("Eaten Foods")){break;}
                 arrFood = line.split(",");
                 switch (arrFood[0].charAt(0)) {
                     case 'c': for (House house : alHouses) {if (house.getPosition() == Integer.parseInt(arrFood[1])) {
                                 Carne carne = new Carne('c', "Carne", "meat.png", 50, 0, 50, Integer.parseInt(arrFood[1]));
                                 gameFoods.add(carne);
                                 house.food = carne;
-                            }
-                        }break;
+                            }}break;
                     case 'b': for (House house : alHouses) {if (house.getPosition() == Integer.parseInt(arrFood[1])) {
                                 Banana banana = new Banana('b', "Cacho de Bananas", "bananas.png", 40, 40, 40, Integer.parseInt(arrFood[2]), Integer.parseInt(arrFood[1]));
                                 gameFoods.add(banana);
                                 house.food = banana;
-                            }
-                        }break;
+                            }}break;
                     case 'a': for (House house : alHouses) {if (house.getPosition() == Integer.parseInt(arrFood[1])) {
                                 Agua agua = new Agua('a', "Agua", "water.png", 15, 20, 20, Integer.parseInt(arrFood[1]));
                                 gameFoods.add(agua);
                                 house.food = agua;
-                            }
-                        }break;
+                            }}break;
                     case 'e': for (House house : alHouses) { if (house.getPosition() == Integer.parseInt(arrFood[1])) {
                                 Erva erva = new Erva('e', "erva", "grass.png", 20, 20, 20, Integer.parseInt(arrFood[1]));
                                 gameFoods.add(erva);
                                 house.food = erva;
-                            }
-                        }break;
+                            }}break;
                     case 'm': for (House house : alHouses) { if (house.getPosition() == Integer.parseInt(arrFood[1])) {
                                 Random r = new Random();
                                 int low = 10, high = 51;
@@ -1062,32 +1050,24 @@ public class GameManager {
                                 CogumelosMagicos cogumelo = new CogumelosMagicos('m', "Cogumelos magicos", "mushroom.png", result, result, result, Integer.parseInt(arrFood[1]));
                                 gameFoods.add(cogumelo);
                                 house.food = cogumelo;
-                            }
-                        }break;
+                            }}break;
                 }
             }
             //EatenFoods
-            while ((line = br.readLine()) != null) {
-                if(line.equals("GameManager")) {break;}
+            while ((line = br.readLine()) != null) {if(line.equals("GameManager")) {break;}
                 arrEatenFoods = line.split(",");
                 for (Food gameFood : gameFoods) {if(gameFood.getIdentifier() == arrEatenFoods[1].charAt(0) && gameFood.getPosition() == Integer.parseInt(arrEatenFoods[2])) {
-                        hmPlayersTemp.get(Integer.parseInt(arrEatenFoods[0])).eatenFoods.add(gameFood);
-                    }
-                }
+                        hmPlayersTemp.get(Integer.parseInt(arrEatenFoods[0])).eatenFoods.add(gameFood);}}
             }
 
             //Gamemanager
-            while ((line = br.readLine()) != null) {
-                arrGameManager = line.split(",");
+            while ((line = br.readLine()) != null) { arrGameManager = line.split(",");
                 jungleSize = Integer.parseInt(arrGameManager[1]);
                 gameFinished = Boolean.parseBoolean(arrGameManager[0]);
                 idPlayerPlayingTemp = Integer.parseInt(arrGameManager[2]);
                 playerPlayingTemp = Integer.parseInt(arrGameManager[3]);
-                nrPlays = Integer.parseInt(arrGameManager[4]);
-            }
-
+                nrPlays = Integer.parseInt(arrGameManager[4]);}
             startGame();
-
             br.close();
             return true;
         } catch (IOException e) {return false;}
