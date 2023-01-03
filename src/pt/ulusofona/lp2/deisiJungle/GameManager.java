@@ -12,6 +12,7 @@ public class GameManager {
     int jungleSize;
     int nrPlays = 0;
     int nrPlaysMushrooms = 1;
+    int distanceTotal = 0;
 
     //Variaveis com informação de players
     int winner = 0;
@@ -49,6 +50,10 @@ public class GameManager {
 
     public ArrayList<Food> getGameFoods() {
         return gameFoods;
+    }
+
+    public int getDistanceTotal() {
+        return distanceTotal;
     }
 
     public ArrayList<Specie> createDefaultSpecies() {
@@ -601,8 +606,10 @@ public class GameManager {
     public void increaseDistance (int nrSquares) {
         if (nrSquares < 0) {
             playerMoving.increseDistance(nrSquares * (-1));
+            distanceTotal += (nrSquares * (-1));
         } else if (nrSquares > 0) {
             playerMoving.increseDistance(nrSquares);
+            distanceTotal += nrSquares;
         }
     }
 

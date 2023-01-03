@@ -18,11 +18,16 @@ fun commandGet (game : GameManager, list : List<String>) : String? {
         "PLAYER_INFO" -> return getPlayerInfo(game,list)
         "PLAYERS_BY_SPECIE" -> return getPlayerBySpecie(game,list)
         "MOST_TRAVELED" -> return getMostTraveled(game,list)
+        "TOP_ENERGETIC_OMNIVORES" -> return getTopEnergeticOmnivores(game,list)
+        "CONSUMED_FOODS" -> return getConsumedFoods(game,list)
     }
     return null
 }
 
 fun commandPost (game : GameManager, list : List<String>) : String? {
+    when (list.get(0)) {
+        "MOVE" -> return move(game,list)
+    }
     return null
 }
 
@@ -54,7 +59,34 @@ fun getMostTraveled(game : GameManager, list : List<String>): String? {
     var string = ""
     val players = game.getAlPlayer().sortedWith{i1,i2 -> i2.getDistance() - i1.getDistance()}.forEach{string += it.getName() + ":" + it.getSpecie().getIdentifier() + ":" + it.getDistance() + "\n"}
 
+    string += "Total:" + game.getDistanceTotal()
+
     return string
+}
+
+fun getTopEnergeticOmnivores(game : GameManager, list : List<String>): String? {
+    var string = ""
+    val players = game.getAlPlayer().filter { it.getEnergy() != 0 }.sortedWith{i1,i2 -> i2.getEnergy() - i1.getEnergy()}.take(list.get(1).toInt()).forEach{string += it.getName() + ":" + it.getEnergy() + "\n"}
+
+    string.substring(string.length - 2,string.length -1)
+
+    return string
+}
+
+fun getConsumedFoods(game : GameManager, list : List<String>): String? {
+    var string = ""
+    var listaTemp = listOf<String>()
+    val players = game.getAlPlayer().forEach{ it.getEatenFoods().forEach { listaTemp += it.getNome() }}
+
+    listaTemp.sortedWith{s1,s2 -> s1.compareTo(s2)}.forEach{string += it + "\n"}
+
+    string.substring(string.length - 2,string.length -1)
+
+    return string
+}
+
+fun move(game : GameManager, list : List<String>): String? {
+    return ""
 }
 
 fun main() {
