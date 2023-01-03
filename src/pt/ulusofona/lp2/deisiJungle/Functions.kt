@@ -17,6 +17,7 @@ fun commandGet (game : GameManager, list : List<String>) : String? {
     when (list.get(0)) {
         "PLAYER_INFO" -> return getPlayerInfo(game,list)
         "PLAYERS_BY_SPECIE" -> return getPlayerBySpecie(game,list)
+        "MOST_TRAVELED" -> return getMostTraveled(game,list)
     }
     return null
 }
@@ -49,9 +50,16 @@ fun getPlayerBySpecie(game : GameManager, list : List<String>): String? {
     return players.joinToString(",")
 }
 
+fun getMostTraveled(game : GameManager, list : List<String>): String? {
+    var string = ""
+    val players = game.getAlPlayer().sortedWith{i1,i2 -> i2.getDistance() - i1.getDistance()}.forEach{string += it.getName() + ":" + it.getSpecie().getIdentifier() + ":" + it.getDistance() + "\n"}
+
+    return string
+}
+
 fun main() {
     val routerFn = router()
     val commandGetFn = routerFn.invoke(CommandType.GET)
-    val result = commandGetFn.invoke(GameManager(), listOf("PLAYER_INFO", "Pedro"))
+    val result = commandGetFn.invoke(GameManager(), listOf("MOST_TRAVELED", "Pedro"))
     print(result)
 }
