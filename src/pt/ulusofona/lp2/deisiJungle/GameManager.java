@@ -140,7 +140,7 @@ public class GameManager {
         return foods;
     }
 
-    public InitializationError createInitialJungle(int jungleSize, String[][] playersInfo) {
+    public void createInitialJungle(int jungleSize, String[][] playersInfo) throws InvalidInitialJungleException {
         cleaningArrays();
 
         this.jungleSize = jungleSize;
@@ -151,27 +151,27 @@ public class GameManager {
 
         //Validate number of players
         if(playersInfo == null || playersInfo.length < minPlayers || playersInfo.length > maxPlayers || jungleSize < playersInfo.length * 2) {
-            return new InitializationError("Invalid number of players");
+            throw new InvalidInitialJungleException("Invalid number of players", true, false);
         }
 
         //Validate incorrect ids and names
         for (String[] strings : playersInfo) {
             if (strings[0] == null || !strings[0].matches("[0-9]+") || strings[1] == null || strings[1].equals("")) {
-                return new InitializationError("Incorrect id or name");
+                throw new InvalidInitialJungleException("Incorrect id or name", true, false);
             }
         }
         //Validate repeated ids
         for (int x = 0; x < playersInfo.length; x++) {
             for (int y = x + 1; y < playersInfo.length; y++) {
                 if(Objects.equals(playersInfo[x][0], playersInfo[y][0])) {
-                    return new InitializationError("Repeated ids found");
+                    throw new InvalidInitialJungleException("Repeated ids found", true, false);
                 }
             }
         }
         //Validate incorrect species
         for (String[] strings : playersInfo) {
             if(strings[2] == null || !((strings[2].equals("E")) || (strings[2].equals("L")) || (strings[2].equals("T")) || (strings[2].equals("P")) || (strings[2].equals("Z")) || (strings[2].equals("M")) || (strings[2].equals("G")) || (strings[2].equals("Y")) || (strings[2].equals("X")))) {
-                return new InitializationError("Incorrect specie");
+                throw new InvalidInitialJungleException("Incorrect specie", true, false);
             }
         }
         //Creating players and adding them to the HashMaps
@@ -180,7 +180,7 @@ public class GameManager {
                 if(playerInfo[2].charAt(0) == specie.getIdentifier()) {
 
                     if(playerInfo[2].equals(String.valueOf('Z')) && nrOfTarzans == 1) {
-                        return new InitializationError("There is already a tarzan player");
+                        throw new InvalidInitialJungleException("There is already a tarzan player", true, false);
                     }
 
                     if(playerInfo[2].equals(String.valueOf('Z')) && nrOfTarzans < 1) {
@@ -212,59 +212,23 @@ public class GameManager {
         orderByID = new int[alPlayer.size()];
 
         idPlayerPlaying = alPlayer.get(0).getIdentifier();
-
-        return null;
     }
 
-    public InitializationError createInitialJungle(int jungleSize,String[][] playersInfo, String[][] foodsInfo) {
+    public void createInitialJungle(int jungleSize,String[][] playersInfo, String[][] foodsInfo) throws InvalidInitialJungleException {
         cleaningArrays();
-        InitializationError erro = createInitialJungle(jungleSize, playersInfo);
-
-        if (erro != null) {
-            if (Objects.equals(createInitialJungle(jungleSize, playersInfo).getMessage(), "There is already a tarzan player")) {
-                return new InitializationError("There is already a tarzan player");
-            }
-        }
-
-        //Validate number of players
-        if(playersInfo == null || playersInfo.length < minPlayers || playersInfo.length > maxPlayers || jungleSize < playersInfo.length * 2) {
-            return new InitializationError("Invalid number of players");
-        }
-
-        //Validate incorrect ids and names
-        for (String[] strings : playersInfo) {
-            if (strings[0] == null || !strings[0].matches("[0-9]+") || strings[1] == null || strings[1].equals("")) {
-                return new InitializationError("Incorrect id or name");
-            }
-        }
-        //Validate repeated ids
-        for (int x = 0; x < playersInfo.length; x++) {
-            for (int y = x + 1; y < playersInfo.length; y++) {
-                if(Objects.equals(playersInfo[x][0], playersInfo[y][0])) {
-                    return new InitializationError("Repeated ids found");
-                }
-            }
-        }
-        //Validate incorrect species
-        for (String[] strings : playersInfo) {
-            if(strings[2] == null || !((strings[2].equals("E")) || (strings[2].equals("L")) || (strings[2].equals("T")) || (strings[2].equals("P")) || (strings[2].equals("Z")) || (strings[2].equals("M")) || (strings[2].equals("G")) || (strings[2].equals("Y")) || (strings[2].equals("X")))) {
-                return new InitializationError("Incorrect specie");
-            }
-        }
+        createInitialJungle(jungleSize, playersInfo);
 
         //Validate incorrect foods and incorrect positions for them
         for (String[] strings : foodsInfo) {
             if(strings[0] == null || !((strings[0].equals("e")) || (strings[0].equals("a")) || (strings[0].equals("b")) || (strings[0].equals("c")) || (strings[0].equals("m")))) {
-                return new InitializationError("Incorrect food found");
+                throw new InvalidInitialJungleException("Incorrect food found", false, true);
             }
             if(!(strings[1].matches("[0-9]+")) || Integer.parseInt(strings[1]) <= 1 || Integer.parseInt(strings[1]) >= jungleSize) {
-                return new InitializationError("Ilegal position for food");
+                throw new InvalidInitialJungleException("Ilegal position for food", false, true);
             }
         }
 
         foodCreatingAndPlacing(foodsInfo);
-
-        return null;
     }
 
     public void foodCreatingAndPlacing (String[][] foodsInfo) {
@@ -921,7 +885,7 @@ public class GameManager {
         } catch (IOException e) {return false;}
     }
 
-    public boolean loadGame(File file){
+    public boolean loadGame(File file) throws InvalidInitialJungleException{
         try {alPlayerTemp = new ArrayList<>();
             // Check if the file exists
             if (!file.exists()) {return false;}
@@ -989,7 +953,7 @@ public class GameManager {
         } catch (IOException e) {return false;}
     }
 
-    public void startGame(){
+    public void startGame() throws InvalidInitialJungleException {
         alSpecies = createDefaultSpecies();
         alFoods = createDefaultFoods();
         if(gameFoods.size() > 0){createInitialJungle(jungleSize, getPlayersInfo(),getFoodsInfo());}

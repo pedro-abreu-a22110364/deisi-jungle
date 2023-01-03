@@ -1,6 +1,6 @@
 Players
-1,Pedro,M,116,0,3
-2,Gui,Y,100,0,1
+1,Pedro,M,190,0,3
+2,Gui,Y,90,0,1
 Food
 e,3
 a,4
@@ -10,4 +10,4 @@ m,7
 Eaten Foods
 1,e,3
 GameManager
-false,47,2,1,1
+false,11,2,1,1
