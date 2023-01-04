@@ -78,7 +78,7 @@ fun getTopEnergeticOmnivores(game : GameManager, list : List<String>): String? {
 fun getConsumedFoods(game : GameManager, list : List<String>): String? {
     var string = ""
     var listaTemp = listOf<String>()
-    val players = game.getAlPlayer().filter { it.getEatenFoods().size > 0 }.forEach{ it.getEatenFoods().forEach { listaTemp += it.getNome() }}
+    val players = game.getAlPlayer().filter { it.getEatenFoods().size > 0 }.forEach{ it.getEatenFoods().forEach { listaTemp += it.foodType }}
 
     listaTemp.sortedWith{s1,s2 -> s1.compareTo(s2)}.forEach{string += it + "\n"}
 

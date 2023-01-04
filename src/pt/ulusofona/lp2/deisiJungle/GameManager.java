@@ -100,7 +100,7 @@ public class GameManager {
         int high = 51;
         int result = r.nextInt(high-low) + low;
 
-        CogumelosMagicos cogumelo = new CogumelosMagicos('m', "Cogumelo magico", "mushroom.png", result, result, result);
+        CogumelosMagicos cogumelo = new CogumelosMagicos('m', "Cogumelos magicos", "mushroom.png", result, result, result);
 
         //Adding objects to list
         alfood.add(erva);
