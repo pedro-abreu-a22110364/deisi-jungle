@@ -18,7 +18,7 @@ public class GameManager {
     int winner = 0;
     int idPlayerPlaying;
     int playerPlaying;
-    int posTemp = 0;
+    int posTemp = 1;
 
     Player playerMoving = new Player();
 
