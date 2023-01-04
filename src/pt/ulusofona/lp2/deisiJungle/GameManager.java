@@ -18,6 +18,7 @@ public class GameManager {
     int winner = 0;
     int idPlayerPlaying;
     int playerPlaying;
+    int posTemp = 0;
 
     Player playerMoving = new Player();
 
@@ -54,6 +55,10 @@ public class GameManager {
 
     public int getDistanceTotal() {
         return distanceTotal;
+    }
+
+    public int getPosTemp() {
+        return posTemp;
     }
 
     public ArrayList<Specie> createDefaultSpecies() {
@@ -216,6 +221,7 @@ public class GameManager {
         orderByPosition = new int[alPlayer.size()];
         orderByID = new int[alPlayer.size()];
 
+        playerMoving = alPlayer.get(0);
         idPlayerPlaying = alPlayer.get(0).getIdentifier();
     }
 
@@ -581,6 +587,7 @@ public class GameManager {
         }
 
         if (playerMoving.getPosition() <= 0) {
+            posTemp = playerMoving.getPosition();
             playerMoving.setPosition(1);
         }
     }

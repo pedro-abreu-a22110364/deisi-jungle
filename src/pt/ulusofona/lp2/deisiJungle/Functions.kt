@@ -90,21 +90,28 @@ fun getConsumedFoods(game : GameManager, list : List<String>): String? {
 }
 
 fun move(game : GameManager, list : List<String>): String? {
-    if (game.moveCurrentPlayer(list.get(1).toInt(),true).code == MovementResultCode.CAUGHT_FOOD) {
+    val movementResult : MovementResult = game.moveCurrentPlayer(list.get(1).toInt(),true)
+
+    if (movementResult.code == MovementResultCode.CAUGHT_FOOD) {
         return "Apanhou comida"
     }
 
-    if (game.moveCurrentPlayer(list.get(1).toInt(),true).code == MovementResultCode.INVALID_MOVEMENT) {
+    if (movementResult.code == MovementResultCode.INVALID_MOVEMENT) {
         return "Movimento invalido"
     }
 
-    if (game.moveCurrentPlayer(list.get(1).toInt(),true).code == MovementResultCode.NO_ENERGY) {
+    if (movementResult.code == MovementResultCode.NO_ENERGY) {
         return "Sem energia"
     }
 
-    game.moveCurrentPlayer(list.get(1).toInt(),true)
+    if (movementResult.code == MovementResultCode.VALID_MOVEMENT) {
+        if (game.getPosTemp() <= 0) {
+            return "Movimento invalido"
+        }
+        return "OK"
+    }
 
-    return "OK"
+    return null
 }
 
 fun main() {
