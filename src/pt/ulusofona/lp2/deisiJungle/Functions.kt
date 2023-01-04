@@ -46,7 +46,7 @@ fun getPlayerInfo(game : GameManager, list : List<String>): String? {
 }
 
 fun getPlayerBySpecie(game : GameManager, list : List<String>): String? {
-    val players = game.getAlPlayer().filter { it.specie.identifier.toString() == list.get(1) }.sortedWith{s1,s2 -> s2.getName().compareTo(s1.getName())}
+    val players = game.getAlPlayer().filter { it.specie.identifier.toString() == list.get(1) }.map { it.getName() }.sortedWith{s1,s2 -> s2.compareTo(s1)}
 
     if (players.isEmpty()) {
         return ""
@@ -68,7 +68,7 @@ fun getTopEnergeticOmnivores(game : GameManager, list : List<String>): String? {
     var string = ""
     val players = game.getAlPlayer().filter { it.getEnergy() != 0 && it.getSpecie().getSpecieType() == "Omnivoro" }.sortedWith{i1,i2 -> i2.getEnergy() - i1.getEnergy()}.take(list.get(1).toInt()).forEach{string += it.getName() + ":" + it.getEnergy() + "\n"}
 
-    string.substring(string.length - 2,string.length -1)
+    string = string.substring(0,string.length -1)
 
     return string
 }
@@ -80,7 +80,7 @@ fun getConsumedFoods(game : GameManager, list : List<String>): String? {
 
     listaTemp.sortedWith{s1,s2 -> s1.compareTo(s2)}.forEach{string += it + "\n"}
 
-    string.substring(string.length - 2,string.length -1)
+    string = string.substring(0,string.length -1)
 
     return string
 }
