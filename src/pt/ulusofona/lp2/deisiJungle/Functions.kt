@@ -105,7 +105,7 @@ fun move(game : GameManager, list : List<String>): String? {
     }
 
     if (movementResult.code == MovementResultCode.VALID_MOVEMENT) {
-        if (game.getPosTemp() <= 0) {
+        if (game.getPosTemp() <= 0 || game.getPosTemp() > game.jungleSize) {
             return "Movimento invalido"
         }
         return "OK"

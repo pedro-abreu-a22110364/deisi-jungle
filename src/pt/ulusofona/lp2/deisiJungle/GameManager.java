@@ -573,6 +573,7 @@ public class GameManager {
     }
 
     public void moveCurrentPlayerFinal () {
+        posTemp = playerMoving.getPosition();
         playerMoving.setPosition(jungleSize);
     }
 
