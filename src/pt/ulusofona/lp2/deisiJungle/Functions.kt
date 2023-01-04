@@ -80,7 +80,7 @@ fun getConsumedFoods(game : GameManager, list : List<String>): String? {
     var listaTemp = listOf<String>()
     val players = game.getAlPlayer().filter { it.getEatenFoods().size > 0 }.forEach{ it.getEatenFoods().forEach { listaTemp += it.foodType }}
 
-    listaTemp.sortedWith{s1,s2 -> s1.compareTo(s2)}.forEach{string += it + "\n"}
+    listaTemp.distinct().sortedWith{s1,s2 -> s1.compareTo(s2)}.forEach{string += it + "\n"}
 
     if (string.isNotEmpty()) {
         string = string.substring(0,string.length -1)
