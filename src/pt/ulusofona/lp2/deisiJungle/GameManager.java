@@ -61,9 +61,9 @@ public class GameManager {
 
         //Creating the objects
         Elefante elefante = new Elefante('E', "Elefante","elephant.png", "Herbivoro",180, 4, 10, 1,6);
-        Leao leao = new Leao('L', "Leão","lion.png","Carnivoro",80, 2, 10, 4,6);
+        Leao leao = new Leao('L', "Leao","lion.png","Carnivoro",80, 2, 10, 4,6);
         Tartaruga tartaruga = new Tartaruga('T', "Tartaruga","turtle.png", "Omnivoro",150,1,5,1,3);
-        Passaro passaro = new Passaro('P', "Pássaro","bird.png","Omnivoro",70,4,50,5,6);
+        Passaro passaro = new Passaro('P', "Passaro","bird.png","Omnivoro",70,4,50,5,6);
         Tarzan tarzan = new Tarzan('Z', "Tarzan","tarzan.png", "Omnivoro",70,2,20,1,6);
 
         Mario mario = new Mario('M',"Mario","mario.png","Omnivoro",180,5,5,2,5);
