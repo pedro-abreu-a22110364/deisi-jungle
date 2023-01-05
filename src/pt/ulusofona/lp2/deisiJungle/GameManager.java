@@ -226,7 +226,6 @@ public class GameManager {
     }
 
     public void createInitialJungle(int jungleSize,String[][] playersInfo, String[][] foodsInfo) throws InvalidInitialJungleException {
-        cleaningArrays();
         createInitialJungle(jungleSize, playersInfo);
 
         //Validate incorrect foods and incorrect positions for them
@@ -300,11 +299,9 @@ public class GameManager {
     }
 
     public void cleaningArrays() {
-        if (alPlayerTemp.isEmpty()) {
-            alPlayer.clear();
-            alHouses.clear();
-            gameFoods.clear();
-        }
+        alPlayer = new ArrayList<>();
+        alHouses= new ArrayList<>();
+        gameFoods= new ArrayList<>();
     }
 
     public int[] getPlayerIds(int squareNr) {
