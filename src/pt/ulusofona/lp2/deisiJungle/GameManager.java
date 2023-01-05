@@ -579,6 +579,7 @@ public class GameManager {
     }
 
     public void moveCurrentPlayerAdd (int nrSquares) {
+        posTemp = playerMoving.getPosition();
         playerMoving.setPosition(playerMoving.getPosition() + nrSquares);
         increaseDistance(nrSquares);
 
@@ -592,7 +593,6 @@ public class GameManager {
             posTemp = playerMoving.getPosition();
             playerMoving.setPosition(1);
         }
-        posTemp = playerMoving.getPosition();
     }
 
     public void eatMoreThan200() {
