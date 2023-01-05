@@ -550,7 +550,8 @@ public class GameManager {
         }
 
         //Verifica se o jogo já acabou
-        if(gameFinished) {
+        if(winner == playerMoving.getIdentifier()) {
+            chacingTurnAndAddingNrPlays();
             nrPlays++;
             nrPlaysMushrooms++;
             return 2;
