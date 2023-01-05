@@ -299,8 +299,6 @@ public class GameManager {
     }
 
     public void cleaningArrays() {
-        alPlayer = new ArrayList<>();
-        alHouses= new ArrayList<>();
         gameFoods= new ArrayList<>();
     }
 
