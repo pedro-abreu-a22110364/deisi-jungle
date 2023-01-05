@@ -92,7 +92,7 @@ fun getConsumedFoods(game : GameManager, list : List<String>): String? {
 fun move(game : GameManager, list : List<String>): String? {
     val movementResult : MovementResult = game.moveCurrentPlayer(list.get(1).toInt(),true)
 
-    if (list.get(1).toInt() > game.jungleSize || list.get(1).toInt() * (-1) > game.jungleSize) {
+    if ((list.get(1).toInt() > game.jungleSize || list.get(1).toInt() * (-1) > game.jungleSize)) {
         return "Movimento invalido"
     }
 
@@ -105,6 +105,9 @@ fun move(game : GameManager, list : List<String>): String? {
     }
 
     if (movementResult.code == MovementResultCode.NO_ENERGY) {
+        if (game.getPosTemp() <= 0 || game.getPosTemp() > game.jungleSize) {
+            return "Movimento invalido"
+        }
         return "Sem energia"
     }
 
