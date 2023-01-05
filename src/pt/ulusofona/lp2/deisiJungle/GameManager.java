@@ -902,6 +902,7 @@ public class GameManager {
     }
 
     public boolean loadGame(File file) throws InvalidInitialJungleException{
+        cleaningArrays();
         try {alPlayerTemp = new ArrayList<>();
             // Check if the file exists
             if (!file.exists()) {return false;}
