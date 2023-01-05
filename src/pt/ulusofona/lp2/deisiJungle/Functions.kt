@@ -117,7 +117,6 @@ fun move(game : GameManager, list : List<String>): String? {
         }
         return "OK"
     }
-
     return null
 }
 

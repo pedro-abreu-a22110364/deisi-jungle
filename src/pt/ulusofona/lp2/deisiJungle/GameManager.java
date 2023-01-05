@@ -487,11 +487,13 @@ public class GameManager {
         //Verifica se todos os players n tem energia
         if (nrSquares < 0) {
             if(playerMoving.getEnergy() - playerMoving.getSpecie().getNeededEnergy() * (-1 * nrSquares) < 0) {
+                posTemp = playerMoving.getPosition() + nrSquares;
                 chacingTurnAndAddingNrPlays();
                 return new MovementResult(MovementResultCode.NO_ENERGY,null);
             }
         } else if (nrSquares > 0) {
             if (playerMoving.getEnergy() - playerMoving.getSpecie().getNeededEnergy() * nrSquares < 0) {
+                posTemp = playerMoving.getPosition() + nrSquares;
                 chacingTurnAndAddingNrPlays();
                 return new MovementResult(MovementResultCode.NO_ENERGY,null);
             }
