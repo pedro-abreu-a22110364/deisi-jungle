@@ -299,6 +299,8 @@ public class GameManager {
     }
 
     public void cleaningArrays() {
+        alPlayer = new ArrayList<>();
+        alHouses= new ArrayList<>();
         gameFoods= new ArrayList<>();
     }
 
@@ -900,7 +902,7 @@ public class GameManager {
     }
 
     public boolean loadGame(File file) throws InvalidInitialJungleException{
-        cleaningArrays();
+        gameFoods = new ArrayList<>();
         try {alPlayerTemp = new ArrayList<>();
             // Check if the file exists
             if (!file.exists()) {return false;}
@@ -971,6 +973,7 @@ public class GameManager {
     public void startGame() throws InvalidInitialJungleException {
         alSpecies = createDefaultSpecies();
         alFoods = createDefaultFoods();
+        alPlayer = alPlayerTemp;
         if(gameFoods.size() > 0){createInitialJungle(jungleSize, getPlayersInfo(),getFoodsInfo());}
         else {createInitialJungle(jungleSize,getPlayersInfo());}
         idPlayerPlaying = idPlayerPlayingTemp;
