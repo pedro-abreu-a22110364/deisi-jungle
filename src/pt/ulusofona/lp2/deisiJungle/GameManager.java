@@ -592,6 +592,7 @@ public class GameManager {
             posTemp = playerMoving.getPosition();
             playerMoving.setPosition(1);
         }
+        posTemp = playerMoving.getPosition();
     }
 
     public void eatMoreThan200() {
