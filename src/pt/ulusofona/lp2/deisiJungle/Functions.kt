@@ -101,6 +101,9 @@ fun move(game : GameManager, list : List<String>): String? {
     }
 
     if (movementResult.code == MovementResultCode.NO_ENERGY) {
+        if (list.get(1).toInt() > game.jungleSize) {
+            return "Movimento invalido"
+        }
         return "Sem energia"
     }
 
