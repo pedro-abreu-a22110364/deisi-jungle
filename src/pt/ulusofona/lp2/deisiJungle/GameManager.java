@@ -534,8 +534,8 @@ public class GameManager {
 
         if(playerMoving.getPosition() >= jungleSize) {
             moveCurrentPlayerFinal();
-            winner = idPlayerPlaying;gameFinished = true;
-            nrPlays++;nrPlaysMushrooms++;
+            winner = idPlayerPlaying;gameFinished = true;nrPlays++;nrPlaysMushrooms++;
+            chacingTurnAndAddingNrPlays();
             return new MovementResult(MovementResultCode.VALID_MOVEMENT,null);
         }
 
